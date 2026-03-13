@@ -1,0 +1,7 @@
+{
+  "name": "Webhouse Media and Marketing Solution",
+  "description": "Professional digital systems development and brand solutions platform.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
