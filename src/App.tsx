@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { AppProvider } from './context/AppContext';
 import { Navbar, Footer } from './components/Layout';
 import { Home } from './pages/Home';
@@ -17,6 +17,9 @@ const AppContent = () => {
 
   return (
     <div className="min-h-screen bg-white font-sans selection:bg-emerald-500 selection:text-white">
+      <Helmet>
+        <title>Webhouse Media – Digital Systems for Business Growth</title>
+      </Helmet>
       {!isAdmin && <Navbar />}
       <main>
         <Routes>
