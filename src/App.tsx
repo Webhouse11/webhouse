@@ -8,6 +8,7 @@ import { Contact } from './pages/Contact';
 import { About } from './pages/About';
 import { Services } from './pages/Services';
 import { Training } from './pages/Training';
+import { Resources } from './pages/Resources';
 import { AdminDashboard } from './pages/AdminDashboard';
 
 const AppContent = () => {
@@ -26,6 +27,7 @@ const AppContent = () => {
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/training" element={<Training />} />
+          <Route path="/resources" element={<Resources />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/admin" element={<AdminDashboard />} />
           {/* Add other routes as needed */}
