@@ -4,6 +4,8 @@ import { ArrowRight, Globe, Cpu, BarChart3, ShieldCheck, Zap, Layers, Users, Roc
 import { Link } from 'react-router-dom';
 import { cn } from '@/src/lib/utils';
 import { HeroSlider } from '@/src/components/HeroSlider';
+import { TestimonialSlider } from '@/src/components/TestimonialSlider';
+import { TechNews } from '@/src/components/TechNews';
 
 const services = [
   {
@@ -74,41 +76,11 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="py-24 bg-black text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <div>
-              <h2 className="text-4xl font-bold mb-8 leading-tight">Why Forward-Thinking Businesses Choose Webhouse</h2>
-              <div className="space-y-8">
-                {[
-                  { title: "Strategic Thinking", desc: "We analyze your business model before writing a single line of code." },
-                  { title: "Scalable Architecture", desc: "Our systems are built to grow from 100 to 1,000,000 users seamlessly." },
-                  { title: "Automation Driven", desc: "We eliminate repetitive tasks through intelligent software integration." }
-                ].map((item, i) => (
-                  <div key={i} className="flex gap-6">
-                    <div className="w-12 h-12 rounded-full bg-white/10 flex-shrink-0 flex items-center justify-center">
-                      <ShieldCheck className="w-6 h-6 text-emerald-400" />
-                    </div>
-                    <div>
-                      <h4 className="text-xl font-bold mb-2">{item.title}</h4>
-                      <p className="text-white/60">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="relative">
-              <div className="aspect-square rounded-3xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 p-8 flex items-center justify-center">
-                <div className="text-center">
-                  <Cpu className="w-32 h-32 text-emerald-400 mx-auto mb-6" />
-                  <p className="text-2xl font-bold">Webhouse Certified</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Testimonials Section */}
+      <TestimonialSlider />
+
+      {/* Tech News Section */}
+      <TechNews />
 
       {/* CTA Section */}
       <section className="py-24">
