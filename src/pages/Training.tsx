@@ -399,7 +399,7 @@ export const Training = () => {
               <div className="pt-12 border-t border-white/10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
                 <div className="flex items-center justify-center gap-3 text-white">
                   <Mail className="text-amber-400 w-5 h-5" />
-                  <span className="font-medium">olurantiprofile@gmail.com</span>
+                  <span className="font-medium">webhousemediastudio@gmail.com</span>
                 </div>
                 <div className="flex items-center justify-center gap-3 text-white">
                   <Phone className="text-amber-400 w-5 h-5" />

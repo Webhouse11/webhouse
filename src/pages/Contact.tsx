@@ -237,9 +237,9 @@ export const Contact = () => {
             {/* Contact Info - Now after the form button */}
             <div className="pt-12 border-t border-black/5 grid grid-cols-1 sm:grid-cols-2 gap-6">
               {[
-                { icon: Mail, label: "Email Us", value: "olurantiprofile@gmail.com" },
+                { icon: Mail, label: "Email Us", value: "webhousemediastudio@gmail.com" },
                 { icon: Phone, label: "Call Us", value: "+234 806 018 0077" },
-                { icon: MapPin, label: "Visit Us", value: "Lagos, Nigeria" }
+                { icon: MapPin, label: "Visit Us", value: "15 Ring Road, Ibadan, Oyo State, Nigeria" }
               ].map((item, i) => (
                 <div key={i} className="flex gap-4 items-start p-5 rounded-2xl bg-emerald-50/50 border border-emerald-500/10">
                   <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
@@ -252,17 +252,21 @@ export const Contact = () => {
                 </div>
               ))}
             </div>
+
           </div>
 
           {/* Info Column - Now only contains Image and Text */}
           <div className="order-1 lg:order-2">
-            <div className="mb-12 rounded-[2.5rem] overflow-hidden border border-black/5 shadow-xl">
-              <img 
-                src="https://images.unsplash.com/photo-1589156229687-496a31ad1d1f?auto=format&fit=crop&q=80&w=1000" 
-                alt="Webhouse Media Executive" 
-                className="w-full h-[500px] object-cover"
-                referrerPolicy="no-referrer"
-              />
+            <div className="mb-12 rounded-[2.5rem] overflow-hidden border border-black/5 shadow-xl h-[500px]">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.452341407873!2d3.874135374828139!3d7.359223992649852!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10398d0000000001%3A0x0!2s15%20Ring%20Rd%2C%20Ibadan%2C%20Nigeria!5e0!3m2!1sen!2sng!4v1710420000000!5m2!1sen!2sng" 
+                width="100%" 
+                height="100%" 
+                style={{ border: 0 }} 
+                allowFullScreen 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
             </div>
 
             <h1 className="text-5xl font-bold mb-8">Let's Build Something <span className="text-emerald-600">Extraordinary</span></h1>

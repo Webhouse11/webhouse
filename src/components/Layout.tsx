@@ -120,9 +120,9 @@ export const Footer = () => {
           <div>
             <h4 className="font-semibold mb-6">Contact</h4>
             <ul className="space-y-4 text-white/60">
-              <li>olurantiprofile@gmail.com</li>
+              <li>webhousemediastudio@gmail.com</li>
               <li>+234 806 018 0077</li>
-              <li>Lagos, Nigeria</li>
+              <li>15 Ring Road, Ibadan, Oyo State, Nigeria</li>
             </ul>
           </div>
         </div>
