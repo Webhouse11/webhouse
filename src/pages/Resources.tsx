@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   BookOpen, 
   Video, 
@@ -244,8 +244,15 @@ const FAQS = [
 
 export const Resources = () => {
   const [selectedCategory, setSelectedCategory] = React.useState('All');
+  const [showPlaceholder, setShowPlaceholder] = React.useState(false);
+  const [selectedProduct, setSelectedProduct] = React.useState<Product | null>(null);
 
-  const categories = ['All', 'Marketing', 'AI & Automation', 'Business', 'Freelancing'];
+  const handleBuyNow = (product: Product) => {
+    setSelectedProduct(product);
+    setShowPlaceholder(true);
+    // Auto-hide after 3 seconds
+    setTimeout(() => setShowPlaceholder(false), 3000);
+  };
 
   const filteredProducts = PRODUCTS; // For now, showing all. Could add category mapping.
 
@@ -406,7 +413,10 @@ export const Resources = () => {
                   </ul>
                 </div>
 
-                <button className="w-full bg-black text-white py-4 rounded-xl font-bold hover:bg-emerald-600 transition-all flex items-center justify-center gap-2">
+                <button 
+                  onClick={() => handleBuyNow(product)}
+                  className="w-full bg-black text-white py-4 rounded-xl font-bold hover:bg-emerald-600 transition-all flex items-center justify-center gap-2"
+                >
                   Buy Now <ShoppingBag className="w-4 h-4" />
                 </button>
               </motion.div>
@@ -485,6 +495,26 @@ export const Resources = () => {
           </div>
         </div>
       </section>
+
+      {/* Payment Placeholder Toast */}
+      <AnimatePresence>
+        {showPlaceholder && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 bg-black text-white px-8 py-4 rounded-2xl shadow-2xl border border-white/10 flex items-center gap-4 min-w-[320px]"
+          >
+            <div className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0">
+              <ShieldCheck className="w-6 h-6" />
+            </div>
+            <div>
+              <p className="font-bold text-sm">Checkout Placeholder</p>
+              <p className="text-xs text-white/60">Integration for "{selectedProduct?.title}" coming soon!</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Final CTA Banner */}
       <section className="py-24 px-4">
