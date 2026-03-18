@@ -27,7 +27,9 @@ import {
   Instagram,
   Target,
   Calendar,
-  Layers
+  Layers,
+  X,
+  Plus
 } from 'lucide-react';
 
 interface Product {
@@ -38,17 +40,87 @@ interface Product {
   format: 'Ebook' | 'Video Course' | 'Toolkit' | 'Template Pack' | 'Guide' | 'Playbook';
   price: number;
   icon: React.ElementType;
+  category: string;
+  image?: string;
 }
 
+const BookCover = ({ title, category, icon: Icon, format, image }: { title: string, category: string, icon: React.ElementType, format: string, image?: string }) => {
+  const getGradient = (cat: string) => {
+    switch (cat) {
+      case 'AI & Automation': return 'from-emerald-600/90 to-teal-900/95';
+      case 'Digital Marketing & Sales': return 'from-blue-600/90 to-indigo-900/95';
+      case 'Website & Digital Business': return 'from-slate-700/90 to-slate-950/95';
+      case 'Digital Products & Online Income': return 'from-amber-500/90 to-orange-800/95';
+      case 'Social Media & Content Creation': return 'from-rose-500/90 to-purple-900/95';
+      case 'Business Systems & Productivity': return 'from-cyan-600/90 to-blue-900/95';
+      case 'Branding & Creative': return 'from-violet-600/90 to-fuchsia-900/95';
+      default: return 'from-emerald-600/90 to-emerald-900/95';
+    }
+  };
+
+  return (
+    <div className={`w-full h-full relative overflow-hidden group-hover:scale-105 transition-transform duration-500`}>
+      {/* Background Image */}
+      {image && (
+        <img 
+          src={image} 
+          alt="" 
+          className="absolute inset-0 w-full h-full object-cover"
+          referrerPolicy="no-referrer"
+        />
+      )}
+      
+      {/* Gradient Overlay */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${getGradient(category)} mix-blend-multiply opacity-80`}></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+
+      {/* Decorative Elements */}
+      <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-3xl rounded-full -mr-16 -mt-16"></div>
+      <div className="absolute inset-0 opacity-5 pointer-events-none">
+        <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
+      </div>
+
+      <div className="relative z-10 h-full p-8 flex flex-col justify-between">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-[10px] font-bold uppercase tracking-widest text-white mb-6">
+            <Icon className="w-3 h-3" /> {category}
+          </div>
+          <h3 className="text-2xl lg:text-3xl font-black text-white leading-tight tracking-tight mb-4 drop-shadow-2xl">
+            {title}
+          </h3>
+          <div className="w-12 h-1 bg-white/40 rounded-full"></div>
+        </div>
+
+        <div className="flex justify-between items-end">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 mb-1">Premium Resource</p>
+            <p className="text-sm font-bold text-white">{format}</p>
+          </div>
+          <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center">
+            <Icon className="w-6 h-6 text-white" />
+          </div>
+        </div>
+      </div>
+
+      {/* Book Spine Effect */}
+      <div className="absolute top-0 left-0 w-1.5 h-full bg-black/40"></div>
+      <div className="absolute top-0 left-1.5 w-0.5 h-full bg-white/10"></div>
+    </div>
+  );
+};
+
 const PRODUCTS: Product[] = [
+  // PREVIOUS PRODUCTS (Restored)
   {
     id: 'ai-blogging',
     title: "AI Blogging Automation Blueprint",
     description: "Learn how to build a fully automated blog that researches, writes, and posts high-quality SEO content daily.",
     benefits: ["Full automation workflow", "SEO optimization secrets", "Monetization strategies"],
     format: 'Guide',
-    price: 99,
-    icon: Cpu
+    price: 15,
+    icon: Cpu,
+    category: "AI & Automation",
+    image: "https://picsum.photos/seed/ai-blog/600/800"
   },
   {
     id: 'pinterest-traffic',
@@ -56,8 +128,10 @@ const PRODUCTS: Product[] = [
     description: "Drive thousands of visitors to your website using automated Pinterest marketing strategies.",
     benefits: ["Viral pin templates", "Automation tool setup", "Niche selection guide"],
     format: 'Playbook',
-    price: 49,
-    icon: TrendingUp
+    price: 15,
+    icon: TrendingUp,
+    category: "Digital Marketing & Sales",
+    image: "https://picsum.photos/seed/pinterest/600/800"
   },
   {
     id: 'fiverr-income',
@@ -65,8 +139,10 @@ const PRODUCTS: Product[] = [
     description: "The complete guide to setting up a high-income freelancing business on Fiverr from scratch.",
     benefits: ["Gig optimization hacks", "Client communication scripts", "Scaling strategies"],
     format: 'Playbook',
-    price: 39,
-    icon: DollarSign
+    price: 15,
+    icon: DollarSign,
+    category: "Digital Products & Online Income",
+    image: "https://picsum.photos/seed/freelance-money/600/800"
   },
   {
     id: 'fb-ads-profit',
@@ -74,8 +150,10 @@ const PRODUCTS: Product[] = [
     description: "Master the art of high-converting Facebook ads for any business or niche.",
     benefits: ["Ad copy templates", "Targeting masterclass", "Retargeting strategies"],
     format: 'Video Course',
-    price: 149,
-    icon: Facebook
+    price: 19.5,
+    icon: Facebook,
+    category: "Digital Marketing & Sales",
+    image: "https://picsum.photos/seed/facebook-ads/600/800"
   },
   {
     id: 'agency-starter',
@@ -83,8 +161,10 @@ const PRODUCTS: Product[] = [
     description: "Everything you need to launch and scale your own digital marketing agency this year.",
     benefits: ["Service delivery templates", "Contract & proposal docs", "Lead gen system"],
     format: 'Toolkit',
-    price: 199,
-    icon: Rocket
+    price: 15,
+    icon: Rocket,
+    category: "Website & Digital Business",
+    image: "https://picsum.photos/seed/digital-agency/600/800"
   },
   {
     id: 'sales-funnel',
@@ -92,8 +172,10 @@ const PRODUCTS: Product[] = [
     description: "Plug-and-play funnel templates designed to convert cold traffic into loyal customers.",
     benefits: ["High-converting designs", "Email sequence included", "Landing page copy"],
     format: 'Template Pack',
-    price: 79,
-    icon: Layout
+    price: 19.5,
+    icon: Layout,
+    category: "Digital Marketing & Sales",
+    image: "https://picsum.photos/seed/sales-funnel/600/800"
   },
   {
     id: 'whatsapp-marketing',
@@ -101,17 +183,21 @@ const PRODUCTS: Product[] = [
     description: "Turn your WhatsApp into a sales machine with these proven marketing and automation techniques.",
     benefits: ["Broadcast strategies", "Status selling secrets", "Automation tools"],
     format: 'Guide',
-    price: 29,
-    icon: MessageSquare
+    price: 19.5,
+    icon: MessageSquare,
+    category: "Digital Marketing & Sales",
+    image: "https://picsum.photos/seed/whatsapp-business/600/800"
   },
   {
-    id: 'landing-page',
+    id: 'landing-page-old',
     title: "High-Converting Landing Page Blueprint",
     description: "The psychological framework for building landing pages that convert at 20% or higher.",
     benefits: ["Copywriting framework", "Design principles", "A/B testing guide"],
     format: 'Guide',
-    price: 59,
-    icon: FileText
+    price: 15,
+    icon: FileText,
+    category: "Website & Digital Business",
+    image: "https://picsum.photos/seed/landing-page/600/800"
   },
   {
     id: 'lead-gen-sme',
@@ -119,8 +205,10 @@ const PRODUCTS: Product[] = [
     description: "A predictable system for generating high-quality leads for small and medium enterprises.",
     benefits: ["Multi-channel approach", "Lead magnet ideas", "CRM setup guide"],
     format: 'Toolkit',
-    price: 129,
-    icon: Target
+    price: 19.5,
+    icon: Target,
+    category: "Digital Marketing & Sales",
+    image: "https://picsum.photos/seed/lead-generation/600/800"
   },
   {
     id: 'content-calendar',
@@ -128,8 +216,10 @@ const PRODUCTS: Product[] = [
     description: "365 days of social media content ideas and templates for consistent brand growth.",
     benefits: ["Daily content prompts", "Engagement boosters", "Platform-specific tips"],
     format: 'Template Pack',
-    price: 25,
-    icon: Calendar
+    price: 15,
+    icon: Calendar,
+    category: "Social Media & Content Creation",
+    image: "https://picsum.photos/seed/content-calendar/600/800"
   },
   {
     id: 'ai-entrepreneurs',
@@ -137,8 +227,10 @@ const PRODUCTS: Product[] = [
     description: "The ultimate directory and guide to the best AI tools to save time and increase profit.",
     benefits: ["Top 50 AI tools", "Implementation guides", "Prompt engineering basics"],
     format: 'Toolkit',
-    price: 45,
-    icon: Zap
+    price: 15,
+    icon: Zap,
+    category: "AI & Automation",
+    image: "https://picsum.photos/seed/ai-business/600/800"
   },
   {
     id: 'course-creation',
@@ -146,8 +238,10 @@ const PRODUCTS: Product[] = [
     description: "Step-by-step guide to creating, launching, and selling your first online course.",
     benefits: ["Curriculum design", "Tech stack setup", "Marketing plan"],
     format: 'Video Course',
-    price: 199,
-    icon: Video
+    price: 19.5,
+    icon: Video,
+    category: "Digital Products & Online Income",
+    image: "https://picsum.photos/seed/online-course/600/800"
   },
   {
     id: 'product-launch',
@@ -155,8 +249,10 @@ const PRODUCTS: Product[] = [
     description: "The exact framework we use to launch digital products that generate 5-figure revenues.",
     benefits: ["Pre-launch buzz system", "Launch week schedule", "Post-launch scaling"],
     format: 'Playbook',
-    price: 89,
-    icon: ShoppingBag
+    price: 19.5,
+    icon: ShoppingBag,
+    category: "Digital Products & Online Income",
+    image: "https://picsum.photos/seed/product-launch/600/800"
   },
   {
     id: 'seo-domination',
@@ -164,8 +260,10 @@ const PRODUCTS: Product[] = [
     description: "Rank your website on the first page of Google with these modern SEO strategies.",
     benefits: ["Keyword research hacks", "On-page SEO checklist", "Backlink strategies"],
     format: 'Guide',
-    price: 69,
-    icon: Search
+    price: 19.5,
+    icon: Search,
+    category: "Digital Marketing & Sales",
+    image: "https://picsum.photos/seed/seo-search/600/800"
   },
   {
     id: 'email-automation',
@@ -173,17 +271,21 @@ const PRODUCTS: Product[] = [
     description: "Build automated email sequences that sell your products while you sleep.",
     benefits: ["Welcome series templates", "Abandoned cart recovery", "Segmentation guide"],
     format: 'Toolkit',
-    price: 55,
-    icon: Mail
+    price: 15,
+    icon: Mail,
+    category: "Digital Marketing & Sales",
+    image: "https://picsum.photos/seed/email-marketing/600/800"
   },
   {
-    id: 'personal-brand',
+    id: 'personal-brand-old',
     title: "Personal Brand Growth System",
     description: "Build a powerful personal brand that attracts high-paying clients and opportunities.",
     benefits: ["Authority building", "Content strategy", "Networking hacks"],
     format: 'Playbook',
-    price: 119,
-    icon: Users
+    price: 19.5,
+    icon: Users,
+    category: "Social Media & Content Creation",
+    image: "https://picsum.photos/seed/personal-branding/600/800"
   },
   {
     id: 'freelancing-income',
@@ -191,8 +293,10 @@ const PRODUCTS: Product[] = [
     description: "How to transition from a 9-5 to a full-time freelancer with a steady income.",
     benefits: ["Pricing your services", "Finding high-ticket clients", "Portfolio building"],
     format: 'Guide',
-    price: 35,
-    icon: Globe
+    price: 15,
+    icon: Globe,
+    category: "Digital Products & Online Income",
+    image: "https://picsum.photos/seed/freelance-work/600/800"
   },
   {
     id: 'affiliate-blueprint',
@@ -200,8 +304,10 @@ const PRODUCTS: Product[] = [
     description: "Start earning passive income by promoting other people's products the right way.",
     benefits: ["Product selection", "Traffic sources", "Conversion optimization"],
     format: 'Playbook',
-    price: 49,
-    icon: Layers
+    price: 19.5,
+    icon: Layers,
+    category: "Digital Products & Online Income",
+    image: "https://picsum.photos/seed/affiliate-marketing/600/800"
   },
   {
     id: 'chatgpt-business',
@@ -209,8 +315,10 @@ const PRODUCTS: Product[] = [
     description: "Master ChatGPT to automate your business tasks, from emails to content creation.",
     benefits: ["100+ business prompts", "Workflow automation", "Custom GPT guide"],
     format: 'Playbook',
-    price: 20,
-    icon: MessageSquare
+    price: 19.5,
+    icon: MessageSquare,
+    category: "AI & Automation",
+    image: "https://picsum.photos/seed/chatgpt-ai/600/800"
   },
   {
     id: 'startup-kit',
@@ -218,8 +326,354 @@ const PRODUCTS: Product[] = [
     description: "The complete roadmap to starting your online business from idea to first sale.",
     benefits: ["Business model selection", "Legal & tech setup", "First 90 days plan"],
     format: 'Toolkit',
-    price: 159,
-    icon: ShieldCheck
+    price: 15,
+    icon: ShieldCheck,
+    category: "Website & Digital Business",
+    image: "https://picsum.photos/seed/startup-business/600/800"
+  },
+
+  // NEW PRODUCTS
+  {
+    id: 'web-no-code',
+    title: "How To Build a High-Converting Website Without Coding",
+    description: "Master the art of building professional websites using modern no-code tools and frameworks.",
+    benefits: ["No technical skills required", "Drag-and-drop mastery", "Mobile-responsive design"],
+    format: 'Video Course',
+    price: 19.5,
+    icon: Globe,
+    category: "Website & Digital Business",
+    image: "https://picsum.photos/seed/nocode-web/600/800"
+  },
+  {
+    id: 'web-sales-machine',
+    title: "How To Turn Your Website Into a 24/7 Sales Machine",
+    description: "Optimize your existing website to capture leads and close sales automatically while you sleep.",
+    benefits: ["Conversion rate optimization", "Lead capture systems", "Automated follow-ups"],
+    format: 'Playbook',
+    price: 19.5,
+    icon: TrendingUp,
+    category: "Website & Digital Business",
+    image: "https://picsum.photos/seed/web-sales/600/800"
+  },
+  {
+    id: 'landing-page-buyers',
+    title: "How To Create Landing Pages That Convert Visitors Into Buyers",
+    description: "The psychological framework for building landing pages that turn cold traffic into hot leads.",
+    benefits: ["Persuasive copywriting", "Visual hierarchy secrets", "A/B testing framework"],
+    format: 'Guide',
+    price: 19.5,
+    icon: Layout,
+    category: "Website & Digital Business",
+    image: "https://picsum.photos/seed/conversion-page/600/800"
+  },
+  {
+    id: 'online-biz-30-days',
+    title: "How To Start a Profitable Online Business From Scratch in 30 Days",
+    description: "A step-by-step roadmap to launching your digital venture and making your first sale in a month.",
+    benefits: ["Niche selection guide", "Low-cost startup tools", "First-sale strategy"],
+    format: 'Playbook',
+    price: 19.5,
+    icon: Rocket,
+    category: "Website & Digital Business",
+    image: "https://picsum.photos/seed/online-business/600/800"
+  },
+
+  // DIGITAL MARKETING & SALES
+  {
+    id: 'fb-ig-leads',
+    title: "How To Get Unlimited Leads From Facebook & Instagram Ads",
+    description: "Master the ads platforms that drive the most growth for modern businesses.",
+    benefits: ["High-ROI targeting", "Ad creative templates", "Budget scaling secrets"],
+    format: 'Video Course',
+    price: 19.5,
+    icon: Facebook,
+    category: "Digital Marketing & Sales",
+    image: "https://picsum.photos/seed/social-ads/600/800"
+  },
+  {
+    id: 'sales-funnel-money',
+    title: "How To Build a Sales Funnel That Prints Money Automatically",
+    description: "The architecture of high-converting funnels that scale businesses to 6 and 7 figures.",
+    benefits: ["Funnel mapping guide", "Upsell/Downsell strategy", "Tech stack setup"],
+    format: 'Toolkit',
+    price: 19.5,
+    icon: Target,
+    category: "Digital Marketing & Sales",
+    image: "https://picsum.photos/seed/money-funnel/600/800"
+  },
+  {
+    id: 'ai-seo-strategies',
+    title: "How To Rank Your Business on Google Using AI SEO Strategies",
+    description: "Use the power of AI to dominate search results and get free organic traffic.",
+    benefits: ["AI keyword research", "Automated content SEO", "Backlink automation"],
+    format: 'Guide',
+    price: 19.5,
+    icon: Search,
+    category: "Digital Marketing & Sales",
+    image: "https://picsum.photos/seed/ai-seo/600/800"
+  },
+  {
+    id: 'social-followers-customers',
+    title: "How To Turn Social Media Followers Into Paying Customers",
+    description: "Stop chasing likes and start chasing sales with this social commerce framework.",
+    benefits: ["Engagement to sales funnel", "DM closing scripts", "Community building"],
+    format: 'Playbook',
+    price: 19.5,
+    icon: Users,
+    category: "Digital Marketing & Sales",
+    image: "https://picsum.photos/seed/social-sales/600/800"
+  },
+  {
+    id: 'viral-content-brand',
+    title: "How To Create Viral Content That Explodes Your Brand Online",
+    description: "The science behind virality and how to apply it to your personal or business brand.",
+    benefits: ["Hook writing formulas", "Viral video structures", "Algorithm hacking"],
+    format: 'Playbook',
+    price: 19.5,
+    icon: Zap,
+    category: "Digital Marketing & Sales",
+    image: "https://picsum.photos/seed/viral-content/600/800"
+  },
+
+  // AI & AUTOMATION
+  {
+    id: 'ai-biz-autopilot',
+    title: "How To Use AI Tools To Run Your Business on Autopilot",
+    description: "The ultimate guide to business automation using the latest AI technology.",
+    benefits: ["Workflow automation", "AI agent setup", "Time-saving hacks"],
+    format: 'Toolkit',
+    price: 19.5,
+    icon: Cpu,
+    category: "AI & Automation",
+    image: "https://picsum.photos/seed/ai-autopilot/600/800"
+  },
+  {
+    id: 'chatgpt-money-2026',
+    title: "How To Make Money With ChatGPT and AI Tools in 2026",
+    description: "Stay ahead of the curve with the most advanced AI monetization strategies.",
+    benefits: ["New income streams", "Prompt engineering 2.0", "AI service delivery"],
+    format: 'Playbook',
+    price: 19.5,
+    icon: MessageSquare,
+    category: "AI & Automation",
+    image: "https://picsum.photos/seed/ai-money/600/800"
+  },
+  {
+    id: 'ai-automation-sme',
+    title: "How To Build AI Automation Systems for Small Businesses",
+    description: "Help SMEs scale by implementing custom AI solutions and automated workflows.",
+    benefits: ["Client acquisition plan", "System implementation", "Pricing your AI services"],
+    format: 'Toolkit',
+    price: 19.5,
+    icon: Wrench,
+    category: "AI & Automation",
+    image: "https://picsum.photos/seed/ai-automation/600/800"
+  },
+  {
+    id: 'ai-prompt-packs',
+    title: "How To Create and Sell AI Prompt Packs for Passive Income",
+    description: "Turn your prompt engineering skills into a scalable digital product business.",
+    benefits: ["Prompt testing guide", "Packaging & branding", "Sales platform setup"],
+    format: 'Template Pack',
+    price: 19.5,
+    icon: Layers,
+    category: "AI & Automation",
+    image: "https://picsum.photos/seed/ai-prompts/600/800"
+  },
+  {
+    id: 'ai-content-marketing',
+    title: "How To Use AI for Content Creation, Marketing & Sales",
+    description: "A comprehensive guide to integrating AI into every stage of your marketing funnel.",
+    benefits: ["AI copy mastery", "Visual content AI", "Sales automation"],
+    format: 'Guide',
+    price: 19.5,
+    icon: Zap,
+    category: "AI & Automation",
+    image: "https://picsum.photos/seed/ai-marketing/600/800"
+  },
+
+  // DIGITAL PRODUCTS & ONLINE INCOME
+  {
+    id: 'digital-products-daily',
+    title: "How To Create and Sell Digital Products That Generate Daily Income",
+    description: "The blueprint for building a passive income stream through high-demand digital assets.",
+    benefits: ["Product idea validation", "Rapid creation methods", "Automated sales setup"],
+    format: 'Playbook',
+    price: 19.5,
+    icon: ShoppingBag,
+    category: "Digital Products & Online Income",
+    image: "https://picsum.photos/seed/digital-products/600/800"
+  },
+  {
+    id: 'online-course-zero',
+    title: "How To Build a Profitable Online Course From Zero to Launch",
+    description: "Turn your expertise into a scalable online course that people actually want to buy.",
+    benefits: ["Curriculum design", "Filming & tech guide", "Launch strategy"],
+    format: 'Video Course',
+    price: 19.5,
+    icon: Video,
+    category: "Digital Products & Online Income",
+    image: "https://picsum.photos/seed/course-launch/600/800"
+  },
+  {
+    id: 'passive-templates',
+    title: "How To Make Passive Income Selling Templates and Digital Assets",
+    description: "Create once, sell forever. Master the art of template-based digital businesses.",
+    benefits: ["Notion/Canva templates", "Marketplace selection", "SEO for assets"],
+    format: 'Template Pack',
+    price: 19.5,
+    icon: FileText,
+    category: "Digital Products & Online Income",
+    image: "https://picsum.photos/seed/digital-templates/600/800"
+  },
+  {
+    id: 'side-hustle-dollars',
+    title: "How To Start a Side Hustle That Pays You in Dollars Online",
+    description: "Break geographical barriers and earn in stable currencies from anywhere in the world.",
+    benefits: ["Global platform guide", "Payment setup", "High-value skill selection"],
+    format: 'Guide',
+    price: 19.5,
+    icon: DollarSign,
+    category: "Digital Products & Online Income",
+    image: "https://picsum.photos/seed/side-hustle/600/800"
+  },
+  {
+    id: 'knowledge-money-product',
+    title: "How To Turn Your Knowledge Into a Money-Making Digital Product",
+    description: "Identify your unique value and package it into a product that solves real problems.",
+    benefits: ["Expertise extraction", "Product formatting", "Pricing psychology"],
+    format: 'Guide',
+    price: 19.5,
+    icon: BookOpen,
+    category: "Digital Products & Online Income",
+    image: "https://picsum.photos/seed/knowledge-product/600/800"
+  },
+
+  // SOCIAL MEDIA & CONTENT CREATION
+  {
+    id: 'ig-100k-fast',
+    title: "How To Grow Your Instagram Page to 100K Followers Fast",
+    description: "The exact strategies used by top creators to explode their following in record time.",
+    benefits: ["Reels algorithm hacks", "Engagement strategies", "Growth loops"],
+    format: 'Playbook',
+    price: 19.5,
+    icon: Instagram,
+    category: "Social Media & Content Creation",
+    image: "https://picsum.photos/seed/instagram-growth/600/800"
+  },
+  {
+    id: 'youtube-monetize',
+    title: "How To Start and Monetize a YouTube Channel From Scratch",
+    description: "Build a loyal audience and multiple revenue streams on the world's largest video platform.",
+    benefits: ["Channel setup & SEO", "Content planning", "Monetization beyond ads"],
+    format: 'Video Course',
+    price: 19.5,
+    icon: Video,
+    category: "Social Media & Content Creation",
+    image: "https://picsum.photos/seed/youtube-money/600/800"
+  },
+  {
+    id: 'short-videos-viral',
+    title: "How To Create Short Videos That Go Viral on TikTok & Reels",
+    description: "Master the art of short-form storytelling that captures attention and drives action.",
+    benefits: ["Hook/Body/CTA formula", "Editing for retention", "Trend riding"],
+    format: 'Playbook',
+    price: 19.5,
+    icon: Zap,
+    category: "Social Media & Content Creation",
+    image: "https://picsum.photos/seed/viral-video/600/800"
+  },
+  {
+    id: 'personal-brand-attract',
+    title: "How To Build a Personal Brand That Attracts Opportunities",
+    description: "Become a magnet for high-paying clients, partnerships, and speaking gigs.",
+    benefits: ["Authority positioning", "Content ecosystem", "Networking mastery"],
+    format: 'Playbook',
+    price: 19.5,
+    icon: Users,
+    category: "Social Media & Content Creation",
+    image: "https://picsum.photos/seed/brand-authority/600/800"
+  },
+
+  // BUSINESS SYSTEMS & PRODUCTIVITY
+  {
+    id: 'biz-systems-run',
+    title: "How To Build Business Systems That Run Without You",
+    description: "Transition from operator to owner by implementing robust business systems.",
+    benefits: ["System mapping", "Delegation framework", "Automation triggers"],
+    format: 'Playbook',
+    price: 15,
+    icon: Layers,
+    category: "Business Systems & Productivity",
+    image: "https://picsum.photos/seed/business-systems/600/800"
+  },
+  {
+    id: 'sops-scale',
+    title: "How To Create SOPs That Scale Your Business Faster",
+    description: "Document your success and empower your team to deliver consistent results.",
+    benefits: ["SOP writing guide", "Process optimization", "Team training system"],
+    format: 'Toolkit',
+    price: 19.5,
+    icon: FileText,
+    category: "Business Systems & Productivity",
+    image: "https://picsum.photos/seed/business-sop/600/800"
+  },
+  {
+    id: 'notion-organize',
+    title: "How To Use Notion to Organize and Grow Your Business",
+    description: "Build your business second brain and manage everything in one powerful workspace.",
+    benefits: ["Custom dashboard setup", "Project management", "Team collaboration"],
+    format: 'Template Pack',
+    price: 19.5,
+    icon: Layout,
+    category: "Business Systems & Productivity",
+    image: "https://picsum.photos/seed/notion-workspace/600/800"
+  },
+  {
+    id: 'automate-workflows',
+    title: "How To Automate Your Daily Workflows and Save 10+ Hours Weekly",
+    description: "Reclaim your time by automating repetitive tasks and focusing on high-impact work.",
+    benefits: ["Zapier/Make mastery", "Email automation", "Task management"],
+    format: 'Toolkit',
+    price: 19.5,
+    icon: Zap,
+    category: "Business Systems & Productivity",
+    image: "https://picsum.photos/seed/workflow-automation/600/800"
+  },
+
+  // BRANDING & CREATIVE
+  {
+    id: 'brand-identity-attract',
+    title: "How To Design a Powerful Brand Identity That Attracts Clients",
+    description: "Create a visual and emotional brand that resonates with your ideal audience.",
+    benefits: ["Brand strategy", "Visual design basics", "Messaging framework"],
+    format: 'Guide',
+    price: 19.5,
+    icon: Target,
+    category: "Branding & Creative",
+    image: "https://picsum.photos/seed/brand-identity/600/800"
+  },
+  {
+    id: 'graphics-no-designer',
+    title: "How To Create Stunning Graphics Without Being a Designer",
+    description: "Master modern design tools to create professional assets for your business.",
+    benefits: ["Canva mastery", "Design principles", "Asset creation guide"],
+    format: 'Guide',
+    price: 19.5,
+    icon: Layout,
+    category: "Branding & Creative",
+    image: "https://picsum.photos/seed/graphic-design/600/800"
+  },
+  {
+    id: 'brand-story-sells',
+    title: "How To Tell Your Brand Story in a Way That Sells",
+    description: "Use the power of storytelling to build deep connections and drive conversions.",
+    benefits: ["Storytelling framework", "Emotional triggers", "Content integration"],
+    format: 'Guide',
+    price: 19.5,
+    icon: MessageSquare,
+    category: "Branding & Creative",
+    image: "https://picsum.photos/seed/brand-story/600/800"
   }
 ];
 
@@ -246,15 +700,81 @@ export const Resources = () => {
   const [selectedCategory, setSelectedCategory] = React.useState('All');
   const [showPlaceholder, setShowPlaceholder] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState<Product | null>(null);
+  const [currency, setCurrency] = React.useState({ code: 'USD', symbol: '$', rate: 1 });
+  const [cart, setCart] = React.useState<Product[]>([]);
+  const [isUpsellOpen, setIsUpsellOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    // Attempt to detect currency based on IP
+    fetch('https://ipapi.co/json/')
+      .then(res => res.json())
+      .then(data => {
+        if (data.currency) {
+          // For Nigeria, we'll use a fixed rate for the demo if it's NGN
+          const rate = data.currency === 'NGN' ? 1500 : 1; // Example conversion rate
+          setCurrency({ 
+            code: data.currency, 
+            symbol: data.currency_symbol || '$', 
+            rate: rate 
+          });
+        }
+      })
+      .catch(() => {
+        // Fallback to USD
+      });
+  }, []);
 
   const handleBuyNow = (product: Product) => {
-    setSelectedProduct(product);
+    setCart([product]);
+    setIsUpsellOpen(true);
+  };
+
+  const addToCart = (product: Product) => {
+    if (!cart.find(p => p.id === product.id)) {
+      setCart([...cart, product]);
+    }
+  };
+
+  const removeFromCart = (productId: string) => {
+    setCart(cart.filter(p => p.id !== productId));
+  };
+
+  const handleCheckout = () => {
+    setIsUpsellOpen(false);
     setShowPlaceholder(true);
-    // Auto-hide after 3 seconds
     setTimeout(() => setShowPlaceholder(false), 3000);
   };
 
-  const filteredProducts = PRODUCTS; // For now, showing all. Could add category mapping.
+  const allProducts = React.useMemo(() => PRODUCTS.map(p => ({ ...p, price: 15 })), []);
+
+  const categories = [
+    'All',
+    'Website & Digital Business',
+    'Digital Marketing & Sales',
+    'AI & Automation',
+    'Digital Products & Online Income',
+    'Social Media & Content Creation',
+    'Business Systems & Productivity',
+    'Branding & Creative'
+  ];
+
+  const filteredProducts = selectedCategory === 'All' 
+    ? allProducts 
+    : allProducts.filter(p => p.category === selectedCategory);
+
+  const categoryNotes: Record<string, string> = {
+    'AI & Automation': "👉 AI adoption and automation tools are exploding globally, with massive business demand",
+    'Digital Products & Online Income': "👉 Online courses and templates are among the most profitable digital products right now",
+    'Social Media & Content Creation': "👉 Viral content packs and creator tools are in huge demand right now"
+  };
+
+  const formatPrice = (usdPrice: number) => {
+    const localPrice = usdPrice * currency.rate;
+    return new Intl.NumberFormat(undefined, {
+      style: 'currency',
+      currency: currency.code,
+    }).format(localPrice);
+  };
 
   return (
     <div className="bg-white pt-20">
@@ -370,7 +890,34 @@ export const Resources = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4 text-black">Featured Digital Products</h2>
-            <p className="text-black/60 text-lg">Premium resources to help you scale faster and smarter.</p>
+            <p className="text-black/60 text-lg mb-8">Premium resources to help you scale faster and smarter.</p>
+            
+            {/* Category Filter */}
+            <div className="flex flex-wrap justify-center gap-3 mb-12">
+              {categories.map(cat => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${
+                    selectedCategory === cat 
+                      ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' 
+                      : 'bg-white text-black/60 hover:bg-emerald-50 border border-black/5'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
+            {categoryNotes[selectedCategory] && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-emerald-50 border border-emerald-500/10 p-4 rounded-2xl mb-12 inline-block mx-auto"
+              >
+                <p className="text-emerald-700 font-bold text-sm">{categoryNotes[selectedCategory]}</p>
+              </motion.div>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -381,44 +928,60 @@ export const Resources = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i % 3 * 0.1 }}
-                className="bg-white rounded-3xl p-8 border border-black/5 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full"
+                className="bg-white rounded-3xl overflow-hidden border border-black/5 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full"
               >
-                <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
-                  <product.icon className="w-7 h-7" />
-                </div>
-                
-                <div className="flex-1">
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
+                <div className="relative aspect-[3/4] overflow-hidden bg-slate-100">
+                  <BookCover 
+                    title={product.title} 
+                    category={product.category} 
+                    icon={product.icon} 
+                    format={product.format} 
+                    image={product.image}
+                  />
+                  <div className="absolute top-4 left-4">
+                    <div className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-emerald-600 border border-emerald-500/10 shadow-sm">
                       {product.format}
-                    </span>
-                    <span className="text-2xl font-bold text-black">${product.price}</span>
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                    <p className="text-white text-xs font-medium leading-relaxed">
+                      {product.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-8 flex-1 flex flex-col">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors flex-shrink-0">
+                      <product.icon className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex justify-between items-center">
+                        <span className="text-2xl font-bold text-black">{formatPrice(product.price)}</span>
+                      </div>
+                    </div>
                   </div>
                   
-                  <h3 className="text-xl font-bold mb-3 text-black group-hover:text-emerald-600 transition-colors">
+                  <h3 className="text-xl font-bold mb-4 text-black group-hover:text-emerald-600 transition-colors line-clamp-2">
                     {product.title}
                   </h3>
                   
-                  <p className="text-black/60 text-sm mb-6 leading-relaxed">
-                    {product.description}
-                  </p>
-                  
-                  <ul className="space-y-3 mb-8">
-                    {product.benefits.map((benefit, j) => (
+                  <ul className="space-y-3 mb-8 flex-1">
+                    {product.benefits.slice(0, 3).map((benefit, j) => (
                       <li key={j} className="flex items-center gap-2 text-xs font-medium text-black/70">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                        {benefit}
+                        <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                        <span className="line-clamp-1">{benefit}</span>
                       </li>
                     ))}
                   </ul>
-                </div>
 
-                <button 
-                  onClick={() => handleBuyNow(product)}
-                  className="w-full bg-black text-white py-4 rounded-xl font-bold hover:bg-emerald-600 transition-all flex items-center justify-center gap-2"
-                >
-                  Buy Now <ShoppingBag className="w-4 h-4" />
-                </button>
+                  <button 
+                    onClick={() => handleBuyNow(product)}
+                    className="w-full bg-black text-white py-4 rounded-xl font-bold hover:bg-emerald-600 transition-all flex items-center justify-center gap-2 mt-auto"
+                  >
+                    Buy Now <ShoppingBag className="w-4 h-4" />
+                  </button>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -496,6 +1059,101 @@ export const Resources = () => {
         </div>
       </section>
 
+      {/* Upsell Modal */}
+      <AnimatePresence>
+        {isUpsellOpen && (
+          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="bg-white w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-[2.5rem] shadow-2xl flex flex-col lg:flex-row"
+            >
+              {/* Left Side: Cart Summary */}
+              <div className="flex-1 p-8 lg:p-12 overflow-y-auto border-b lg:border-b-0 lg:border-r border-black/5">
+                <div className="flex justify-between items-center mb-8">
+                  <h2 className="text-2xl font-bold text-black">Your Selection</h2>
+                  <button onClick={() => setIsUpsellOpen(false)} className="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                    <X className="w-6 h-6 text-black/40" />
+                  </button>
+                </div>
+
+                <div className="space-y-6 mb-12">
+                  {cart.map(item => (
+                    <div key={item.id} className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl border border-black/5">
+                      <div className="w-16 h-20 flex-shrink-0 rounded-lg overflow-hidden shadow-sm">
+                        <BookCover title={item.title} category={item.category} icon={item.icon} format={item.format} image={item.image} />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-bold text-sm text-black line-clamp-1">{item.title}</h4>
+                        <p className="text-xs text-black/40">{item.format}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-bold text-emerald-600">{formatPrice(item.price)}</p>
+                        {cart.length > 1 && (
+                          <button onClick={() => removeFromCart(item.id)} className="text-[10px] text-red-500 font-bold hover:underline">Remove</button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-6 border-t border-black/5">
+                  <div className="flex justify-between items-center mb-6">
+                    <span className="text-black/40 font-bold uppercase tracking-widest text-xs">Total Amount</span>
+                    <span className="text-3xl font-bold text-black">
+                      {formatPrice(cart.reduce((sum, item) => sum + item.price, 0))}
+                    </span>
+                  </div>
+                  <button 
+                    onClick={handleCheckout}
+                    className="w-full bg-emerald-500 text-white py-5 rounded-2xl font-bold text-lg hover:bg-emerald-600 transition-all shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-2"
+                  >
+                    Complete Purchase <ArrowRight className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Right Side: Upsell Recommendations */}
+              <div className="w-full lg:w-[380px] bg-slate-50 p-8 lg:p-12 overflow-y-auto">
+                <div className="flex items-center gap-2 mb-6">
+                  <Zap className="w-5 h-5 text-emerald-500" />
+                  <h3 className="font-bold text-black">Recommended Upsells</h3>
+                </div>
+                <p className="text-sm text-black/40 mb-8">Add these to your order and accelerate your results even faster.</p>
+
+                <div className="space-y-6">
+                  {allProducts
+                    .filter(p => !cart.find(cp => cp.id === p.id))
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, 3)
+                    .map(upsell => (
+                      <div key={upsell.id} className="group bg-white p-4 rounded-2xl border border-black/5 hover:border-emerald-500/30 transition-all">
+                        <div className="flex gap-4 mb-4">
+                          <div className="w-12 h-16 flex-shrink-0 rounded-lg overflow-hidden shadow-sm">
+                            <BookCover title={upsell.title} category={upsell.category} icon={upsell.icon} format={upsell.format} image={upsell.image} />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-bold text-xs text-black line-clamp-2 mb-1">{upsell.title}</h4>
+                            <p className="text-[10px] text-emerald-600 font-bold">{formatPrice(upsell.price)}</p>
+                          </div>
+                        </div>
+                        <button 
+                          onClick={() => addToCart(upsell)}
+                          className="w-full py-2 rounded-lg border border-emerald-500 text-emerald-600 text-xs font-bold hover:bg-emerald-500 hover:text-white transition-all flex items-center justify-center gap-2"
+                        >
+                          <Plus className="w-3 h-3" /> Add to Order
+                        </button>
+                      </div>
+                    ))
+                  }
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
       {/* Payment Placeholder Toast */}
       <AnimatePresence>
         {showPlaceholder && (
@@ -510,7 +1168,7 @@ export const Resources = () => {
             </div>
             <div>
               <p className="font-bold text-sm">Checkout Placeholder</p>
-              <p className="text-xs text-white/60">Integration for "{selectedProduct?.title}" coming soon!</p>
+              <p className="text-xs text-white/60">Integration for your order coming soon!</p>
             </div>
           </motion.div>
         )}
