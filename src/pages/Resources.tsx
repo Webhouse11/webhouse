@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useNavigate } from 'react-router-dom';
 import { 
   BookOpen, 
   Video, 
@@ -700,13 +699,10 @@ const FAQS = [
 ];
 
 export const Resources = () => {
-  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = React.useState('All');
   const [showPlaceholder, setShowPlaceholder] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState<Product | null>(null);
-  const [currency, setCurrency] = React.useState({ code: 'NGN', symbol: '₦', rate: 1 });
-  const [cart, setCart] = React.useState<Product[]>([]);
-  const [isUpsellOpen, setIsUpsellOpen] = React.useState(false);
+  const [currency, setCurrency] = React.useState({ code: 'USD', symbol: '$', rate: 1 });
 
   React.useEffect(() => {
     // Attempt to detect currency based on IP
@@ -714,8 +710,8 @@ export const Resources = () => {
       .then(res => res.json())
       .then(data => {
         if (data.currency) {
-          // For Nigeria, we'll use a fixed rate for the demo if it's NGN
-          const rate = data.currency === 'NGN' ? 1 : 1; // Set to 1 to keep price at 100
+          // Set conversion rate: 1600 for NGN, 1 for others (demo purposes)
+          const rate = data.currency === 'NGN' ? 1600 : 1;
           setCurrency({ 
             code: data.currency, 
             symbol: data.currency_symbol || '$', 
@@ -729,40 +725,16 @@ export const Resources = () => {
   }, []);
 
   const handleBuyNow = (product: Product) => {
-    setCart([product]);
-    setIsUpsellOpen(true);
-  };
-
-  const addToCart = (product: Product) => {
-    if (!cart.find(p => p.id === product.id)) {
-      setCart([...cart, product]);
-    }
-  };
-
-  const removeFromCart = (productId: string) => {
-    setCart(cart.filter(p => p.id !== productId));
-  };
-
-  const handleCheckout = () => {
-    // Use product-specific link if available, otherwise fallback to default
-    const productLink = cart[0]?.selarLink || "https://selar.com/37j713171k"; 
-    
-    setIsUpsellOpen(false);
+    const productLink = product.selarLink || "https://selar.com/37j713171k";
     setShowPlaceholder(true);
-    
-    // Open Selar in a new tab
     window.open(productLink, '_blank');
     
-    // Simulate redirect to upsell page after a short delay
-    // In production, set your Selar "Success Redirect URL" to:
-    // https://your-domain.com/upsell
     setTimeout(() => {
       setShowPlaceholder(false);
-      navigate('/upsell');
     }, 2000);
   };
 
-  const allProducts = React.useMemo(() => PRODUCTS.map(p => ({ ...p, price: 100 })), []);
+  const allProducts = React.useMemo(() => PRODUCTS.map(p => ({ ...p, price: 19.99 })), []);
 
   const categories = [
     'All',
@@ -1075,65 +1047,6 @@ export const Resources = () => {
           </div>
         </div>
       </section>
-
-      {/* Upsell Modal */}
-      <AnimatePresence>
-        {isUpsellOpen && (
-          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-[2.5rem] shadow-2xl flex flex-col"
-            >
-              {/* Cart Summary */}
-              <div className="p-8 lg:p-12 overflow-y-auto">
-                <div className="flex justify-between items-center mb-8">
-                  <h2 className="text-2xl font-bold text-black">Your Selection</h2>
-                  <button onClick={() => setIsUpsellOpen(false)} className="p-2 hover:bg-slate-100 rounded-full transition-colors">
-                    <X className="w-6 h-6 text-black/40" />
-                  </button>
-                </div>
-
-                <div className="space-y-6 mb-12">
-                  {cart.map(item => (
-                    <div key={item.id} className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl border border-black/5">
-                      <div className="w-16 h-20 flex-shrink-0 rounded-lg overflow-hidden shadow-sm">
-                        <BookCover title={item.title} category={item.category} icon={item.icon} format={item.format} image={item.image} />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-bold text-sm text-black line-clamp-1">{item.title}</h4>
-                        <p className="text-xs text-black/40">{item.format}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-bold text-emerald-600">{formatPrice(item.price)}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="pt-6 border-t border-black/5">
-                  <div className="flex justify-between items-center mb-6">
-                    <span className="text-black/40 font-bold uppercase tracking-widest text-xs">Total Amount</span>
-                    <span className="text-3xl font-bold text-black">
-                      {formatPrice(cart.reduce((sum, item) => sum + item.price, 0))}
-                    </span>
-                  </div>
-                  <button 
-                    onClick={handleCheckout}
-                    className="w-full bg-emerald-500 text-white py-5 rounded-2xl font-bold text-lg hover:bg-emerald-600 transition-all shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-2"
-                  >
-                    Complete Purchase <ArrowRight className="w-5 h-5" />
-                  </button>
-                  <p className="text-center text-[10px] text-black/40 mt-4">
-                    You will be redirected to our secure payment partner, Selar.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
 
       {/* Payment Placeholder Toast */}
       <AnimatePresence>
