@@ -43,6 +43,7 @@ interface Product {
   icon: React.ElementType;
   category: string;
   image?: string;
+  selarLink?: string;
 }
 
 const BookCover = ({ title, category, icon: Icon, format, image }: { title: string, category: string, icon: React.ElementType, format: string, image?: string }) => {
@@ -121,7 +122,8 @@ const PRODUCTS: Product[] = [
     price: 15,
     icon: Cpu,
     category: "AI & Automation",
-    image: "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?auto=format&fit=crop&q=80&w=800"
+    image: "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?auto=format&fit=crop&q=80&w=800",
+    selarLink: "https://selar.com/m77m2p31h2"
   },
   {
     id: 'pinterest-traffic',
@@ -702,7 +704,7 @@ export const Resources = () => {
   const [selectedCategory, setSelectedCategory] = React.useState('All');
   const [showPlaceholder, setShowPlaceholder] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState<Product | null>(null);
-  const [currency, setCurrency] = React.useState({ code: 'USD', symbol: '$', rate: 1 });
+  const [currency, setCurrency] = React.useState({ code: 'NGN', symbol: '₦', rate: 1 });
   const [cart, setCart] = React.useState<Product[]>([]);
   const [isUpsellOpen, setIsUpsellOpen] = React.useState(false);
 
@@ -713,7 +715,7 @@ export const Resources = () => {
       .then(data => {
         if (data.currency) {
           // For Nigeria, we'll use a fixed rate for the demo if it's NGN
-          const rate = data.currency === 'NGN' ? 1500 : 1; // Example conversion rate
+          const rate = data.currency === 'NGN' ? 1 : 1; // Set to 1 to keep price at 100
           setCurrency({ 
             code: data.currency, 
             symbol: data.currency_symbol || '$', 
@@ -742,16 +744,25 @@ export const Resources = () => {
   };
 
   const handleCheckout = () => {
+    // Use product-specific link if available, otherwise fallback to default
+    const productLink = cart[0]?.selarLink || "https://selar.com/37j713171k"; 
+    
     setIsUpsellOpen(false);
     setShowPlaceholder(true);
-    // Simulate payment processing then redirect to upsell page
+    
+    // Open Selar in a new tab
+    window.open(productLink, '_blank');
+    
+    // Simulate redirect to upsell page after a short delay
+    // In production, set your Selar "Success Redirect URL" to:
+    // https://your-domain.com/upsell
     setTimeout(() => {
       setShowPlaceholder(false);
       navigate('/upsell');
     }, 2000);
   };
 
-  const allProducts = React.useMemo(() => PRODUCTS.map(p => ({ ...p, price: 15 })), []);
+  const allProducts = React.useMemo(() => PRODUCTS.map(p => ({ ...p, price: 100 })), []);
 
   const categories = [
     'All',
@@ -1073,10 +1084,10 @@ export const Resources = () => {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-[2.5rem] shadow-2xl flex flex-col lg:flex-row"
+              className="bg-white w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-[2.5rem] shadow-2xl flex flex-col"
             >
-              {/* Left Side: Cart Summary */}
-              <div className="flex-1 p-8 lg:p-12 overflow-y-auto border-b lg:border-b-0 lg:border-r border-black/5">
+              {/* Cart Summary */}
+              <div className="p-8 lg:p-12 overflow-y-auto">
                 <div className="flex justify-between items-center mb-8">
                   <h2 className="text-2xl font-bold text-black">Your Selection</h2>
                   <button onClick={() => setIsUpsellOpen(false)} className="p-2 hover:bg-slate-100 rounded-full transition-colors">
@@ -1096,9 +1107,6 @@ export const Resources = () => {
                       </div>
                       <div className="text-right">
                         <p className="font-bold text-emerald-600">{formatPrice(item.price)}</p>
-                        {cart.length > 1 && (
-                          <button onClick={() => removeFromCart(item.id)} className="text-[10px] text-red-500 font-bold hover:underline">Remove</button>
-                        )}
                       </div>
                     </div>
                   ))}
@@ -1117,42 +1125,9 @@ export const Resources = () => {
                   >
                     Complete Purchase <ArrowRight className="w-5 h-5" />
                   </button>
-                </div>
-              </div>
-
-              {/* Right Side: Upsell Recommendations */}
-              <div className="w-full lg:w-[380px] bg-slate-50 p-8 lg:p-12 overflow-y-auto">
-                <div className="flex items-center gap-2 mb-6">
-                  <Zap className="w-5 h-5 text-emerald-500" />
-                  <h3 className="font-bold text-black">Recommended Upsells</h3>
-                </div>
-                <p className="text-sm text-black/40 mb-8">Add these to your order and accelerate your results even faster.</p>
-
-                <div className="space-y-6">
-                  {allProducts
-                    .filter(p => !cart.find(cp => cp.id === p.id))
-                    .sort(() => Math.random() - 0.5)
-                    .slice(0, 3)
-                    .map(upsell => (
-                      <div key={upsell.id} className="group bg-white p-4 rounded-2xl border border-black/5 hover:border-emerald-500/30 transition-all">
-                        <div className="flex gap-4 mb-4">
-                          <div className="w-12 h-16 flex-shrink-0 rounded-lg overflow-hidden shadow-sm">
-                            <BookCover title={upsell.title} category={upsell.category} icon={upsell.icon} format={upsell.format} image={upsell.image} />
-                          </div>
-                          <div className="flex-1">
-                            <h4 className="font-bold text-xs text-black line-clamp-2 mb-1">{upsell.title}</h4>
-                            <p className="text-[10px] text-emerald-600 font-bold">{formatPrice(upsell.price)}</p>
-                          </div>
-                        </div>
-                        <button 
-                          onClick={() => addToCart(upsell)}
-                          className="w-full py-2 rounded-lg border border-emerald-500 text-emerald-600 text-xs font-bold hover:bg-emerald-500 hover:text-white transition-all flex items-center justify-center gap-2"
-                        >
-                          <Plus className="w-3 h-3" /> Add to Order
-                        </button>
-                      </div>
-                    ))
-                  }
+                  <p className="text-center text-[10px] text-black/40 mt-4">
+                    You will be redirected to our secure payment partner, Selar.
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -1173,8 +1148,8 @@ export const Resources = () => {
               <ShieldCheck className="w-6 h-6" />
             </div>
             <div>
-              <p className="font-bold text-sm">Checkout Placeholder</p>
-              <p className="text-xs text-white/60">Integration for your order coming soon!</p>
+              <p className="font-bold text-sm">Redirecting to Payment</p>
+              <p className="text-xs text-white/60">Opening Selar checkout in a new tab...</p>
             </div>
           </motion.div>
         )}

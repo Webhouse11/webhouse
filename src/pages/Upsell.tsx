@@ -126,7 +126,7 @@ export const Upsell = () => {
                   <ul className="space-y-3">
                     <li className="flex items-center gap-2 text-sm text-black/70">
                       <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                      30-Min Strategy Call with Our Team ($150 Value)
+                      30-Min Strategy Call with Our Team (₦15,000 Value)
                     </li>
                     <li className="flex items-center gap-2 text-sm text-black/70">
                       <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
@@ -143,10 +143,10 @@ export const Upsell = () => {
               {/* Right Side: Pricing & CTA */}
               <div className="bg-slate-50 rounded-[2.5rem] p-8 lg:p-12 border border-black/5 sticky top-32">
                 <div className="text-center mb-10">
-                  <p className="text-xs font-bold uppercase tracking-widest text-black/40 mb-4">Total Value: $975.00+</p>
+                  <p className="text-xs font-bold uppercase tracking-widest text-black/40 mb-4">Total Value: ₦50,000.00+</p>
                   <div className="flex items-center justify-center gap-4 mb-2">
-                    <span className="text-2xl text-black/30 line-through font-bold">$497.00</span>
-                    <span className="text-5xl font-bold text-emerald-600">$97.00</span>
+                    <span className="text-2xl text-black/30 line-through font-bold">₦25,000.00</span>
+                    <span className="text-5xl font-bold text-emerald-600">₦5,000.00</span>
                   </div>
                   <p className="text-sm font-bold text-emerald-600/60">One-Time Payment • Save 90%</p>
                 </div>
