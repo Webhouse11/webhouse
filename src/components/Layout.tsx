@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Menu, X, ChevronRight, Globe, Cpu, BarChart3, ShieldCheck } from 'lucide-react';
+import { Menu, X, ChevronRight, Globe, Cpu, BarChart3, ShieldCheck, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 import { cn } from '@/src/lib/utils';
 
 export const Navbar = () => {
@@ -108,6 +108,20 @@ export const Footer = () => {
             <p className="text-white/60 max-w-md mb-8">
               Webhouse Media and Marketing Solution provides full-service digital systems and marketing infrastructures for businesses looking to scale.
             </p>
+            <div className="flex gap-4">
+              <a href="https://www.facebook.com/webhouselab/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-emerald-500 transition-all text-white/60 hover:text-white" title="Facebook">
+                <Facebook size={20} />
+              </a>
+              <a href="https://www.instagram.com/p/DV5FZ69DtLW/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-emerald-500 transition-all text-white/60 hover:text-white" title="Instagram">
+                <Instagram size={20} />
+              </a>
+              <a href="https://ng.linkedin.com/in/oluranti-clement-7116b078" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-emerald-500 transition-all text-white/60 hover:text-white" title="LinkedIn">
+                <Linkedin size={20} />
+              </a>
+              <a href="https://m.youtube.com/@webhouselabtv" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-emerald-500 transition-all text-white/60 hover:text-white" title="YouTube">
+                <Youtube size={20} />
+              </a>
+            </div>
           </div>
           
           <div>

@@ -120,7 +120,7 @@ const PRODUCTS: Product[] = [
     price: 15,
     icon: Cpu,
     category: "AI & Automation",
-    image: "https://picsum.photos/seed/ai-blog/600/800"
+    image: "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'pinterest-traffic',
@@ -131,7 +131,7 @@ const PRODUCTS: Product[] = [
     price: 15,
     icon: TrendingUp,
     category: "Digital Marketing & Sales",
-    image: "https://picsum.photos/seed/pinterest/600/800"
+    image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'fiverr-income',
@@ -142,7 +142,7 @@ const PRODUCTS: Product[] = [
     price: 15,
     icon: DollarSign,
     category: "Digital Products & Online Income",
-    image: "https://picsum.photos/seed/freelance-money/600/800"
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'fb-ads-profit',
@@ -153,7 +153,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Facebook,
     category: "Digital Marketing & Sales",
-    image: "https://picsum.photos/seed/facebook-ads/600/800"
+    image: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'agency-starter',
@@ -164,7 +164,7 @@ const PRODUCTS: Product[] = [
     price: 15,
     icon: Rocket,
     category: "Website & Digital Business",
-    image: "https://picsum.photos/seed/digital-agency/600/800"
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'sales-funnel',
@@ -175,7 +175,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Layout,
     category: "Digital Marketing & Sales",
-    image: "https://picsum.photos/seed/sales-funnel/600/800"
+    image: "https://images.unsplash.com/photo-1551288049-bbbda546697a?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'whatsapp-marketing',
@@ -186,7 +186,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: MessageSquare,
     category: "Digital Marketing & Sales",
-    image: "https://picsum.photos/seed/whatsapp-business/600/800"
+    image: "https://images.unsplash.com/photo-1611744214246-9017400cd7a7?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'landing-page-old',
@@ -197,7 +197,7 @@ const PRODUCTS: Product[] = [
     price: 15,
     icon: FileText,
     category: "Website & Digital Business",
-    image: "https://picsum.photos/seed/landing-page/600/800"
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'lead-gen-sme',
@@ -208,7 +208,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Target,
     category: "Digital Marketing & Sales",
-    image: "https://picsum.photos/seed/lead-generation/600/800"
+    image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'content-calendar',
@@ -219,7 +219,7 @@ const PRODUCTS: Product[] = [
     price: 15,
     icon: Calendar,
     category: "Social Media & Content Creation",
-    image: "https://picsum.photos/seed/content-calendar/600/800"
+    image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'ai-entrepreneurs',
@@ -230,7 +230,7 @@ const PRODUCTS: Product[] = [
     price: 15,
     icon: Zap,
     category: "AI & Automation",
-    image: "https://picsum.photos/seed/ai-business/600/800"
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'course-creation',
@@ -241,7 +241,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Video,
     category: "Digital Products & Online Income",
-    image: "https://picsum.photos/seed/online-course/600/800"
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'product-launch',
@@ -252,7 +252,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: ShoppingBag,
     category: "Digital Products & Online Income",
-    image: "https://picsum.photos/seed/product-launch/600/800"
+    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'seo-domination',
@@ -263,7 +263,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Search,
     category: "Digital Marketing & Sales",
-    image: "https://picsum.photos/seed/seo-search/600/800"
+    image: "https://images.unsplash.com/photo-1571721795195-a2ca2d3370a9?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'email-automation',
@@ -274,7 +274,7 @@ const PRODUCTS: Product[] = [
     price: 15,
     icon: Mail,
     category: "Digital Marketing & Sales",
-    image: "https://picsum.photos/seed/email-marketing/600/800"
+    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'personal-brand-old',
@@ -285,7 +285,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Users,
     category: "Social Media & Content Creation",
-    image: "https://picsum.photos/seed/personal-branding/600/800"
+    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'freelancing-income',
@@ -296,7 +296,7 @@ const PRODUCTS: Product[] = [
     price: 15,
     icon: Globe,
     category: "Digital Products & Online Income",
-    image: "https://picsum.photos/seed/freelance-work/600/800"
+    image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'affiliate-blueprint',
@@ -307,7 +307,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Layers,
     category: "Digital Products & Online Income",
-    image: "https://picsum.photos/seed/affiliate-marketing/600/800"
+    image: "https://images.unsplash.com/photo-1556742049-02e1f740d0ff?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'chatgpt-business',
@@ -318,7 +318,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: MessageSquare,
     category: "AI & Automation",
-    image: "https://picsum.photos/seed/chatgpt-ai/600/800"
+    image: "https://images.unsplash.com/photo-1676299081847-c0326a0333d5?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'startup-kit',
@@ -329,7 +329,7 @@ const PRODUCTS: Product[] = [
     price: 15,
     icon: ShieldCheck,
     category: "Website & Digital Business",
-    image: "https://picsum.photos/seed/startup-business/600/800"
+    image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&q=80&w=800"
   },
 
   // NEW PRODUCTS
@@ -342,7 +342,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Globe,
     category: "Website & Digital Business",
-    image: "https://picsum.photos/seed/nocode-web/600/800"
+    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'web-sales-machine',
@@ -353,7 +353,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: TrendingUp,
     category: "Website & Digital Business",
-    image: "https://picsum.photos/seed/web-sales/600/800"
+    image: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'landing-page-buyers',
@@ -364,7 +364,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Layout,
     category: "Website & Digital Business",
-    image: "https://picsum.photos/seed/conversion-page/600/800"
+    image: "https://images.unsplash.com/photo-1551288049-bbbda546697a?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'online-biz-30-days',
@@ -375,7 +375,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Rocket,
     category: "Website & Digital Business",
-    image: "https://picsum.photos/seed/online-business/600/800"
+    image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=800"
   },
 
   // DIGITAL MARKETING & SALES
@@ -388,7 +388,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Facebook,
     category: "Digital Marketing & Sales",
-    image: "https://picsum.photos/seed/social-ads/600/800"
+    image: "https://images.unsplash.com/photo-1611162616475-46b635cbca86?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'sales-funnel-money',
@@ -399,7 +399,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Target,
     category: "Digital Marketing & Sales",
-    image: "https://picsum.photos/seed/money-funnel/600/800"
+    image: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'ai-seo-strategies',
@@ -410,7 +410,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Search,
     category: "Digital Marketing & Sales",
-    image: "https://picsum.photos/seed/ai-seo/600/800"
+    image: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'social-followers-customers',
@@ -421,7 +421,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Users,
     category: "Digital Marketing & Sales",
-    image: "https://picsum.photos/seed/social-sales/600/800"
+    image: "https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'viral-content-brand',
@@ -432,7 +432,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Zap,
     category: "Digital Marketing & Sales",
-    image: "https://picsum.photos/seed/viral-content/600/800"
+    image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800"
   },
 
   // AI & AUTOMATION
@@ -445,7 +445,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Cpu,
     category: "AI & Automation",
-    image: "https://picsum.photos/seed/ai-autopilot/600/800"
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'chatgpt-money-2026',
@@ -456,7 +456,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: MessageSquare,
     category: "AI & Automation",
-    image: "https://picsum.photos/seed/ai-money/600/800"
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'ai-automation-sme',
@@ -467,7 +467,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Wrench,
     category: "AI & Automation",
-    image: "https://picsum.photos/seed/ai-automation/600/800"
+    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'ai-prompt-packs',
@@ -478,7 +478,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Layers,
     category: "AI & Automation",
-    image: "https://picsum.photos/seed/ai-prompts/600/800"
+    image: "https://images.unsplash.com/photo-1684369175833-30390696e21b?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'ai-content-marketing',
@@ -489,7 +489,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Zap,
     category: "AI & Automation",
-    image: "https://picsum.photos/seed/ai-marketing/600/800"
+    image: "https://images.unsplash.com/photo-1675271591211-126ad94e495d?auto=format&fit=crop&q=80&w=800"
   },
 
   // DIGITAL PRODUCTS & ONLINE INCOME
@@ -502,7 +502,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: ShoppingBag,
     category: "Digital Products & Online Income",
-    image: "https://picsum.photos/seed/digital-products/600/800"
+    image: "https://images.unsplash.com/photo-1512428559083-a40ce9033afb?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'online-course-zero',
@@ -513,7 +513,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Video,
     category: "Digital Products & Online Income",
-    image: "https://picsum.photos/seed/course-launch/600/800"
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'passive-templates',
@@ -524,7 +524,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: FileText,
     category: "Digital Products & Online Income",
-    image: "https://picsum.photos/seed/digital-templates/600/800"
+    image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'side-hustle-dollars',
@@ -535,7 +535,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: DollarSign,
     category: "Digital Products & Online Income",
-    image: "https://picsum.photos/seed/side-hustle/600/800"
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'knowledge-money-product',
@@ -546,7 +546,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: BookOpen,
     category: "Digital Products & Online Income",
-    image: "https://picsum.photos/seed/knowledge-product/600/800"
+    image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=800"
   },
 
   // SOCIAL MEDIA & CONTENT CREATION
@@ -559,7 +559,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Instagram,
     category: "Social Media & Content Creation",
-    image: "https://picsum.photos/seed/instagram-growth/600/800"
+    image: "https://images.unsplash.com/photo-1611262588024-d12430b98920?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'youtube-monetize',
@@ -570,7 +570,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Video,
     category: "Social Media & Content Creation",
-    image: "https://picsum.photos/seed/youtube-money/600/800"
+    image: "https://images.unsplash.com/photo-1524704659699-9f654936694c?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'short-videos-viral',
@@ -581,7 +581,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Zap,
     category: "Social Media & Content Creation",
-    image: "https://picsum.photos/seed/viral-video/600/800"
+    image: "https://images.unsplash.com/photo-1540759786422-c60d5ecd57ad?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'personal-brand-attract',
@@ -592,7 +592,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Users,
     category: "Social Media & Content Creation",
-    image: "https://picsum.photos/seed/brand-authority/600/800"
+    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=800"
   },
 
   // BUSINESS SYSTEMS & PRODUCTIVITY
@@ -605,7 +605,7 @@ const PRODUCTS: Product[] = [
     price: 15,
     icon: Layers,
     category: "Business Systems & Productivity",
-    image: "https://picsum.photos/seed/business-systems/600/800"
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'sops-scale',
@@ -616,7 +616,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: FileText,
     category: "Business Systems & Productivity",
-    image: "https://picsum.photos/seed/business-sop/600/800"
+    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'notion-organize',
@@ -627,7 +627,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Layout,
     category: "Business Systems & Productivity",
-    image: "https://picsum.photos/seed/notion-workspace/600/800"
+    image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'automate-workflows',
@@ -638,7 +638,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Zap,
     category: "Business Systems & Productivity",
-    image: "https://picsum.photos/seed/workflow-automation/600/800"
+    image: "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&q=80&w=800"
   },
 
   // BRANDING & CREATIVE
@@ -651,7 +651,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Target,
     category: "Branding & Creative",
-    image: "https://picsum.photos/seed/brand-identity/600/800"
+    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'graphics-no-designer',
@@ -662,7 +662,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: Layout,
     category: "Branding & Creative",
-    image: "https://picsum.photos/seed/graphic-design/600/800"
+    image: "https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 'brand-story-sells',
@@ -673,7 +673,7 @@ const PRODUCTS: Product[] = [
     price: 19.5,
     icon: MessageSquare,
     category: "Branding & Creative",
-    image: "https://picsum.photos/seed/brand-story/600/800"
+    image: "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&q=80&w=800"
   }
 ];
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useApp } from '@/src/context/AppContext';
 import { motion } from 'motion/react';
-import { Mail, Phone, MapPin, Send, MessageSquare } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, MessageSquare, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 
 const SERVICES = [
   "Website Development",
@@ -235,22 +235,42 @@ export const Contact = () => {
             )}
 
             {/* Contact Info - Now after the form button */}
-            <div className="pt-12 border-t border-black/5 grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {[
-                { icon: Mail, label: "Email Us", value: "webhousemediastudio@gmail.com" },
-                { icon: Phone, label: "Call Us", value: "+234 806 018 0077" },
-                { icon: MapPin, label: "Visit Us", value: "15 Ring Road, Ibadan, Oyo State, Nigeria" }
-              ].map((item, i) => (
-                <div key={i} className="flex gap-4 items-start p-5 rounded-2xl bg-emerald-50/50 border border-emerald-500/10">
-                  <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <item.icon className="w-5 h-5 text-emerald-600" />
+            <div className="pt-12 border-t border-black/5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                {[
+                  { icon: Mail, label: "Email Us", value: "webhousemediastudio@gmail.com" },
+                  { icon: Phone, label: "Call Us", value: "+234 806 018 0077" },
+                  { icon: MapPin, label: "Visit Us", value: "15 Ring Road, Ibadan, Oyo State, Nigeria" }
+                ].map((item, i) => (
+                  <div key={i} className="flex gap-4 items-start p-5 rounded-2xl bg-emerald-50/50 border border-emerald-500/10">
+                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <item.icon className="w-5 h-5 text-emerald-600" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-black/40 uppercase tracking-wider mb-1">{item.label}</p>
+                      <p className="text-sm font-semibold break-words">{item.value}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-[10px] font-bold text-black/40 uppercase tracking-wider mb-1">{item.label}</p>
-                    <p className="text-sm font-semibold break-words">{item.value}</p>
-                  </div>
+                ))}
+              </div>
+
+              <div>
+                <p className="text-[10px] font-bold text-black/40 uppercase tracking-wider mb-4">Follow Our Socials</p>
+                <div className="flex gap-4">
+                  <a href="https://www.facebook.com/webhouselab/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 hover:bg-emerald-600 hover:text-white transition-all shadow-sm" title="Facebook">
+                    <Facebook size={24} />
+                  </a>
+                  <a href="https://www.instagram.com/p/DV5FZ69DtLW/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 hover:bg-emerald-600 hover:text-white transition-all shadow-sm" title="Instagram">
+                    <Instagram size={24} />
+                  </a>
+                  <a href="https://ng.linkedin.com/in/oluranti-clement-7116b078" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 hover:bg-emerald-600 hover:text-white transition-all shadow-sm" title="LinkedIn">
+                    <Linkedin size={24} />
+                  </a>
+                  <a href="https://m.youtube.com/@webhouselabtv" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 hover:bg-emerald-600 hover:text-white transition-all shadow-sm" title="YouTube">
+                    <Youtube size={24} />
+                  </a>
                 </div>
-              ))}
+              </div>
             </div>
 
           </div>
