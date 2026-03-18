@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useNavigate } from 'react-router-dom';
 import { 
   BookOpen, 
   Video, 
@@ -697,6 +698,7 @@ const FAQS = [
 ];
 
 export const Resources = () => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = React.useState('All');
   const [showPlaceholder, setShowPlaceholder] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState<Product | null>(null);
@@ -742,7 +744,11 @@ export const Resources = () => {
   const handleCheckout = () => {
     setIsUpsellOpen(false);
     setShowPlaceholder(true);
-    setTimeout(() => setShowPlaceholder(false), 3000);
+    // Simulate payment processing then redirect to upsell page
+    setTimeout(() => {
+      setShowPlaceholder(false);
+      navigate('/upsell');
+    }, 2000);
   };
 
   const allProducts = React.useMemo(() => PRODUCTS.map(p => ({ ...p, price: 15 })), []);
