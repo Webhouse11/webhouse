@@ -133,7 +133,8 @@ const PRODUCTS: Product[] = [
     price: 15,
     icon: TrendingUp,
     category: "Digital Marketing & Sales",
-    image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=800"
+    image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=800",
+    selarLink: "https://selar.com/7u6366e61c"
   },
   {
     id: 'fiverr-income',

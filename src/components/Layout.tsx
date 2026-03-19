@@ -12,6 +12,7 @@ export const Navbar = () => {
     { name: 'Services', path: '/services' },
     { name: 'Training', path: '/training' },
     { name: 'Resources', path: '/resources' },
+    { name: 'Blog', path: '/blog' },
     { name: 'Contact', path: '/contact' },
   ];
 
@@ -130,6 +131,7 @@ export const Footer = () => {
               <li><Link to="/about" className="hover:text-emerald-400 transition-colors">About Us</Link></li>
               <li><Link to="/services" className="hover:text-emerald-400 transition-colors">Services</Link></li>
               <li><Link to="/resources" className="hover:text-emerald-400 transition-colors">Digital Resources</Link></li>
+              <li><Link to="/blog" className="hover:text-emerald-400 transition-colors">Blog & Insights</Link></li>
             </ul>
           </div>
 

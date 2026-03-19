@@ -9,6 +9,8 @@ import { About } from './pages/About';
 import { Services } from './pages/Services';
 import { Training } from './pages/Training';
 import { Resources } from './pages/Resources';
+import { Blog } from './pages/Blog';
+import { BlogPost } from './pages/BlogPost';
 import { AdminDashboard } from './pages/AdminDashboard';
 
 const AppContent = () => {
@@ -28,6 +30,8 @@ const AppContent = () => {
           <Route path="/services" element={<Services />} />
           <Route path="/training" element={<Training />} />
           <Route path="/resources" element={<Resources />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/admin" element={<AdminDashboard />} />
           {/* Add other routes as needed */}
