@@ -117,7 +117,7 @@ export const Training = () => {
               transition={{ delay: 0.1 }}
               className="text-4xl lg:text-7xl font-bold text-white mb-8 leading-[1.1]"
             >
-              How to Build an Automated Blog That Posts Daily, Designs Its Own Template, and Triggers Monetization — <span className="text-amber-400 italic">Even If You Don’t Know How to Code</span>
+              Master AI Marketing & Digital Systems — <span className="text-amber-400 italic">The Best Tech Training in Nigeria</span>
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -125,7 +125,7 @@ export const Training = () => {
               transition={{ delay: 0.2 }}
               className="text-xl text-white/70 mb-12 max-w-2xl mx-auto leading-relaxed"
             >
-              Master the art of AI-powered blogging. This training teaches you how to build systems that generate high-quality SEO content based on real-time daily search trends automatically.
+              Master the art of AI-powered blogging and digital marketing. Our training programs in Nigeria teach you how to build automated systems that generate high-quality SEO content and drive business growth across Africa.
             </motion.p>
             <motion.div 
               initial={{ opacity: 0, y: 20 }}

@@ -13,12 +13,12 @@ export const About = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h1 className="text-5xl font-bold mb-8">Our Story</h1>
+            <h1 className="text-5xl font-bold mb-8">Leading Digital Marketing Agency in Nigeria</h1>
             <p className="text-xl text-black/60 leading-relaxed mb-6">
-              Webhouse Media and Marketing Solution was founded on a simple premise: businesses don't just need websites; they need digital systems that work while they sleep.
+              Webhouse Media and Marketing Solution is the best digital marketer in Nigeria, founded on a simple premise: businesses don't just need websites; they need digital systems that work while they sleep.
             </p>
             <p className="text-lg text-black/60 leading-relaxed">
-              We've evolved from a creative agency into a digital systems development powerhouse, helping startups and enterprises build the infrastructure required for modern scale.
+              We've evolved into a digital systems development powerhouse, helping startups and enterprises across Africa build the infrastructure required for modern scale through AI marketing and custom software development.
             </p>
           </motion.div>
           <div className="relative">

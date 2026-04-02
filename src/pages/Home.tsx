@@ -47,9 +47,9 @@ export const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
             <div className="max-w-2xl">
-              <h2 className="text-3xl font-bold mb-4">Our Core Expertise</h2>
+              <h2 className="text-3xl font-bold mb-4">Best Digital Marketing & AI Marketing Agency in Nigeria</h2>
               <p className="text-black/60 text-lg">
-                We focus on building digital systems that serve as the backbone of your business growth.
+                We are the leading digital marketing agency in Nigeria, building intelligent systems that serve as the backbone of your business growth.
               </p>
             </div>
             <Link to="/services" className="text-emerald-600 font-semibold flex items-center gap-2 hover:gap-3 transition-all">

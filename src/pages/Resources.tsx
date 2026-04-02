@@ -789,7 +789,7 @@ export const Resources = () => {
             className="text-4xl lg:text-7xl font-bold text-white mb-8 leading-tight"
           >
             Digital Resources & <br />
-            <span className="text-emerald-400">Info Products Hub</span>
+            <span className="text-emerald-400">Marketing Toolkits in Nigeria</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -797,7 +797,7 @@ export const Resources = () => {
             transition={{ delay: 0.2 }}
             className="text-xl text-white/70 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
-            Master high-income digital skills and accelerate your business growth with our premium guides, toolkits, and playbooks.
+            Master high-income digital skills with the best digital marketing resources in Africa. From WhatsApp marketing for business in Nigeria to AI marketing tools for small businesses, we have everything you need to scale.
           </motion.p>
           <motion.div 
             initial={{ opacity: 0, y: 20 }}

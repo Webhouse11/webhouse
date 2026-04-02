@@ -26,23 +26,49 @@ const AppContent = () => {
   const isLoginPath = location.pathname === '/login';
 
   // Dynamic SEO based on path
-  const getPageTitle = () => {
+  const getSEO = () => {
     const path = location.pathname;
-    if (path === '/') return 'Webhouse Media – Digital Systems for Business Growth';
-    if (path === '/about') return 'About Us – Webhouse Media';
-    if (path === '/services') return 'Our Services – Digital Systems & AI Automation';
-    if (path === '/training') return 'Tech Training – Master Digital Systems';
-    if (path === '/resources') return 'Digital Resources – Ebooks & Toolkits';
-    if (path === '/blog') return 'Blog & Insights – Webhouse Media';
-    if (path === '/contact') return 'Contact Us – Start Your Project';
-    return 'Webhouse Media';
+    if (path === '/') return {
+      title: 'Webhouse Media – Best Digital Marketing & AI Marketing Agency in Nigeria',
+      description: 'Webhouse Media is the top digital marketing agency in Nigeria. We offer AI marketing tools, social media marketing in Lagos, and SaaS development across Africa.'
+    };
+    if (path === '/about') return {
+      title: 'About Us – Webhouse Media | Leading Tech Agency in Africa',
+      description: 'Learn about Webhouse Media, the best digital marketer in Nigeria providing business growth strategies for startups in Africa.'
+    };
+    if (path === '/services') return {
+      title: 'Our Services – Digital Systems, AI Automation & Web Development',
+      description: 'Explore our services: from logo design and brand identity in Nigeria to custom software development and Facebook ads expertise.'
+    };
+    if (path === '/training') return {
+      title: 'Tech Training – Master Digital Systems & AI Marketing',
+      description: 'Join our tech training programs in Nigeria. Master digital marketing, AI tools, and website development to scale your career or business.'
+    };
+    if (path === '/resources') return {
+      title: 'Digital Resources – Ebooks, Toolkits & Marketing Guides',
+      description: 'Download affordable website design guides, brand identity toolkits, and WhatsApp marketing strategies for businesses in Nigeria.'
+    };
+    if (path === '/blog') return {
+      title: 'Blog & Insights – Digital Marketing Trends in Africa',
+      description: 'Stay updated with the latest in AI marketing, social media trends, and business growth strategies from Webhouse Media.'
+    };
+    if (path === '/contact') return {
+      title: 'Contact Us – Start Your Project with Webhouse Media',
+      description: 'Contact the best digital marketing agency in Nigeria today. Let\'s discuss your web development, branding, or AI automation project.'
+    };
+    return {
+      title: 'Webhouse Media',
+      description: 'Digital Systems for Business Growth'
+    };
   };
+
+  const seo = getSEO();
 
   return (
     <div className="min-h-screen bg-white font-sans selection:bg-emerald-500 selection:text-white">
       <Helmet>
-        <title>{getPageTitle()}</title>
-        <meta name="description" content="Webhouse Media and Marketing Solution provides full-service digital systems, SaaS development, and AI automation for businesses looking to scale." />
+        <title>{seo.title}</title>
+        <meta name="description" content={seo.description} />
         <link rel="canonical" href={`https://webhouse.media${location.pathname}`} />
       </Helmet>
       {!isAdminPath && !isLoginPath && <Navbar />}

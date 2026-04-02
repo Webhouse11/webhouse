@@ -5,40 +5,40 @@ import { Link } from 'react-router-dom';
 
 const services = [
   {
-    title: "Website Development",
-    desc: "High-converting websites and complex web applications built for scale. We focus on performance, SEO, and user experience.",
-    icon: Globe,
-    features: ["Custom UI/UX", "E-commerce Solutions", "Performance Optimization", "Responsive Design"]
-  },
-  {
-    title: "Custom SaaS Development",
-    desc: "End-to-end software as a service platforms with robust architecture, multi-tenancy, and secure payment integrations.",
-    icon: Layers,
-    features: ["Cloud Infrastructure", "Subscription Management", "API Development", "Scalable Backend"]
-  },
-  {
-    title: "AI Automation Systems",
-    desc: "Intelligent workflows that save time and reduce operational costs by automating repetitive business processes.",
-    icon: Cpu,
-    features: ["LLM Integration", "Workflow Automation", "Data Analysis", "Chatbot Development"]
-  },
-  {
-    title: "Digital Sales Funnels",
-    desc: "Automated marketing systems designed to convert visitors into loyal clients through strategic lead nurturing.",
+    title: "Digital Marketing & AI Marketing",
+    desc: "The best digital marketing agency in Nigeria, leveraging AI marketing tools for small businesses to drive explosive growth.",
     icon: BarChart3,
-    features: ["Landing Pages", "Email Automation", "CRM Integration", "Conversion Tracking"]
+    features: ["Facebook Ads Expert", "Instagram Growth Africa", "WhatsApp Marketing", "AI Automation"]
   },
   {
-    title: "Brand Identity Systems",
-    desc: "Comprehensive visual identity and branding strategies that position your company as a market leader.",
+    title: "Website & SaaS Development",
+    desc: "Top-tier website development company in Nigeria. We build affordable website designs in Lagos and custom software for Africa.",
+    icon: Globe,
+    features: ["SaaS Development Africa", "Custom Software Nigeria", "E-commerce Solutions", "Performance SEO"]
+  },
+  {
+    title: "Brand Design & Creative",
+    desc: "Leading logo design company in Nigeria. We provide brand identity design services across Africa for startups and established brands.",
     icon: Palette,
-    features: ["Logo Design", "Brand Guidelines", "Visual Assets", "Brand Strategy"]
+    features: ["Logo Design Nigeria", "Brand Identity Africa", "Graphic Design Lagos", "Branding for Startups"]
+  },
+  {
+    title: "Ghostwriting & Content",
+    desc: "Professional ghostwriting services in Nigeria. We provide content writing and personal brand storytelling for businesses in Africa.",
+    icon: Layers,
+    features: ["Ghostwriting Nigeria", "Content Writing Africa", "Brand Storytelling", "SEO Copywriting"]
+  },
+  {
+    title: "Consulting & Growth Strategy",
+    desc: "Expert marketing consultant in Nigeria. We develop business growth strategies for startups across Africa to ensure sustainable scaling.",
+    icon: Cpu,
+    features: ["Growth Strategy Africa", "Marketing Consultant", "Business Automation", "Sales Funnel Design"]
   },
   {
     title: "Social Media Management",
-    desc: "Strategic content creation and community management to build brand authority across all major platforms.",
+    desc: "Social media marketing services in Lagos. Strategic content and community management to build brand authority across Africa.",
     icon: Share2,
-    features: ["Content Strategy", "Community Growth", "Analytics Reporting", "Paid Advertising"]
+    features: ["Social Media Lagos", "Community Growth", "Analytics Reporting", "Paid Advertising"]
   }
 ];
 

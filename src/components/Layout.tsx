@@ -144,6 +144,37 @@ export const Footer = () => {
             </ul>
           </div>
         </div>
+
+        {/* SEO Keywords Section */}
+        <div className="border-t border-white/5 py-12">
+          <h4 className="text-sm font-bold text-white/40 uppercase tracking-widest mb-8">Relevant Keywords for Digital Marketing and Related Services in Nigeria and Africa</h4>
+          <div className="flex flex-wrap gap-x-6 gap-y-3 text-[10px] text-white/30 uppercase tracking-wider">
+            <span>Digital marketing agency Nigeria</span>
+            <span>Social media marketing services Lagos</span>
+            <span>Best digital marketer Nigeria</span>
+            <span>AI marketing tools for small business</span>
+            <span>Facebook ads expert Nigeria</span>
+            <span>Instagram growth services Africa</span>
+            <span>WhatsApp marketing for business Nigeria</span>
+            <span>Brand design and creative services</span>
+            <span>Logo design company Nigeria</span>
+            <span>Brand identity design services Africa</span>
+            <span>Affordable graphic designer Lagos</span>
+            <span>Branding agency for startups Nigeria</span>
+            <span>Website development company Nigeria</span>
+            <span>Affordable website design Lagos</span>
+            <span>SaaS development company Africa</span>
+            <span>Custom software development Nigeria</span>
+            <span>Ghostwriting services Nigeria</span>
+            <span>Content writing services for business Africa</span>
+            <span>Personal brand storytelling writer</span>
+            <span>Marketing consultant Nigeria</span>
+            <span>Business growth strategy for startups Africa</span>
+            <span>Local SEO Nigeria Lagos</span>
+            <span>AI and marketing automation</span>
+            <span>WhatsApp and social commerce Africa</span>
+          </div>
+        </div>
         
         <div className="border-t border-white/10 pt-10 flex flex-col md:row justify-between items-center gap-4">
           <p className="text-white/40 text-sm">
@@ -152,6 +183,7 @@ export const Footer = () => {
           <div className="flex gap-8 text-sm text-white/40">
             <Link to="/privacy" className="hover:text-white">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-white">Terms of Service</Link>
+            <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="hover:text-white">Sitemap</a>
           </div>
         </div>
       </div>
