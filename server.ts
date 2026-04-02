@@ -88,9 +88,34 @@ async function startServer() {
     res.json({ id: info.lastInsertRowid });
   });
 
+  app.patch("/api/leads/:id", (req, res) => {
+    const { status } = req.body;
+    db.prepare("UPDATE leads SET status = ? WHERE id = ?").run(status, req.params.id);
+    res.json({ success: true });
+  });
+
+  app.delete("/api/leads/:id", (req, res) => {
+    db.prepare("DELETE FROM leads WHERE id = ?").run(req.params.id);
+    res.json({ success: true });
+  });
+
   app.get("/api/blog", (req, res) => {
     const posts = db.prepare("SELECT * FROM blog_posts ORDER BY published_at DESC").all();
     res.json(posts);
+  });
+
+  app.post("/api/blog", (req, res) => {
+    const { title, slug, excerpt, content, author, category, image, icon_name } = req.body;
+    const info = db.prepare(`
+      INSERT INTO blog_posts (title, slug, excerpt, content, author, category, image, icon_name)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(title, slug, excerpt, content, author, category, image, icon_name);
+    res.json({ id: info.lastInsertRowid });
+  });
+
+  app.delete("/api/blog/:id", (req, res) => {
+    db.prepare("DELETE FROM blog_posts WHERE id = ?").run(req.params.id);
+    res.json({ success: true });
   });
 
   app.get("/api/blog/:slug", (req, res) => {

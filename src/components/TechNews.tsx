@@ -1,49 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { Cpu, Brain, Rocket, Lightbulb, Zap, Target, Globe, Users } from 'lucide-react';
+import { Cpu, Brain, Rocket, Lightbulb, Zap, Target, Globe, Users, RefreshCw, AlertCircle } from 'lucide-react';
 
-const hotNews = [
-  {
-    caption: "AI agents are now capable of managing entire marketing departments autonomously.",
-    time: "2m ago",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=200"
-  },
-  {
-    caption: "New breakthrough in quantum computing promises to revolutionize data encryption.",
-    time: "15m ago",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=200"
-  },
-  {
-    caption: "Global digital ad spend projected to hit record highs in 2026.",
-    time: "1h ago",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=200"
-  },
-  {
-    caption: "Social media platforms shifting focus towards long-form educational content.",
-    time: "3h ago",
-    image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=200"
-  },
-  {
-    caption: "Automation tools for small businesses see 300% growth in adoption rates.",
-    time: "5h ago",
-    image: "https://images.unsplash.com/photo-1551288049-bbbda546697a?auto=format&fit=crop&q=80&w=200"
-  },
-  {
-    caption: "New SEO algorithms prioritize authentic human-first content over AI-generated spam.",
-    time: "8h ago",
-    image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&q=80&w=200"
-  },
-  {
-    caption: "The rise of decentralized social networks is changing how brands interact with audiences.",
-    time: "12h ago",
-    image: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?auto=format&fit=crop&q=80&w=200"
-  },
-  {
-    caption: "Voice search optimization becomes a critical factor for e-commerce success in 2026.",
-    time: "1d ago",
-    image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&q=80&w=200"
-  }
-];
+interface NewsItem {
+  caption: string;
+  time: string;
+  image: string;
+  link: string;
+}
 
 const buildingPoints = [
   { text: "Technology meets marketing", icon: Zap },
@@ -53,6 +17,60 @@ const buildingPoints = [
 ];
 
 export const TechNews = () => {
+  const [news, setNews] = useState<NewsItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  const fetchNews = async () => {
+    setLoading(true);
+    setError(false);
+    try {
+      // Using TechCrunch RSS feed via rss2json API
+      const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://techcrunch.com/feed/&api_key=');
+      const data = await response.json();
+      
+      if (data.status === 'ok') {
+        const formattedNews = data.items.slice(0, 8).map((item: any) => {
+          // Calculate relative time
+          const pubDate = new Date(item.pubDate);
+          const now = new Date();
+          const diffMs = now.getTime() - pubDate.getTime();
+          const diffMins = Math.floor(diffMs / 60000);
+          const diffHours = Math.floor(diffMins / 60);
+          const diffDays = Math.floor(diffHours / 24);
+
+          let timeStr = 'Just now';
+          if (diffDays > 0) timeStr = `${diffDays}d ago`;
+          else if (diffHours > 0) timeStr = `${diffHours}h ago`;
+          else if (diffMins > 0) timeStr = `${diffMins}m ago`;
+
+          return {
+            caption: item.title,
+            time: timeStr,
+            image: item.thumbnail || item.enclosure?.link || `https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=200&seed=${item.guid}`,
+            link: item.link
+          };
+        });
+        setNews(formattedNews);
+      } else {
+        throw new Error('Failed to fetch news');
+      }
+    } catch (err) {
+      console.error('Error fetching RSS feed:', err);
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchNews();
+    
+    // Refresh news every 5 minutes
+    const interval = setInterval(fetchNews, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,7 +91,10 @@ export const TechNews = () => {
               viewport={{ once: true }}
             >
               <h2 className="text-4xl md:text-6xl font-black text-black mb-4 tracking-tighter">..Breaking News</h2>
-              <p className="text-emerald-600 text-sm font-bold uppercase tracking-[0.4em] mb-12">Real-time Industry Updates</p>
+              <div className="flex items-center justify-center gap-4 mb-12">
+                <p className="text-emerald-600 text-sm font-bold uppercase tracking-[0.4em]">Real-time Industry Updates</p>
+                {loading && <RefreshCw className="w-4 h-4 text-emerald-600 animate-spin" />}
+              </div>
             </motion.div>
 
             {/* Tech News Hero Image */}
@@ -104,36 +125,66 @@ export const TechNews = () => {
             </motion.div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {hotNews.map((news, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.05 }}
-                viewport={{ once: true }}
-                className="p-4 bg-slate-50 rounded-2xl border border-black/5 hover:border-emerald-500/20 hover:bg-white hover:shadow-xl hover:shadow-black/5 transition-all flex items-center gap-4 group"
+          {error ? (
+            <div className="text-center py-12 bg-red-50 rounded-3xl border border-red-100">
+              <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-red-900 mb-2">Unable to load news</h3>
+              <p className="text-red-700 mb-6">There was a problem connecting to the news feed.</p>
+              <button 
+                onClick={fetchNews}
+                className="px-6 py-2 bg-red-600 text-white rounded-full font-bold hover:bg-red-700 transition-colors"
               >
-                <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 shadow-sm">
-                  <img 
-                    src={news.image} 
-                    alt="" 
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    referrerPolicy="no-referrer"
-                  />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                    <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">{news.time}</span>
+                Try Again
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {loading && news.length === 0 ? (
+                Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className="p-4 bg-slate-50 rounded-2xl border border-black/5 flex items-center gap-4 animate-pulse">
+                    <div className="w-20 h-20 bg-slate-200 rounded-xl flex-shrink-0" />
+                    <div className="flex-1 space-y-3">
+                      <div className="h-3 bg-slate-200 rounded w-1/4" />
+                      <div className="h-4 bg-slate-200 rounded w-full" />
+                      <div className="h-4 bg-slate-200 rounded w-3/4" />
+                    </div>
                   </div>
-                  <p className="text-sm md:text-base font-bold text-black/80 leading-snug line-clamp-2">
-                    {news.caption}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                ))
+              ) : (
+                news.map((item, i) => (
+                  <motion.a
+                    key={i}
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                    viewport={{ once: true }}
+                    className="p-4 bg-slate-50 rounded-2xl border border-black/5 hover:border-emerald-500/20 hover:bg-white hover:shadow-xl hover:shadow-black/5 transition-all flex items-center gap-4 group"
+                  >
+                    <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 shadow-sm">
+                      <img 
+                        src={item.image} 
+                        alt="" 
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">{item.time}</span>
+                      </div>
+                      <p className="text-sm md:text-base font-bold text-black/80 leading-snug line-clamp-2">
+                        {item.caption}
+                      </p>
+                    </div>
+                  </motion.a>
+                ))
+              )}
+            </div>
+          )}
         </div>
 
         {/* What We Are Building Section */}

@@ -31,6 +31,10 @@ interface AppContextType {
   refreshLeads: () => Promise<void>;
   refreshPosts: () => Promise<void>;
   submitLead: (data: any) => Promise<void>;
+  updateLead: (id: number, status: string) => Promise<void>;
+  deleteLead: (id: number) => Promise<void>;
+  addPost: (data: any) => Promise<void>;
+  deletePost: (id: number) => Promise<void>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -69,12 +73,44 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     await refreshLeads();
   };
 
+  const updateLead = async (id: number, status: string) => {
+    await fetch(`/api/leads/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status }),
+    });
+    await refreshLeads();
+  };
+
+  const deleteLead = async (id: number) => {
+    await fetch(`/api/leads/${id}`, {
+      method: 'DELETE',
+    });
+    await refreshLeads();
+  };
+
+  const addPost = async (data: any) => {
+    await fetch('/api/blog', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    await refreshPosts();
+  };
+
+  const deletePost = async (id: number) => {
+    await fetch(`/api/blog/${id}`, {
+      method: 'DELETE',
+    });
+    await refreshPosts();
+  };
+
   useEffect(() => {
     Promise.all([refreshLeads(), refreshPosts()]).finally(() => setLoading(false));
   }, []);
 
   return (
-    <AppContext.Provider value={{ leads, posts, loading, refreshLeads, refreshPosts, submitLead }}>
+    <AppContext.Provider value={{ leads, posts, loading, refreshLeads, refreshPosts, submitLead, updateLead, deleteLead, addPost, deletePost }}>
       {children}
     </AppContext.Provider>
   );
