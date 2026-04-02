@@ -145,8 +145,8 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* SEO Keywords Section */}
-        <div className="border-t border-white/5 py-12">
+        {/* SEO Keywords Section - Hidden from public view but available for SEO */}
+        <div className="sr-only">
           <h4 className="text-sm font-bold text-white/40 uppercase tracking-widest mb-8">Relevant Keywords for Digital Marketing and Related Services in Nigeria and Africa</h4>
           <div className="flex flex-wrap gap-x-6 gap-y-3 text-[10px] text-white/30 uppercase tracking-wider">
             <span>Digital marketing agency Nigeria</span>
