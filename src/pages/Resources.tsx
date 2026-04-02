@@ -32,6 +32,8 @@ import {
   Plus
 } from 'lucide-react';
 
+import { ShareButtons } from '../components/ShareButtons';
+
 interface Product {
   id: string;
   title: string;
@@ -937,6 +939,16 @@ export const Resources = () => {
                     <p className="text-white text-xs font-medium leading-relaxed">
                       {product.description}
                     </p>
+                  </div>
+                  {/* Quick Share Overlay */}
+                  <div className="absolute top-4 right-4 translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 z-20">
+                    <div className="bg-white/90 backdrop-blur-md p-2 rounded-2xl shadow-xl border border-white/20">
+                      <ShareButtons 
+                        url={`${window.location.origin}/resources?product=${product.id}`} 
+                        title={product.title} 
+                        className="flex-col gap-2" 
+                      />
+                    </div>
                   </div>
                 </div>
 

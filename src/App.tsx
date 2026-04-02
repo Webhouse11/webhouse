@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'r
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { AppProvider } from './context/AppContext';
 import { Navbar, Footer } from './components/Layout';
+import { WhatsAppButton } from './components/WhatsAppButton';
 import { Home } from './pages/Home';
 import { Contact } from './pages/Contact';
 import { About } from './pages/About';
@@ -72,6 +73,7 @@ const AppContent = () => {
         <link rel="canonical" href={`https://webhouse.media${location.pathname}`} />
       </Helmet>
       {!isAdminPath && !isLoginPath && <Navbar />}
+      <WhatsAppButton />
       <main>
         <Routes>
           <Route path="/" element={<Home />} />

@@ -4,10 +4,13 @@ import { motion } from 'motion/react';
 import { Calendar, User, ArrowLeft, Share2, MessageSquare, ChevronRight, Clock, Tag } from 'lucide-react';
 import { BLOG_POSTS } from '../lib/blog-data';
 
+import { ShareButtons } from '../components/ShareButtons';
+
 export const BlogPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const post = BLOG_POSTS.find(p => p.id === id);
+  const shareUrl = window.location.href;
 
   if (!post) {
     return (
@@ -94,13 +97,7 @@ export const BlogPost = () => {
               <div className="mt-20 pt-10 border-t border-black/5 flex flex-col sm:flex-row justify-between items-center gap-8">
                 <div className="flex items-center gap-4">
                   <span className="text-sm font-bold text-black/40 uppercase tracking-widest">Share:</span>
-                  <div className="flex gap-2">
-                    {['fb', 'tw', 'ln'].map(social => (
-                      <button key={social} className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center hover:bg-emerald-500 hover:text-white transition-all text-black/40">
-                        <Share2 className="w-4 h-4" />
-                      </button>
-                    ))}
-                  </div>
+                  <ShareButtons url={shareUrl} title={post.title} />
                 </div>
                 <div className="flex items-center gap-2">
                   <Tag className="w-4 h-4 text-emerald-600" />

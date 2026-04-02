@@ -1,11 +1,13 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { Search, Calendar, User, ArrowRight, Tag, ChevronRight } from 'lucide-react';
+import { Search, Calendar, User, ArrowRight, Tag, ChevronRight, Share2 } from 'lucide-react';
 import { BLOG_POSTS, BlogPost } from '../lib/blog-data';
+import { ShareButtons } from '../components/ShareButtons';
 
 const BlogCard = ({ post, index }: { post: BlogPost; index: number; key?: React.Key }) => {
   const Icon = post.icon;
+  const shareUrl = `${window.location.origin}/blog/${post.id}`;
   
   return (
     <motion.div
@@ -15,8 +17,8 @@ const BlogCard = ({ post, index }: { post: BlogPost; index: number; key?: React.
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="group bg-white rounded-3xl border border-black/5 overflow-hidden hover:shadow-2xl hover:shadow-emerald-100 hover:-translate-y-2 transition-all duration-500"
     >
-      <Link to={`/blog/${post.id}`} className="block">
-        <div className="relative h-64 overflow-hidden">
+      <div className="relative h-64 overflow-hidden">
+        <Link to={`/blog/${post.id}`} className="block h-full">
           <img 
             src={post.image} 
             alt={post.title}
@@ -34,9 +36,17 @@ const BlogCard = ({ post, index }: { post: BlogPost; index: number; key?: React.
               Read Article <ArrowRight className="w-4 h-4" />
             </span>
           </div>
+        </Link>
+        {/* Quick Share Overlay */}
+        <div className="absolute top-6 right-6 translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
+          <div className="bg-white/90 backdrop-blur-md p-2 rounded-2xl shadow-xl border border-white/20">
+            <ShareButtons url={shareUrl} title={post.title} className="flex-col gap-2" />
+          </div>
         </div>
+      </div>
 
-        <div className="p-8">
+      <div className="p-8">
+        <Link to={`/blog/${post.id}`} className="block">
           <div className="flex items-center gap-4 mb-4">
             <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-bold uppercase tracking-wider">
               {post.category}
@@ -53,20 +63,22 @@ const BlogCard = ({ post, index }: { post: BlogPost; index: number; key?: React.
           <p className="text-black/60 text-sm leading-relaxed mb-8 line-clamp-3">
             {post.excerpt}
           </p>
+        </Link>
 
-          <div className="flex items-center justify-between pt-6 border-t border-black/5">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-xs">
-                {post.author.charAt(0)}
-              </div>
-              <span className="text-xs font-bold text-black/60">{post.author}</span>
+        <div className="flex items-center justify-between pt-6 border-t border-black/5">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-xs">
+              {post.author.charAt(0)}
             </div>
-            <div className="text-emerald-600 font-bold text-xs flex items-center gap-1 group-hover:gap-2 transition-all">
+            <span className="text-xs font-bold text-black/60">{post.author}</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <Link to={`/blog/${post.id}`} className="text-emerald-600 font-bold text-xs flex items-center gap-1 group-hover:gap-2 transition-all">
               Read More <ChevronRight className="w-4 h-4" />
-            </div>
+            </Link>
           </div>
         </div>
-      </Link>
+      </div>
     </motion.div>
   );
 };
