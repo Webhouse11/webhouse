@@ -10,6 +10,7 @@ import { About } from './pages/About';
 import { Services } from './pages/Services';
 import { Resources } from './pages/Resources';
 import { SocialPlus } from './pages/SocialPlus';
+import { OrderInstructions } from './pages/OrderInstructions';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { Login } from './pages/Login';
 
@@ -47,6 +48,10 @@ const AppContent = () => {
       title: 'Social Plus Packages – Grow Your Brand with Webhouse Media',
       description: 'Professional Social Plus management packages in Nigeria. We handle your content, engagement, and growth across Instagram, Facebook, and more.'
     };
+    if (path === '/order-instructions') return {
+      title: 'Order Instructions – Next Steps for Your Social Plus Package',
+      description: 'Follow these instructions to finalize your Social Plus order and start your brand growth journey.'
+    };
     if (path === '/contact') return {
       title: 'Contact Us – Start Your Project with Webhouse Media',
       description: 'Contact the best digital marketing agency in Nigeria today. Let\'s discuss your web development, branding, or AI automation project.'
@@ -75,6 +80,7 @@ const AppContent = () => {
           <Route path="/services" element={<Services />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/social-plus" element={<SocialPlus />} />
+          <Route path="/order-instructions" element={<OrderInstructions />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={

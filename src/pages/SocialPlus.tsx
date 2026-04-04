@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, X, Instagram, Facebook, Twitter, Linkedin, MessageCircle, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const packages = [
   {
@@ -56,6 +57,7 @@ const packages = [
 export const SocialPlus = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [selectedPlan, setSelectedPlan] = React.useState("");
+  const navigate = useNavigate();
 
   const openForm = (planName: string) => {
     setSelectedPlan(planName);
@@ -95,7 +97,14 @@ Social Media Link/Name: ${link}
 Start Date: ${startDate}`;
 
     const url = `https://wa.me/2348060180077?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+    
+    // Redirect to instructions page with the data
+    navigate('/order-instructions', { 
+      state: { 
+        whatsappUrl: url,
+        plan: plan
+      } 
+    });
   };
 
   return (
