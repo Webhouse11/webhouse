@@ -35,10 +35,10 @@ const services = [
     features: ["Growth Strategy Africa", "Marketing Consultant", "Business Automation", "Sales Funnel Design"]
   },
   {
-    title: "Social Media Management",
-    desc: "Social media marketing services in Lagos. Strategic content and community management to build brand authority across Africa.",
+    title: "Social Plus",
+    desc: "Social Plus marketing services in Lagos. Strategic content and community management to build brand authority across Africa.",
     icon: Share2,
-    features: ["Social Media Lagos", "Community Growth", "Analytics Reporting", "Paid Advertising"]
+    features: ["Social Plus Lagos", "Community Growth", "Analytics Reporting", "Paid Advertising"]
   }
 ];
 

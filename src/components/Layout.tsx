@@ -10,9 +10,8 @@ export const Navbar = () => {
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Services', path: '/services' },
-    { name: 'Training', path: '/training' },
+    { name: 'Social Plus', path: '/social-plus' },
     { name: 'Resources', path: '/resources' },
-    { name: 'Blog', path: '/blog' },
     { name: 'Contact', path: '/contact' },
   ];
 
@@ -130,8 +129,8 @@ export const Footer = () => {
             <ul className="space-y-4 text-white/60">
               <li><Link to="/about" className="hover:text-emerald-400 transition-colors">About Us</Link></li>
               <li><Link to="/services" className="hover:text-emerald-400 transition-colors">Services</Link></li>
+              <li><Link to="/social-plus" className="hover:text-emerald-400 transition-colors">Social Plus</Link></li>
               <li><Link to="/resources" className="hover:text-emerald-400 transition-colors">Digital Resources</Link></li>
-              <li><Link to="/blog" className="hover:text-emerald-400 transition-colors">Blog & Insights</Link></li>
             </ul>
           </div>
 

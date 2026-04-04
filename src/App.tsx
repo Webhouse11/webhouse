@@ -8,10 +8,8 @@ import { Home } from './pages/Home';
 import { Contact } from './pages/Contact';
 import { About } from './pages/About';
 import { Services } from './pages/Services';
-import { Training } from './pages/Training';
 import { Resources } from './pages/Resources';
-import { Blog } from './pages/Blog';
-import { BlogPost } from './pages/BlogPost';
+import { SocialPlus } from './pages/SocialPlus';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { Login } from './pages/Login';
 
@@ -41,17 +39,13 @@ const AppContent = () => {
       title: 'Our Services – Digital Systems, AI Automation & Web Development',
       description: 'Explore our services: from logo design and brand identity in Nigeria to custom software development and Facebook ads expertise.'
     };
-    if (path === '/training') return {
-      title: 'Tech Training – Master Digital Systems & AI Marketing',
-      description: 'Join our tech training programs in Nigeria. Master digital marketing, AI tools, and website development to scale your career or business.'
-    };
     if (path === '/resources') return {
       title: 'Digital Resources – Ebooks, Toolkits & Marketing Guides',
       description: 'Download affordable website design guides, brand identity toolkits, and WhatsApp marketing strategies for businesses in Nigeria.'
     };
-    if (path === '/blog') return {
-      title: 'Blog & Insights – Digital Marketing Trends in Africa',
-      description: 'Stay updated with the latest in AI marketing, social media trends, and business growth strategies from Webhouse Media.'
+    if (path === '/social-plus') return {
+      title: 'Social Plus Packages – Grow Your Brand with Webhouse Media',
+      description: 'Professional Social Plus management packages in Nigeria. We handle your content, engagement, and growth across Instagram, Facebook, and more.'
     };
     if (path === '/contact') return {
       title: 'Contact Us – Start Your Project with Webhouse Media',
@@ -79,10 +73,8 @@ const AppContent = () => {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
-          <Route path="/training" element={<Training />} />
           <Route path="/resources" element={<Resources />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:id" element={<BlogPost />} />
+          <Route path="/social-plus" element={<SocialPlus />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={
