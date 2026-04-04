@@ -79,7 +79,7 @@ export const OrderInstructions = () => {
             </div>
 
             {/* Selected Plan Summary */}
-            <div className="bg-slate-50 rounded-3xl p-6 mb-12 border border-slate-100">
+            <div className="bg-slate-50 rounded-3xl p-6 mb-8 border border-slate-100">
               <div className="flex justify-between items-center">
                 <div>
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Selected Package</p>
@@ -88,6 +88,17 @@ export const OrderInstructions = () => {
                 <ShieldCheck className="w-8 h-8 text-emerald-500" />
               </div>
             </div>
+
+            {/* Payment Notice */}
+            <motion.div
+              animate={{ opacity: [1, 0.4, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="bg-red-50 border border-red-100 p-4 rounded-2xl mb-12 text-center"
+            >
+              <p className="text-red-600 font-black text-sm uppercase tracking-wider">
+                ⚠️ IMPORTANT: 70% upfront payment is required before work commences.
+              </p>
+            </motion.div>
 
             <div className="space-y-4">
               <a 

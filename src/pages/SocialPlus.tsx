@@ -125,10 +125,20 @@ Start Date: ${startDate}`;
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-xl text-slate-600 font-medium"
+              className="text-xl text-slate-600 font-medium mb-6"
             >
               Let’s Grow Your Brand
             </motion.p>
+
+            <motion.div
+              animate={{ opacity: [1, 0.4, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              className="inline-block bg-red-50 border border-red-100 px-6 py-2 rounded-full"
+            >
+              <p className="text-red-600 font-black text-sm md:text-base uppercase tracking-wider">
+                ⚠️ 70% Upfront payment is required before work commences
+              </p>
+            </motion.div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -198,6 +208,13 @@ Start Date: ${startDate}`;
 
               <div className="mb-10">
                 <p className="text-[#d4af37] font-bold text-sm mb-2 uppercase tracking-widest">👉 Serious business owners only — we work with brands ready to grow.</p>
+                <motion.p 
+                  animate={{ opacity: [1, 0.5, 1] }}
+                  transition={{ duration: 1.2, repeat: Infinity }}
+                  className="text-red-600 font-black text-xs mb-4 uppercase tracking-widest"
+                >
+                  Notice: 70% Upfront payment is mandatory
+                </motion.p>
                 <h2 className="text-3xl font-black text-blue-900">Start Your Social Plus Growth</h2>
               </div>
 
