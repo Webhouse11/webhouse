@@ -10,6 +10,7 @@ import { About } from './pages/About';
 import { Services } from './pages/Services';
 import { Resources } from './pages/Resources';
 import { SocialPlus } from './pages/SocialPlus';
+import { DFYServices } from './pages/DFYServices';
 import { OrderInstructions } from './pages/OrderInstructions';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { Login } from './pages/Login';
@@ -48,6 +49,10 @@ const AppContent = () => {
       title: 'Social Plus Packages – Grow Your Brand with Webhouse Media',
       description: 'Professional Social Plus management packages in Nigeria. We handle your content, engagement, and growth across Instagram, Facebook, and more.'
     };
+    if (path === '/dfy-services') return {
+      title: 'Done-For-You Services – Digital Growth Systems for Indian Entrepreneurs',
+      description: 'Professional done-for-you digital services: Web development, brand identity, and marketing systems for small businesses and consultants in India.'
+    };
     if (path === '/order-instructions') return {
       title: 'Order Instructions – Next Steps for Your Social Plus Package',
       description: 'Follow these instructions to finalize your Social Plus order and start your brand growth journey.'
@@ -80,6 +85,7 @@ const AppContent = () => {
           <Route path="/services" element={<Services />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/social-plus" element={<SocialPlus />} />
+          <Route path="/dfy-services" element={<DFYServices />} />
           <Route path="/order-instructions" element={<OrderInstructions />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
