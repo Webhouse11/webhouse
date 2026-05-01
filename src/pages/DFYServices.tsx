@@ -217,7 +217,7 @@ const FAQS = [
   },
   {
     question: "How long does it take to complete the services?",
-    answer: "Most of our DFY services are delivered within 7 to 14 days. Complex projects like a Professional Website or Custom Software might take up to 21 days."
+    answer: "Most of our BrandBox services are delivered within 7 to 14 days. Complex projects like a Professional Website or Custom Software might take up to 21 days."
   },
   {
     question: "Do I need to be tech-savvy to maintain these systems?",
@@ -272,7 +272,7 @@ export const DFYServices = () => {
   };
 
   const handleInquiry = (serviceName: string) => {
-    const message = `Hello Webhouse Media team! I am interested in your Done-For-You Service: ${serviceName}. Please provide more details on how we can get started.`;
+    const message = `Hello Webhouse Media team! I am interested in your BrandBox Service: ${serviceName}. Please provide more details on how we can get started.`;
     window.open(`https://wa.me/2348060180077?text=${encodeURIComponent(message)}`, '_blank');
   };
 
@@ -293,7 +293,7 @@ export const DFYServices = () => {
             animate={{ opacity: 1, y: 0 }}
             className="inline-block px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[#F4A800] text-xs font-bold uppercase tracking-widest mb-6"
           >
-            Done-For-You Agency Services
+            BrandBox Agency Services
           </motion.div>
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
@@ -350,7 +350,7 @@ export const DFYServices = () => {
       <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">Our <span className="text-[#F4A800]">Done-For-You</span> Menu</h2>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">Our <span className="text-[#F4A800]">BrandBox</span> Menu</h2>
             <p className="text-slate-500 font-medium">Premium execution. No technical headaches. Pick your system.</p>
           </div>
 
@@ -569,7 +569,7 @@ export const DFYServices = () => {
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-12 mb-12">
             <button 
-              onClick={() => handleInquiry('General DFY Inquiry')}
+              onClick={() => handleInquiry('General BrandBox Inquiry')}
               className="w-full md:w-auto px-12 py-5 bg-[#F4A800] text-[#0A0F2C] font-black rounded-2xl text-xl hover:brightness-110 transition-all flex items-center justify-center gap-3"
             >
               <MessageCircle className="w-6 h-6" /> WhatsApp Us Now

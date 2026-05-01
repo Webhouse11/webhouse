@@ -50,8 +50,8 @@ const AppContent = () => {
       description: 'Professional Social Plus management packages in Nigeria. We handle your content, engagement, and growth across Instagram, Facebook, and more.'
     };
     if (path === '/dfy-services') return {
-      title: 'Done-For-You Services – Digital Growth Systems for Indian Entrepreneurs',
-      description: 'Professional done-for-you digital services: Web development, brand identity, and marketing systems for small businesses and consultants in India.'
+      title: 'BrandBox – Digital Growth Systems for Entrepreneurs',
+      description: 'Professional BrandBox digital services: Web development, brand identity, and marketing systems for small businesses and consultants.'
     };
     if (path === '/order-instructions') return {
       title: 'Order Instructions – Next Steps for Your Social Plus Package',
