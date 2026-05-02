@@ -1,7 +1,9 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { cn } from '@/src/lib/utils';
 
 const slides = [
@@ -118,7 +120,7 @@ export const HeroSlider = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link 
-                    to={slides[current].link} 
+                    href={slides[current].link} 
                     className={cn("text-white px-8 py-4 rounded-full font-bold transition-all flex items-center justify-center gap-2", slides[current].accent, "hover:brightness-110")}
                   >
                     {slides[current].cta} <ArrowRight className="w-4 h-4" />

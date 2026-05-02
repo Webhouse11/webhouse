@@ -1,0 +1,35 @@
+import Database from 'better-sqlite3';
+import path from 'path';
+
+// Define DB path relative to project root
+const dbPath = path.resolve(process.cwd(), 'webhouse.db');
+const db = new Database(dbPath);
+
+// Initialize tables
+db.exec(`
+  CREATE TABLE IF NOT EXISTS leads (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    email TEXT,
+    phone TEXT,
+    message TEXT,
+    status TEXT DEFAULT 'new',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE TABLE IF NOT EXISTS blog_posts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT,
+    slug TEXT UNIQUE,
+    content TEXT,
+    excerpt TEXT,
+    category TEXT,
+    author TEXT,
+    image_url TEXT,
+    meta_title TEXT,
+    meta_description TEXT,
+    published_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+`);
+
+export default db;
