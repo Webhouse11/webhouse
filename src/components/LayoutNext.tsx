@@ -39,16 +39,28 @@ export const Navbar = () => {
 
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              <Link
-                key={item.path}
-                href={item.path}
-                className={cn(
-                  "text-sm font-medium transition-colors hover:text-emerald-600",
-                  pathname === item.path ? "text-emerald-600" : "text-black/60"
-                )}
-              >
-                {item.name}
-              </Link>
+              item.path.startsWith('http') ? (
+                <a
+                  key={item.path}
+                  href={item.path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium transition-colors hover:text-emerald-600 text-black/60"
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  key={item.path}
+                  href={item.path}
+                  className={cn(
+                    "text-sm font-medium transition-colors hover:text-emerald-600",
+                    pathname === item.path ? "text-emerald-600" : "text-black/60"
+                  )}
+                >
+                  {item.name}
+                </Link>
+              )
             ))}
             <Link
               href="/contact"
@@ -68,14 +80,27 @@ export const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-white border-b border-black/5 px-4 py-6 space-y-4">
           {navItems.map((item) => (
-            <Link
-              key={item.path}
-              href={item.path}
-              className="block text-lg font-medium text-black/60 hover:text-black font-bold"
-              onClick={() => setIsOpen(false)}
-            >
-              {item.name}
-            </Link>
+             item.path.startsWith('http') ? (
+                <a
+                  key={item.path}
+                  href={item.path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-lg font-medium text-black/60 hover:text-black font-bold"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                </a>
+             ) : (
+                <Link
+                  key={item.path}
+                  href={item.path}
+                  className="block text-lg font-medium text-black/60 hover:text-black font-bold"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                </Link>
+             )
           ))}
           <Link
             href="/contact"
