@@ -3,10 +3,11 @@ import db from '@/src/lib/db';
 
 export async function GET(
   request: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
-    const post = db.prepare("SELECT * FROM blog_posts WHERE slug = ?").get(params.slug);
+    const { slug } = await params;
+    const post = db.prepare("SELECT * FROM blog_posts WHERE slug = ?").get(slug);
     if (!post) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });
     }
