@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Add any needed config here
+  serverExternalPackages: ['better-sqlite3'],
   images: {
     remotePatterns: [
       {

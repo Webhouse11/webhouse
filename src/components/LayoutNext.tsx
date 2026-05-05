@@ -157,7 +157,6 @@ export const Footer = () => {
               <li><Link href="/services" className="hover:text-emerald-400 transition-colors font-medium">Services</Link></li>
               <li><Link href="/dfy-services" className="hover:text-emerald-400 transition-colors font-medium">BrandBox</Link></li>
               <li><Link href="/social-plus" className="hover:text-emerald-400 transition-colors font-medium">Social Plus</Link></li>
-              <li><Link href="/resources" className="hover:text-emerald-400 transition-colors font-medium">Digital Resources</Link></li>
             </ul>
           </div>
 

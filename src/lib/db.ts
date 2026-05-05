@@ -3,7 +3,13 @@ import path from 'path';
 
 // Define DB path relative to project root
 const dbPath = path.resolve(process.cwd(), 'webhouse.db');
-const db = new Database(dbPath);
+
+// Use a global variable to preserve the database connection across hot reloads in development
+const globalForDb = global as unknown as { db: Database.Database | undefined };
+
+const db = globalForDb.db ?? new Database(dbPath);
+
+if (process.env.NODE_ENV !== 'production') globalForDb.db = db;
 
 // Initialize tables
 db.exec(`

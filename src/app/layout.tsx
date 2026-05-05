@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import '../index.css';
+import '@/src/index.css';
 import { Navbar, Footer } from '@/src/components/LayoutNext'; // I will create LayoutNext
 import { WhatsAppButton } from '@/src/components/WhatsAppButton';
 import { AppProvider } from '@/src/context/AppContext';

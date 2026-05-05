@@ -108,7 +108,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   useEffect(() => {
-    Promise.all([refreshLeads(), refreshPosts()]).finally(() => setLoading(false));
+    setLoading(true);
+    Promise.all([refreshLeads(), refreshPosts()])
+      .catch(err => console.error("Initial load error:", err))
+      .finally(() => setLoading(false));
   }, []);
 
   return (
