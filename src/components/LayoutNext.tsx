@@ -62,12 +62,6 @@ export const Navbar = () => {
                 </Link>
               )
             ))}
-            <Link
-              href="/contact"
-              className="bg-emerald-500 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-emerald-600 transition-all font-bold"
-            >
-              Start Project
-            </Link>
           </div>
 
           <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
@@ -102,13 +96,6 @@ export const Navbar = () => {
                 </Link>
              )
           ))}
-          <Link
-            href="/contact"
-            className="block w-full bg-black text-white text-center py-3 rounded-xl font-bold"
-            onClick={() => setIsOpen(false)}
-          >
-            Start Project
-          </Link>
         </div>
       )}
     </nav>
