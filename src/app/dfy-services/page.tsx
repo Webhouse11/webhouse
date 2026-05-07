@@ -8,6 +8,7 @@ import {
   ChevronDown, MessageSquare
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useApp } from '@/src/context/AppContext';
 
 const SERVICES = [
     {
@@ -25,8 +26,9 @@ const SERVICES = [
         'On-Page SEO Basics'
       ],
       perfectFor: 'Small businesses and professionals ready to move from Instagram/WhatsApp to a real brand.',
-      price: 149,
-      originalPrice: 180
+      price: 142,
+      originalPrice: 171,
+      isRecurring: true
     },
     {
       id: 'google-profile',
@@ -43,8 +45,9 @@ const SERVICES = [
         'Google Maps Ranking Audit'
       ],
       perfectFor: 'Shop owners, consultants, and local services who want more walk-in customers.',
-      price: 49,
-      originalPrice: 60
+      price: 47,
+      originalPrice: 57,
+      isRecurring: true
     },
     {
       id: 'brand-identity',
@@ -61,8 +64,9 @@ const SERVICES = [
         'Social Media Logo Variants'
       ],
       perfectFor: 'Startups and entrepreneurs who want a high-premium "big company" feel.',
-      price: 79,
-      originalPrice: 100
+      price: 75,
+      originalPrice: 95,
+      isRecurring: true
     },
     {
       id: 'social-setup',
@@ -79,8 +83,9 @@ const SERVICES = [
         '7-Day Content Starter Kit'
       ],
       perfectFor: 'Entrepreneurs starting fresh on social media who want to look professional from Day 1.',
-      price: 59,
-      originalPrice: 70
+      price: 56,
+      originalPrice: 67,
+      isRecurring: true
     },
     {
       id: 'landing-page',
@@ -97,8 +102,9 @@ const SERVICES = [
         'Copywriting for Conversions'
       ],
       perfectFor: 'Course creators, consultants, and experts running paid ads or launches.',
-      price: 99,
-      originalPrice: 120
+      price: 94,
+      originalPrice: 114,
+      isRecurring: true
     },
     {
       id: 'email-marketing',
@@ -115,8 +121,9 @@ const SERVICES = [
         'Sign-up Pop-up/Form Integration'
       ],
       perfectFor: 'Business owners who want to stop relying purely on social media algorithms.',
-      price: 69,
-      originalPrice: 85
+      price: 66,
+      originalPrice: 81,
+      isRecurring: true
     },
     {
       id: 'youtube-branding',
@@ -133,8 +140,9 @@ const SERVICES = [
         'Upload Defaults Configuration'
       ],
       perfectFor: 'Knowledge-givers and experts looking to build authority via video.',
-      price: 79,
-      originalPrice: 100
+      price: 75,
+      originalPrice: 95,
+      isRecurring: true
     },
     {
       id: 'whatsapp-automation',
@@ -151,8 +159,9 @@ const SERVICES = [
         'Lead Labeling & Sorting System'
       ],
       perfectFor: 'Busy business owners who get too many WhatsApp messages to handle manually.',
-      price: 59,
-      originalPrice: 70
+      price: 56,
+      originalPrice: 67,
+      isRecurring: true
     },
     {
       id: 'local-seo',
@@ -169,8 +178,8 @@ const SERVICES = [
         'Localized Content Strategy'
       ],
       perfectFor: 'Establishments like clinics, salons, or stores that depend on city-based customers.',
-      price: 99,
-      originalPrice: 120,
+      price: 94,
+      originalPrice: 114,
       isRecurring: true
     },
     {
@@ -188,8 +197,9 @@ const SERVICES = [
         'ChatGPT Training & SOPs'
       ],
       perfectFor: 'Solopreneurs who find content creation overwhelming and time-consuming.',
-      price: 119,
-      originalPrice: 145
+      price: 113,
+      originalPrice: 138,
+      isRecurring: true
     }
   ];
 
@@ -222,38 +232,8 @@ const FAQS = [
 
 export default function BrandBoxPage() {
   const router = useRouter();
+  const { formatPrice } = useApp();
   const [openFaq, setOpenFaq] = React.useState<number | null>(null);
-  const [currency, setCurrency] = React.useState({ code: 'USD', symbol: '$', rate: 1 });
-
-  React.useEffect(() => {
-    fetch('https://ipapi.co/json/')
-      .then(res => res.json())
-      .then(data => {
-        if (data.currency) {
-          let rate = 1;
-          if (data.currency === 'INR') rate = 83.5;
-          if (data.currency === 'NGN') rate = 1600;
-          if (data.currency === 'GBP') rate = 0.79;
-          if (data.currency === 'EUR') rate = 0.92;
-          
-          setCurrency({ 
-            code: data.currency, 
-            symbol: data.currency_symbol || '$', 
-            rate: rate 
-          });
-        }
-      })
-      .catch(() => {});
-  }, []);
-
-  const formatPrice = (usdPrice: number) => {
-    const localPrice = usdPrice * currency.rate;
-    return new Intl.NumberFormat(undefined, {
-      style: 'currency',
-      currency: currency.code,
-      maximumFractionDigits: 0
-    }).format(localPrice);
-  };
 
   const handleInquiry = (serviceName: string) => {
     const message = `Hello Webhouse Media team! I am interested in your BrandBox Service: ${serviceName}. Please provide more details on how we can get started.`;
@@ -327,7 +307,7 @@ export default function BrandBoxPage() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-24 bg-slate-50">
+      <section id="menu" className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-20">
                 <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">Our <span className="text-[#F4A800]">BrandBox</span> Menu</h2>
@@ -392,7 +372,7 @@ export default function BrandBoxPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-24 bg-slate-50">
+      <section id="faq" className="py-24 bg-slate-50">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
                 <h2 className="text-4xl font-black">Frequently Asked <span className="text-[#F4A800]">Questions</span></h2>
@@ -429,7 +409,7 @@ export default function BrandBoxPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-[#0A0F2C] text-white overflow-hidden relative">
+      <section id="cta" className="py-24 bg-[#0A0F2C] text-white overflow-hidden relative">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
             <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">
                 Ready to Build a Brand That <br/>

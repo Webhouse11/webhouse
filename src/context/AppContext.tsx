@@ -26,10 +26,18 @@ interface BlogPost {
   published_at: string;
 }
 
+interface CurrencyInfo {
+  code: string;
+  symbol: string;
+  rate: number;
+}
+
 interface AppContextType {
   leads: Lead[];
   posts: BlogPost[];
   loading: boolean;
+  currency: CurrencyInfo;
+  formatPrice: (usdPrice: number) => string;
   refreshLeads: () => Promise<void>;
   refreshPosts: () => Promise<void>;
   submitLead: (data: any) => Promise<void>;
@@ -45,6 +53,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [leads, setLeads] = useState<Lead[]>([]);
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currency, setCurrency] = useState<CurrencyInfo>({ code: 'USD', symbol: '$', rate: 1 });
 
   const refreshLeads = async () => {
     try {
@@ -64,6 +73,48 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const detectCurrency = async () => {
+    try {
+      // 1. Detect IP and Currency Code
+      const ipRes = await fetch('https://ipapi.co/json/').catch(() => null);
+      let ipData: any = null;
+      if (ipRes && ipRes.ok) {
+        ipData = await ipRes.json();
+      }
+      
+      const targetCurrency = ipData?.currency || 'USD';
+      const targetSymbol = ipData?.currency_symbol || '$';
+
+      if (targetCurrency === 'USD') {
+        setCurrency({ code: 'USD', symbol: '$', rate: 1 });
+        return;
+      }
+
+      // 2. Fetch Exchange Rate from USD to Target Currency
+      const rateRes = await fetch('https://open.er-api.com/v6/latest/USD').catch(() => null);
+      if (rateRes && rateRes.ok) {
+        const rateData = await rateRes.json();
+        const rate = rateData.rates[targetCurrency] || 1;
+        setCurrency({
+          code: targetCurrency,
+          symbol: targetSymbol,
+          rate: rate
+        });
+      }
+    } catch (err) {
+      console.error('Currency detection failed:', err);
+    }
+  };
+
+  const formatPrice = (usdPrice: number) => {
+    const localPrice = usdPrice * currency.rate;
+    return new Intl.NumberFormat(undefined, {
+      style: 'currency',
+      currency: currency.code,
+      maximumFractionDigits: 0
+    }).format(localPrice);
   };
 
   const submitLead = async (data: any) => {
@@ -109,13 +160,26 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   useEffect(() => {
     setLoading(true);
-    Promise.all([refreshLeads(), refreshPosts()])
+    Promise.all([refreshLeads(), refreshPosts(), detectCurrency()])
       .catch(err => console.error("Initial load error:", err))
       .finally(() => setLoading(false));
   }, []);
 
   return (
-    <AppContext.Provider value={{ leads, posts, loading, refreshLeads, refreshPosts, submitLead, updateLead, deleteLead, addPost, deletePost }}>
+    <AppContext.Provider value={{ 
+      leads, 
+      posts, 
+      loading, 
+      currency,
+      formatPrice,
+      refreshLeads, 
+      refreshPosts, 
+      submitLead, 
+      updateLead, 
+      deleteLead, 
+      addPost, 
+      deletePost 
+    }}>
       {children}
     </AppContext.Provider>
   );

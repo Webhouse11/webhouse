@@ -15,7 +15,7 @@ export const Navbar = () => {
     { name: 'About', path: '/about' },
     { name: 'Services', path: '/services' },
     { name: 'BrandBox', path: '/dfy-services' },
-    { name: 'Social Plus', path: '/social-plus' },
+    { name: 'PostPilot', path: '/social-media' },
     { name: 'Our Update', path: 'https://webhousemedia.blogspot.com/' },
     { name: 'Contact', path: '/contact' },
   ];
@@ -39,28 +39,30 @@ export const Navbar = () => {
 
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              item.path.startsWith('http') ? (
-                <a
-                  key={item.path}
-                  href={item.path}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-medium transition-colors hover:text-emerald-600 text-black/60"
-                >
-                  {item.name}
-                </a>
-              ) : (
-                <Link
-                  key={item.path}
-                  href={item.path}
-                  className={cn(
-                    "text-sm font-medium transition-colors hover:text-emerald-600",
-                    pathname === item.path ? "text-emerald-600" : "text-black/60"
-                  )}
-                >
-                  {item.name}
-                </Link>
-              )
+              <div key={item.name} className="relative group">
+                {item.path.startsWith('http') ? (
+                  <a
+                    href={item.path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium transition-colors hover:text-emerald-600 text-black/60 py-2"
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <div className="flex items-center gap-1 group">
+                    <Link
+                      href={item.path}
+                      className={cn(
+                        "text-sm font-medium transition-colors hover:text-emerald-600 py-2 flex items-center gap-1",
+                        pathname === item.path ? "text-emerald-600" : "text-black/60"
+                      )}
+                    >
+                      {item.name}
+                    </Link>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
 
@@ -74,31 +76,34 @@ export const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-white border-b border-black/5 px-4 py-6 space-y-4">
           {navItems.map((item) => (
-             item.path.startsWith('http') ? (
-                <a
-                  key={item.path}
-                  href={item.path}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-lg font-medium text-black/60 hover:text-black font-bold"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </a>
-             ) : (
-                <Link
-                  key={item.path}
-                  href={item.path}
-                  className="block text-lg font-medium text-black/60 hover:text-black font-bold"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </Link>
-             )
+            <div key={item.name} className="space-y-4">
+               {item.path.startsWith('http') ? (
+                  <a
+                    href={item.path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-lg font-medium text-black/60 hover:text-black font-bold"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </a>
+               ) : (
+                  <div className="space-y-2">
+                    <Link
+                      href={item.path}
+                      className="block text-lg font-medium text-black/60 hover:text-black font-bold"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  </div>
+               )}
+            </div>
           ))}
         </div>
       )}
     </nav>
+
   );
 };
 
@@ -143,7 +148,6 @@ export const Footer = () => {
               <li><Link href="/about" className="hover:text-emerald-400 transition-colors font-medium">About Us</Link></li>
               <li><Link href="/services" className="hover:text-emerald-400 transition-colors font-medium">Services</Link></li>
               <li><Link href="/dfy-services" className="hover:text-emerald-400 transition-colors font-medium">BrandBox</Link></li>
-              <li><Link href="/social-plus" className="hover:text-emerald-400 transition-colors font-medium">Social Plus</Link></li>
             </ul>
           </div>
 
