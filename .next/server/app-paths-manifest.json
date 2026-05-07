@@ -1,0 +1,16 @@
+{
+  "/api/blog/[slug]/route": "app/api/blog/[slug]/route.js",
+  "/robots.txt/route": "app/robots.txt/route.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js",
+  "/api/leads/route": "app/api/leads/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/about/page": "app/about/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/dfy-services/page": "app/dfy-services/page.js",
+  "/page": "app/page.js",
+  "/privacy/page": "app/privacy/page.js",
+  "/services/page": "app/services/page.js",
+  "/social-media/page": "app/social-media/page.js",
+  "/terms/page": "app/terms/page.js",
+  "/api/blog/route": "app/api/blog/route.js"
+}
