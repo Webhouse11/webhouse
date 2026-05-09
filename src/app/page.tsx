@@ -7,7 +7,6 @@ import Link from 'next/link';
 import { cn } from '@/src/lib/utils';
 import { HeroSlider } from '@/src/components/HeroSlider';
 import { TestimonialSlider } from '@/src/components/TestimonialSlider';
-import { TechNews } from '@/src/components/TechNews';
 import { LeadMagnet } from '@/src/components/LeadMagnet';
 
 const services = [
@@ -237,9 +236,6 @@ export default function Home() {
 
       {/* Lead Magnet */}
       <LeadMagnet />
-
-      {/* Blog/News */}
-      <TechNews />
 
       {/* Quick Contact / WhatsApp Section */}
       <section className="py-24 bg-white">

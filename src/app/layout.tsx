@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import '@/src/index.css';
 import { Navbar, Footer } from '@/src/components/LayoutNext'; // I will create LayoutNext
 import { WhatsAppButton } from '@/src/components/WhatsAppButton';
+import { TelegramButton } from '@/src/components/TelegramButton';
 import { AppProvider } from '@/src/context/AppContext';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Webhouse | Grow Your Business Online Easily',
     description: 'Affordable digital solutions for entrepreneurs and small businesses in Africa. Website design, branding, and marketing made simple.',
-    url: 'https://www.webhousemedia.com.ng',
+    url: '/',
     siteName: 'Webhouse',
     images: [
       {
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     images: ['https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200&h=630'],
   },
   alternates: {
-    canonical: 'https://www.webhousemedia.com.ng',
+    canonical: '/',
   }
 };
 
@@ -87,7 +88,8 @@ export default function RootLayout({
         <AppProvider>
           <Navbar />
           <WhatsAppButton />
-          <main className="overflow-x-hidden">{children}</main>
+          <TelegramButton />
+          <main className="overflow-x-hidden pt-[112px]">{children}</main>
           <Footer />
         </AppProvider>
       </body>

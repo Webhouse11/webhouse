@@ -33,12 +33,12 @@ export const Navbar = () => {
     { name: 'BrandBox', path: '/dfy-services' },
     { name: 'PostPilot', path: '/social-media' },
     { name: 'Our Work', path: '/portfolio' },
-    { name: 'Blog', path: '/blog' },
+    { name: 'Blog', path: 'https://webhousemedia.blogspot.com/' },
     { name: 'Contact', path: '/contact' },
   ];
 
   return (
-    <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-black/5">
+    <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-black/5 top-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
           <Link href="/" className="flex items-center gap-2">
@@ -175,7 +175,7 @@ export const Footer = () => {
               <li><Link href="/about" className="hover:text-emerald-400 transition-colors font-medium">About Webhouse</Link></li>
               <li><Link href="/portfolio" className="hover:text-emerald-400 transition-colors font-medium">Our Work</Link></li>
               <li><Link href="/pricing" className="hover:text-emerald-400 transition-colors font-medium">Price List</Link></li>
-              <li><Link href="/blog" className="hover:text-emerald-400 transition-colors font-medium">Business Tips Blog</Link></li>
+              <li><a href="https://webhousemedia.blogspot.com/" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors font-medium">Business Tips Blog</a></li>
               <li><Link href="/contact" className="hover:text-emerald-400 transition-colors font-medium">Contact Us</Link></li>
             </ul>
           </div>
