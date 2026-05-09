@@ -10,11 +10,13 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.webhousemedia.com.ng'),
-  title: {
-    default: 'Webhouse | Simple Digital Solutions for Growing Businesses',
-    template: '%s | Webhouse'
-  },
+  title: 'Grow your business online, simply',
   description: 'We help African businesses, schools, churches, and entrepreneurs grow online with affordable website design, social media management, and digital marketing.',
+  icons: {
+    icon: 'https://res.cloudinary.com/dhzouslh1/image/upload/v1773161041/591626377_1368804921611344_6068326484691096664_n_c1x0d4.jpg',
+    shortcut: 'https://res.cloudinary.com/dhzouslh1/image/upload/v1773161041/591626377_1368804921611344_6068326484691096664_n_c1x0d4.jpg',
+    apple: 'https://res.cloudinary.com/dhzouslh1/image/upload/v1773161041/591626377_1368804921611344_6068326484691096664_n_c1x0d4.jpg',
+  },
   keywords: ['digital marketing Nigeria', 'website design Lagos', 'affordable branding Africa', 'social media management for small business', 'AI tools for business Nigeria', 'business growth solutions'],
   openGraph: {
     title: 'Webhouse | Grow Your Business Online Easily',
@@ -52,10 +54,10 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Webhouse",
+    "description": "Grow your business online, simply",
     "url": "https://www.webhousemedia.com.ng",
     "logo": "https://www.webhousemedia.com.ng/logo.png",
     "image": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200",
-    "description": "We help African businesses grow online with simple digital solutions like website design and social media marketing.",
     "telephone": "+234-806-018-0077",
     "address": {
       "@type": "PostalAddress",
