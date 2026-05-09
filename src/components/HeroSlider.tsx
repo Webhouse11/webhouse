@@ -8,60 +8,36 @@ import { cn } from '@/src/lib/utils';
 
 const slides = [
   {
-    title: "Building Digital Systems That Power Growth",
-    subtitle: "Webhouse Media and Marketing Solution designs websites, SaaS platforms, and AI automation systems that help businesses scale digitally.",
+    title: "Scale With Digital Systems & Infrastructure",
+    subtitle: "We build professional websites, custom SaaS platforms, and AI systems designed for high-growth African enterprises.",
     cta: "Start Your Project",
-    link: "/contact",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426",
-    accent: "bg-emerald-500"
+    link: "/services",
+    image: "https://images.unsplash.com/photo-1542744094-24638eff58bb?auto=format&fit=crop&q=80&w=2400",
+    accent: "bg-emerald-600"
   },
   {
-    title: "Custom SaaS Development & Architecture",
-    subtitle: "End-to-end software products built with robust, scalable infrastructure for modern enterprises.",
-    cta: "Explore SaaS Solutions",
-    link: "/services",
-    image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=2340",
-    accent: "bg-blue-500"
+    title: "PostPilot: Social Media Organic Growth",
+    subtitle: "Let our experts handle your Facebook, Instagram, and LinkedIn to bring you real business results and loyal followers.",
+    cta: "Learn About PostPilot",
+    link: "/social-media",
+    image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=2400",
+    accent: "bg-blue-600"
   },
   {
-    title: "Intelligent AI Automation Systems",
-    subtitle: "Eliminate repetitive tasks and reduce costs with our custom-engineered AI workflow solutions.",
-    cta: "Automate Your Business",
-    link: "/services",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=2232",
-    accent: "bg-purple-500"
+    title: "BrandBox: Your Done-For-You Brand Suite",
+    subtitle: "Original logos, business cards, social media kits, and brand guidelines delivered in one complete, professional box.",
+    cta: "Order Your BrandBox",
+    link: "/dfy-services",
+    image: "https://images.unsplash.com/photo-1572021335469-31716248e15c?auto=format&fit=crop&q=80&w=2400",
+    accent: "bg-orange-600"
   },
   {
-    title: "High-Converting Web Applications",
-    subtitle: "Performance-driven websites that turn visitors into loyal customers through strategic UI/UX.",
-    cta: "View Web Services",
-    link: "/services",
-    image: "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&q=80&w=2264",
-    accent: "bg-orange-500"
-  },
-  {
-    title: "Digital Sales & Marketing Funnels",
-    subtitle: "Automated marketing infrastructures designed to maximize conversion rates and ROI.",
-    cta: "Boost Your Sales",
-    link: "/services",
-    image: "https://images.unsplash.com/photo-1551288049-bbbda5366392?auto=format&fit=crop&q=80&w=2340",
-    accent: "bg-indigo-500"
-  },
-  {
-    title: "Professional Tech Training Programs",
-    subtitle: "Master the skills needed to build modern digital systems with our intensive training courses.",
-    cta: "Enroll Today",
-    link: "/services",
-    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=2340",
-    accent: "bg-rose-500"
-  },
-  {
-    title: "Brand Identity & Graphic Systems",
-    subtitle: "Position your company as a market leader with comprehensive visual identity and branding.",
-    cta: "Build Your Brand",
-    link: "/services",
-    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=2264",
-    accent: "bg-amber-500"
+    title: "Viral AI Videos That Sell More",
+    subtitle: "We create cinematic AI video ads and TikToks designed to capture attention and drive sales for your products.",
+    cta: "Start Your Video",
+    link: "/ai-video-content",
+    image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=2400",
+    accent: "bg-purple-600"
   }
 ];
 
@@ -112,18 +88,18 @@ export const HeroSlider = () => {
                   <span className={cn("flex h-2 w-2 rounded-full animate-pulse", slides[current].accent)}></span>
                   Slide {current + 1} of {slides.length}
                 </div>
-                <h1 className="text-5xl lg:text-7xl font-bold tracking-tight text-white mb-8 leading-[1.1]">
+                <h1 className="text-5xl lg:text-8xl font-black tracking-tighter text-white mb-8 leading-[0.9] lowercase italic">
                   {slides[current].title}
                 </h1>
-                <p className="text-xl text-white/70 mb-10 leading-relaxed max-w-2xl">
+                <p className="text-xl text-white/70 mb-10 leading-relaxed max-w-2xl font-bold">
                   {slides[current].subtitle}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link 
                     href={slides[current].link} 
-                    className={cn("text-white px-8 py-4 rounded-full font-bold transition-all flex items-center justify-center gap-2", slides[current].accent, "hover:brightness-110")}
+                    className={cn("text-white px-10 py-5 rounded-2xl font-black transition-all flex items-center justify-center gap-3 text-lg shadow-2xl", slides[current].accent, "hover:scale-105 shadow-emerald-500/20 active:scale-95")}
                   >
-                    {slides[current].cta} <ArrowRight className="w-4 h-4" />
+                    <span className="uppercase tracking-widest">{slides[current].cta}</span> <ArrowRight className="w-5 h-5" />
                   </Link>
                 </div>
               </motion.div>

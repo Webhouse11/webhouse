@@ -3,636 +3,336 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { 
-  Facebook, Instagram, Linkedin, MessageCircle, Youtube, Zap, 
-  CheckCircle2, ArrowRight, Star, Shield, Users, BarChart3, 
-  Target, Rocket, Globe, Zap as ZapIcon, Send, Mail, Phone
+  Facebook, 
+  Instagram, 
+  Linkedin, 
+  MessageCircle, 
+  Youtube, 
+  Zap, 
+  CheckCircle2, 
+  ArrowRight, 
+  Users, 
+  TrendingUp, 
+  Smartphone,
+  Star,
+  Quote,
+  Globe,
+  Layout,
+  PlayCircle
 } from 'lucide-react';
 import Link from 'next/link';
-import { cn } from '@/src/lib/utils';
 
-const platforms = [
-  {
-    id: 'facebook',
-    name: 'Facebook Management',
-    icon: Facebook,
-    color: 'text-[#1877F2]',
-    bg: 'bg-[#1877F2]/5',
-    desc: 'Strategic content and community building to dominate the world\'s largest social network.',
-    growth: 'Targeted Reach & Engagement'
-  },
-  {
-    id: 'instagram',
-    name: 'Instagram Management',
-    icon: Instagram,
-    color: 'text-[#E4405F]',
-    bg: 'bg-[#E4405F]/5',
-    desc: 'Visual storytelling and aesthetic curation that turns scrollers into loyal brand advocates.',
-    growth: 'Visual Authority & Sales'
-  },
-  {
-    id: 'linkedin',
-    name: 'LinkedIn Management',
-    icon: Linkedin,
-    color: 'text-[#0077B5]',
-    bg: 'bg-[#0077B5]/5',
-    desc: 'Positioning your brand as an industry leader with professional, high-authority content.',
-    growth: 'B2B Leads & Authority'
-  },
-  {
-    id: 'whatsapp',
-    name: 'WhatsApp Marketing',
-    icon: MessageCircle,
-    color: 'text-[#25D366]',
-    bg: 'bg-[#25D366]/5',
-    desc: 'Direct commerce systems using the most intimate and high-conversion channel available.',
-    growth: 'Instant Sales & Support'
-  },
-  {
-    id: 'tiktok',
-    name: 'TikTok Growth',
-    icon: Zap,
-    color: 'text-black',
-    bg: 'bg-black/5',
-    desc: 'Viral-optimized short-form video strategies that capture the attention of millions.',
-    growth: 'Viral Identity & Trends'
-  },
-  {
-    id: 'youtube',
-    name: 'YouTube Management',
-    icon: Youtube,
-    color: 'text-[#FF0000]',
-    bg: 'bg-[#FF0000]/5',
-    desc: 'Building long-term video assets that generate passive leads and massive authority.',
-    growth: 'SEO Traffic & Community'
-  }
+const stats = [
+  { label: "Brands Managed", value: "500+" },
+  { label: "Reach Generated", value: "10M+" },
+  { label: "Client Satisfaction", value: "95%" },
+  { label: "Campaigns Completed", value: "1200+" }
 ];
 
-const tiers = [
+const platforms = [
+  { name: "Facebook Management", desc: "Strategic content and community building to dominate the world's largest social network.", icon: Facebook, color: "text-blue-600", bg: "bg-blue-50" },
+  { name: "Instagram Management", desc: "Visual storytelling and aesthetic curation that turns scrollers into loyal brand advocates.", icon: Instagram, color: "text-pink-600", bg: "bg-pink-50" },
+  { name: "LinkedIn Management", desc: "Positioning your brand as an industry leader with professional, high-authority content.", icon: Linkedin, color: "text-blue-700", bg: "bg-blue-50" },
+  { name: "WhatsApp Marketing", desc: "Direct commerce systems using the most intimate and high-conversion channel available.", icon: MessageCircle, color: "text-emerald-600", bg: "bg-emerald-50" },
+  { name: "TikTok Growth", desc: "Viral-optimized short-form video strategies that capture the attention of millions.", icon: Smartphone, color: "text-slate-900", bg: "bg-slate-100" },
+  { name: "YouTube Management", desc: "Building long-term video assets that generate passive leads and massive authority.", icon: Youtube, color: "text-red-600", bg: "bg-red-50" }
+];
+
+const reasons = [
+  { title: "Creative Content", icon: Zap, desc: "Bespoke content that resonates with your brand voice." },
+  { title: "Fast Delivery", icon: TrendingUp, desc: "Quick turnaround without compromising on quality." },
+  { title: "International Standards", icon: Globe, desc: "Global-level strategy tailored for your local market." },
+  { title: "Growth Strategy", icon: Users, desc: "Data-driven plans built for long-term scalability." },
+  { title: "Audience Engagement", icon: MessageCircle, desc: "Building real connections with your community." },
+  { title: "Conversion Focused", icon: CheckCircle2, desc: "Every post is a step towards a measurable goal." }
+];
+
+const plans = [
   {
     name: "Starter Package",
-    price: 99,
-    period: "/month",
-    bullets: [
-      "12 posts monthly",
-      "Basic graphics",
-      "Caption writing",
-      "Hashtag research",
-      "Facebook & Instagram management",
-      "Monthly analytics report"
+    price: "₦85,000",
+    period: "/mo",
+    desc: "Perfect for small businesses starting their digital journey.",
+    features: [
+      "2 Management Platforms",
+      "3 Posts Per Week",
+      "Basic Graphic Design",
+      "Content Planning",
+      "Community Management",
+      "Monthly Growth Report"
     ],
-    cta: "Get Started",
-    accent: "border-slate-100"
+    cta: "Start Growing",
+    highlight: false
   },
   {
     name: "Growth Package",
-    price: 249,
-    period: "/month",
-    bullets: [
-      "20 posts monthly",
-      "Professional designs",
-      "Reel/TikTok editing",
-      "Community management",
-      "LinkedIn management",
-      "WhatsApp marketing support",
-      "Growth strategy",
-      "Weekly analytics"
+    price: "₦155,000",
+    period: "/mo",
+    desc: "Designed for scaling brands that need more impact.",
+    features: [
+      "3 Management Platforms",
+      "5 Posts Per Week",
+      "Premium Reels & Graphics",
+      "Full Community Management",
+      "Influencer Strategy",
+      "Actionable Insights"
     ],
-    cta: "Start Scaling",
-    accent: "border-blue-500 ring-2 ring-blue-500/10 shadow-2xl",
-    popular: true
+    cta: "Scale Now",
+    highlight: true
   },
   {
     name: "Premium Package",
-    price: 499,
-    period: "/month",
-    bullets: [
-      "Unlimited content strategy",
-      "Daily posting",
-      "Full multi-platform management",
-      "YouTube optimization",
-      "TikTok growth strategy",
-      "Paid ads management",
-      "Dedicated account manager",
-      "Advanced analytics",
-      "Priority support"
+    price: "₦250,500",
+    period: "/mo",
+    desc: "The ultimate solution for established brands.",
+    features: [
+      "All Platforms Management",
+      "Daily Strategic Posting",
+      "Cinematic Short Videos",
+      "WhatsApp Storefront Aid",
+      "Dedicated Growth Lead",
+      "Weekly Performance Audits"
     ],
-    cta: "Go Premium",
-    accent: "border-slate-100"
+    cta: "Go Elite",
+    highlight: false
   }
 ];
 
 const testimonials = [
-  {
-    quote: "Webhouse Media completely transformed our online presence and customer engagement.",
-    author: "Sarah Johnson",
-    role: "CEO",
-    image: "https://i.pravatar.cc/150?u=sarah"
-  },
-  {
-    quote: "Our sales increased within weeks after working with Webhouse Media.",
-    author: "Michael Adams",
-    role: "Founder, TechLaunch",
-    image: "https://i.pravatar.cc/150?u=michael"
-  },
-  {
-    quote: "Professional, creative, and very reliable social media team.",
-    author: "Amanda Lee",
-    role: "Marketing Director",
-    image: "https://i.pravatar.cc/150?u=amanda"
-  },
-  {
-    quote: "The strategic approach Webhouse Media took for our campaign was world-class.",
-    author: "David Chen",
-    role: "E-commerce Director",
-    image: "https://i.pravatar.cc/150?u=david"
-  }
+  { name: "Sarah Johnson", role: "CEO", text: "Webhouse Media completely transformed our online presence and customer engagement." },
+  { name: "Michael Adams", role: "Founder, TechLaunch", text: "Our sales increased within weeks after working with Webhouse Media." },
+  { name: "Amanda Lee", role: "Marketing Director", text: "Professional, creative, and very reliable social media team." },
+  { name: "David Chen", role: "E-commerce Director", text: "The strategic approach Webhouse Media took for our campaign was world-class." }
 ];
 
-const stats = [
-  { value: "500+", label: "Brands Managed", icon: Users },
-  { value: "10M+", label: "Reach Generated", icon: BarChart3 },
-  { value: "95%", label: "Client Satisfaction", icon: Star },
-  { value: "1200+", label: "Campaigns Completed", icon: Rocket }
-];
-
-const whyChooseUs = [
-  { title: "Creative Content", icon: ZapIcon, desc: "Bespoke content that resonates with your brand voice." },
-  { title: "Fast Delivery", icon: Send, desc: "Quick turnaround without compromising on quality." },
-  { title: "International Standards", icon: Globe, desc: "Global-level strategy tailored for your local market." },
-  { title: "Growth Strategy", icon: Target, desc: "Data-driven plans built for long-term scalability." },
-  { title: "Audience Engagement", icon: MessageCircle, desc: "Building real connections with your community." },
-  { title: "Conversion Focused", icon: Shield, desc: "Every post is a step towards a measurable goal." }
-];
-
-export default function PostPilotPage() {
-  const [currency, setCurrency] = React.useState({ code: 'USD', symbol: '$', rate: 1 });
-  const [formData, setFormData] = React.useState({
-    name: '',
-    email: '',
-    project: 'SMM Starter Package',
-    message: ''
-  });
-
-  React.useEffect(() => {
-    const detectLocation = async () => {
-      try {
-        const response = await fetch('https://ipapi.co/json/');
-        const data = await response.json();
-        
-        if (data.country_code === 'NG') {
-          setCurrency({ code: 'NGN', symbol: '₦', rate: 1600 }); // Approximate rate for business services
-        } else if (data.currency === 'EUR') {
-          setCurrency({ code: 'EUR', symbol: '€', rate: 0.95 });
-        } else if (data.currency === 'GBP') {
-          setCurrency({ code: 'GBP', symbol: '£', rate: 0.80 });
-        } else if (data.currency && data.currency !== 'USD') {
-          // Fallback for other standard currencies if API provides them
-          setCurrency({ code: data.currency, symbol: data.currency_symbol || '$', rate: 1 });
-        }
-      } catch (error) {
-        console.error('Location detection failed:', error);
-      }
-    };
-    detectLocation();
-  }, []);
-
-  const formatDetectedPrice = (usdPrice: number) => {
-    const converted = usdPrice * currency.rate;
-    return new Intl.NumberFormat(currency.code === 'NGN' ? 'en-NG' : 'en-US', {
-      style: 'currency',
-      currency: currency.code,
-      maximumFractionDigits: 0,
-    }).format(converted);
-  };
-
-  const handleConsultation = () => {
-    window.open('https://wa.me/2348060180077', '_blank');
-  };
-
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const text = encodeURIComponent(
-      `PostPilot Inquiry:\n\nName: ${formData.name}\nEmail: ${formData.email}\nProject: ${formData.project}\nMessage: ${formData.message}`
-    );
-    window.open(`https://wa.me/2348060180077?text=${text}`, '_blank');
-  };
-
+export default function SocialMediaPage() {
   return (
-    <div className="min-h-screen bg-white selection:bg-blue-100 text-slate-900">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-gradient-to-b from-blue-50/50 to-transparent -z-10 blur-3xl opacity-60"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-blue-600 text-sm font-bold mb-8">
-                <ZapIcon className="w-4 h-4 fill-blue-600" /> New Era of Social Management
-              </div>
-              <h1 className="text-5xl md:text-7xl font-black mb-8 tracking-tight leading-[1.1] text-slate-900">
-                We Manage Your <span className="text-blue-600">Social Media</span> While You Grow.
-              </h1>
-              <p className="text-xl text-slate-600 leading-relaxed mb-10 max-w-lg">
-                Professional social media management for modern brands, businesses, creators, and companies worldwide.
-              </p>
-              <div className="flex flex-wrap gap-4 mb-12">
-                <button 
-                  onClick={handleConsultation}
-                  className="px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg hover:bg-blue-700 transition-all shadow-xl shadow-blue-500/25 flex items-center gap-2"
-                >
-                  Get Started <ArrowRight className="w-5 h-5" />
-                </button>
-                <button 
-                  onClick={handleConsultation}
-                  className="px-8 py-4 bg-white border border-slate-200 text-slate-900 rounded-2xl font-bold text-lg hover:bg-slate-50 transition-all shadow-sm"
-                >
-                  Book Free Consultation
-                </button>
-              </div>
-              
-              <div className="flex items-center gap-6">
-                <div className="flex -space-x-3">
-                  {[1,2,3,4].map(i => (
-                    <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-100 overflow-hidden">
-                      <img src={`https://i.pravatar.cc/150?u=${i}`} alt="user" className="w-full h-full object-cover" />
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  <div className="flex items-center gap-1 text-amber-400">
-                    <Star className="w-4 h-4 fill-amber-400" />
-                    <Star className="w-4 h-4 fill-amber-400" />
-                    <Star className="w-4 h-4 fill-amber-400" />
-                    <Star className="w-4 h-4 fill-amber-400" />
-                    <Star className="w-4 h-4 fill-amber-400" />
-                  </div>
-                  <p className="text-sm font-bold text-slate-600">Loved by 500+ global brands</p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative"
-            >
-              <div className="absolute inset-0 bg-blue-400/20 blur-[120px] rounded-full"></div>
-              <div className="relative bg-white rounded-[3rem] p-8 shadow-2xl border border-slate-100">
-                <div className="aspect-video rounded-2xl bg-slate-50 overflow-hidden relative mb-8">
-                  <img 
-                    src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=2574&auto=format&fit=crop" 
-                    alt="Social Analytics"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                </div>
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="p-4 rounded-2xl bg-blue-50 border border-blue-100">
-                    <p className="text-xs font-bold text-blue-600 uppercase tracking-widest mb-1">Engagement</p>
-                    <p className="text-2xl font-black text-slate-900">+142%</p>
-                  </div>
-                  <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-100">
-                    <p className="text-xs font-bold text-emerald-600 uppercase tracking-widest mb-1">Conversions</p>
-                    <p className="text-2xl font-black text-slate-900">+89%</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Social Icons */}
-              <motion.div 
-                animate={{ y: [0, -15, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-10 -right-10 w-20 h-20 rounded-3xl bg-white shadow-xl flex items-center justify-center text-3xl border border-slate-50"
+    <div className="bg-[#f8fafc]">
+      {/* Hero */}
+      <section className="pt-32 pb-20 bg-white overflow-hidden relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-4xl mx-auto"
+          >
+            <div className="inline-flex items-center gap-2 bg-indigo-100 text-indigo-600 px-4 py-2 rounded-full text-xs font-black uppercase tracking-widest mb-8">
+              PostPilot™ Social Management
+            </div>
+            <h1 className="text-4xl md:text-7xl font-black tracking-tight text-slate-900 mb-8 lowercase">
+              we manage your <span className="text-indigo-600">social media</span> while you grow.
+            </h1>
+            <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto mb-10">
+              Professional social media management for modern brands, businesses, creators, and companies worldwide.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16">
+              <a 
+                href="https://wa.me/2348060180077?text=Hello,%20I'm%20ready%20to%20grow%20my%20brand%20with%20PostPilot." 
+                className="bg-indigo-600 text-white px-10 py-5 rounded-full font-black text-lg hover:scale-105 transition-all shadow-xl shadow-indigo-500/20 flex items-center gap-3"
               >
-                <Instagram className="w-10 h-10 text-[#E4405F]" />
-              </motion.div>
-              <motion.div 
-                animate={{ y: [0, 15, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute -bottom-10 -left-10 w-20 h-20 rounded-3xl bg-white shadow-xl flex items-center justify-center text-3xl border border-slate-50"
-              >
-                <Facebook className="w-10 h-10 text-[#1877F2]" />
-              </motion.div>
-            </motion.div>
-          </div>
+                Grow My Brand Now <ArrowRight size={20} />
+              </a>
+              <div className="flex -space-x-3">
+                 {[1,2,3,4,5].map(i => (
+                   <div key={i} className="w-12 h-12 rounded-full border-4 border-white bg-slate-200 overflow-hidden">
+                     <img src={`https://picsum.photos/seed/user${i}/100/100`} alt="user" className="w-full h-full object-cover" />
+                   </div>
+                 ))}
+                 <div className="w-12 h-12 rounded-full border-4 border-white bg-indigo-600 flex items-center justify-center text-white text-xs font-bold">
+                   500+
+                 </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto border-t border-slate-100 pt-10">
+               <div>
+                  <div className="text-2xl font-black text-indigo-600">+142%</div>
+                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Engagement</div>
+               </div>
+               <div>
+                  <div className="text-2xl font-black text-emerald-500">+89%</div>
+                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Conversions</div>
+               </div>
+               <div>
+                  <div className="text-2xl font-black text-pink-500">24/7</div>
+                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Management</div>
+               </div>
+               <div>
+                  <div className="text-2xl font-black text-amber-500">10M+</div>
+                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Monthly Reach</div>
+               </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 bg-slate-50">
+      {/* Stats Quick View */}
+      <section className="py-12 bg-indigo-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {stats.map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center p-8 bg-white rounded-3xl shadow-sm border border-slate-100"
-              >
-                <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mx-auto mb-6">
-                  <stat.icon className="w-6 h-6" />
-                </div>
-                <h3 className="text-4xl font-black mb-2 text-slate-900">{stat.value}</h3>
-                <p className="text-slate-500 font-bold uppercase tracking-widest text-[10px]">{stat.label}</p>
-              </motion.div>
+              <div key={i}>
+                <div className="text-3xl md:text-4xl font-black mb-1">{stat.value}</div>
+                <div className="text-xs font-bold text-indigo-200 uppercase tracking-widest">{stat.label}</div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Platforms Section */}
-      <section id="platforms" className="py-32">
+      {/* Platforms We Master */}
+      <section className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">Platforms We Master</h2>
-            <p className="text-slate-500 text-lg font-medium max-w-2xl mx-auto">
+            <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">Platforms We <span className="text-indigo-600 font-serif italic font-medium">Master</span></h2>
+            <p className="text-lg text-slate-500 max-w-2xl mx-auto">
               We don't just post content; we build ecosystems that thrive on the platforms where your audience lives.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {platforms.map((p, i) => (
-              <motion.div
-                key={p.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
-                viewport={{ once: true }}
-                className="group p-8 rounded-[2.5rem] bg-white border border-slate-100 hover:border-blue-500/20 hover:shadow-2xl transition-all"
-              >
-                <div className={cn("w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-transform group-hover:scale-110", p.bg)}>
-                  <p.icon className={cn("w-8 h-8", p.color)} />
+            {platforms.map((platform, i) => (
+              <div key={i} className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 hover:shadow-2xl transition-all group">
+                <div className={`w-14 h-14 rounded-2xl ${platform.bg} ${platform.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                  <platform.icon size={28} />
                 </div>
-                <h3 className="text-2xl font-black mb-4 text-slate-900">{p.name}</h3>
-                <p className="text-slate-600 mb-8 leading-relaxed font-medium">
-                  {p.desc}
-                </p>
-                <div className="flex items-center justify-between mt-auto">
-                  <span className="text-xs font-black uppercase tracking-widest text-[#0056B3]">{p.growth}</span>
-                  <button className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center hover:bg-black hover:text-white transition-colors">
-                    <ArrowRight className="w-5 h-5" />
-                  </button>
-                </div>
-              </motion.div>
+                <h3 className="text-xl font-black mb-3">{platform.name}</h3>
+                <p className="text-slate-500 text-sm leading-relaxed">{platform.desc}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
-      <section className="py-32 bg-slate-900 text-white overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-blue-600/10 blur-[120px] rounded-full -mr-64 -mt-64"></div>
+      {/* Why Choose PostPilot */}
+      <section className="py-24 bg-slate-900 text-white rounded-[4rem] mx-4 md:mx-8 mb-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.1),transparent)]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div>
-              <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">
-                Why Brands Choose <span className="text-blue-500">PostPilot.</span>
-              </h2>
-              <p className="text-slate-400 text-xl leading-relaxed mb-12">
-                We combine international standards with obsessive data tracking to ensure your social media isn't just a cost, but a revenue driver.
-              </p>
+              <h2 className="text-4xl md:text-6xl font-black mb-10 leading-[1.1]">Why Brands Choose <br /><span className="text-indigo-400 italic">PostPilot.</span></h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                {whyChooseUs.map((item, i) => (
-                  <div key={i} className="space-y-4">
-                    <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-blue-400">
-                      <item.icon className="w-6 h-6" />
+                {reasons.map((reason, i) => (
+                  <div key={i}>
+                    <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-indigo-400 mb-4">
+                      <reason.icon size={20} />
                     </div>
-                    <h4 className="text-xl font-bold">{item.title}</h4>
-                    <p className="text-slate-500 text-sm">{item.desc}</p>
+                    <h3 className="text-lg font-bold mb-2">{reason.title}</h3>
+                    <p className="text-slate-400 text-xs leading-relaxed">{reason.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
             <div className="relative">
-              <img 
-                src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=2671&auto=format&fit=crop" 
-                alt="Creative Work"
-                className="rounded-[3rem] shadow-2xl relative z-10"
-              />
-              <div className="absolute -bottom-10 -right-10 bg-blue-600 p-8 rounded-[2rem] shadow-2xl z-20">
-                <p className="text-4xl font-black mb-1">24/7</p>
-                <p className="text-xs font-bold uppercase tracking-widest text-blue-200">Management & Support</p>
+              <div className="aspect-square rounded-[3rem] bg-indigo-600/20 border border-indigo-500/30 backdrop-blur-3xl p-8 flex flex-col justify-center items-center text-center overflow-hidden">
+                 <div className="absolute -top-20 -right-20 w-64 h-64 bg-indigo-500 blur-3xl opacity-20 rounded-full" />
+                 <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-emerald-500 blur-3xl opacity-20 rounded-full" />
+                 
+                 <PlayCircle size={80} className="text-white mb-6 animate-pulse" />
+                 <div className="text-4xl font-black mb-4 italic">24/7</div>
+                 <div className="text-sm font-black uppercase tracking-widest text-indigo-300">Management & Support</div>
+                 <p className="mt-8 text-slate-400 text-sm max-w-xs">Our team works around the clock to ensure your brand never stops engaging and growing.</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Pricing Packages Section */}
-      <section id="pricing" className="py-32">
+      {/* Plans */}
+      <section className="py-24 bg-white" id="plans">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight uppercase">Our POSTPILOT PLAN</h2>
-            <p className="text-slate-500 text-lg font-medium max-w-2xl mx-auto">
-              Choose the package that aligns with your growth stage.
-            </p>
+            <h2 className="text-4xl md:text-6xl font-black mb-6">Our <span className="text-indigo-600">PostPilot™</span> Plan</h2>
+            <p className="text-lg text-slate-500 max-w-2xl mx-auto">Choose the package that aligns with your growth stage.</p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {tiers.map((t, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                viewport={{ once: true }}
-                className={cn(
-                  "p-10 rounded-[3rem] border bg-white flex flex-col relative transition-all duration-500",
-                  t.accent
-                )}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {plans.map((plan, i) => (
+              <div 
+                key={i} 
+                className={`p-10 rounded-[3rem] border transition-all ${
+                  plan.highlight 
+                  ? 'bg-indigo-600 text-white border-indigo-600 shadow-2xl shadow-indigo-500/30 scale-105 relative z-10' 
+                  : 'bg-white border-slate-100 hover:border-indigo-200 shadow-xl'
+                }`}
               >
-                {t.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest shadow-xl shadow-blue-500/20">
-                    ⭐ Most Popular
-                  </div>
-                )}
-                <h3 className="text-2xl font-black mb-8 text-center uppercase tracking-widest text-slate-400">{t.name}</h3>
-                
-                <div className="text-center mb-10 pb-10 border-b border-slate-50">
-                  <span className="text-5xl font-black text-slate-900">
-                    {formatDetectedPrice(t.price)}
-                  </span>
-                  <span className="text-slate-400 font-bold text-sm tracking-tighter ml-1">{t.period}</span>
+                <h3 className="text-2xl font-black mb-1">{plan.name}</h3>
+                <p className={`text-sm mb-6 ${plan.highlight ? 'text-indigo-100' : 'text-slate-500'}`}>{plan.desc}</p>
+                <div className="flex items-baseline gap-1 mb-8">
+                  <span className="text-4xl font-black tracking-tighter italic">{plan.price}</span>
+                  <span className={`text-sm font-bold ${plan.highlight ? 'text-indigo-200' : 'text-slate-400'}`}>{plan.period}</span>
                 </div>
-
-                <div className="space-y-4 mb-12 flex-grow">
-                  {t.bullets.map((b, j) => (
-                    <div key={j} className="flex items-center gap-3 text-slate-600 font-bold text-sm">
-                      <CheckCircle2 className={cn("w-5 h-5 flex-shrink-0", t.popular ? "text-blue-600" : "text-slate-300")} />
-                      {b}
-                    </div>
+                <ul className="space-y-4 mb-10">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center gap-3 text-sm font-bold">
+                      <CheckCircle2 size={18} className={plan.highlight ? 'text-indigo-300' : 'text-emerald-500'} />
+                      {feature}
+                    </li>
                   ))}
-                </div>
-
-                <button 
-                  onClick={handleConsultation}
-                  className={cn(
-                    "w-full py-5 rounded-2xl font-black text-lg text-center transition-all uppercase tracking-widest",
-                    t.popular ? "bg-blue-600 text-white shadow-xl shadow-blue-500/20 hover:bg-blue-700" : "bg-slate-900 text-white hover:bg-black"
-                  )}
+                </ul>
+                <a 
+                  href={`https://wa.me/2348060180077?text=I'm%20ready%20to%20order%20the%20${encodeURIComponent(plan.name)}.`}
+                  className={`w-full py-5 rounded-2xl font-black text-center block transition-all ${
+                    plan.highlight 
+                    ? 'bg-white text-indigo-600 hover:bg-slate-50' 
+                    : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                  }`}
                 >
-                  {t.cta}
-                </button>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonial Section */}
-      <section className="py-32 bg-slate-50 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 text-center">
-          <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">Global Success Stories</h2>
-          <div className="flex justify-center gap-1 text-amber-400">
-             {[1,2,3,4,5].map(i => <Star key={i} className="w-5 h-5 fill-amber-400" />)}
-          </div>
-        </div>
-
-        {/* Animated Marquee */}
-        <div className="relative flex overflow-hidden">
-          <motion.div 
-            className="flex gap-8 py-4 px-4"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ 
-              duration: 25, 
-              repeat: Infinity, 
-              ease: "linear" 
-            }}
-          >
-            {[...testimonials, ...testimonials].map((t, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 w-[400px] p-10 rounded-[2.5rem] bg-white shadow-2xl shadow-blue-500/5 border border-slate-100 flex flex-col"
-              >
-                <div className="mb-8">
-                  {[1,2,3,4,5].map(j => <Star key={j} className="inline w-3 h-3 fill-amber-400 text-amber-400 mr-0.5" />)}
-                </div>
-                <p className="text-lg font-bold italic text-slate-800 mb-10 flex-grow">"{t.quote}"</p>
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-full bg-slate-100 overflow-hidden border-2 border-white shadow-md">
-                    <img src={t.image} alt={t.author} className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <p className="font-black text-slate-900">{t.author}</p>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t.role}</p>
-                  </div>
-                </div>
+                  {plan.cta}
+                </a>
               </div>
             ))}
-          </motion.div>
-
-          {/* Gradient Masks */}
-          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none"></div>
+          </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-32">
+      {/* Testimonials */}
+      <section className="py-24 bg-slate-50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-blue-600 rounded-[3.5rem] p-8 md:p-20 text-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 blur-[100px] rounded-full -mr-48 -mt-48"></div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">
-              <div>
-                <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">Ready To Grow Your Brand Online?</h2>
-                <p className="text-blue-100 text-lg mb-12 max-w-md">
-                  Stop stressing about what to post. Partner with the experts and watch your engagement soar.
-                </p>
-                
-                <div className="space-y-6">
-                  <a href="mailto:webhousemediastudio@gmail.com" className="flex items-center gap-4 group">
-                    <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                      <Mail className="w-6 h-6" />
-                    </div>
-                    <span className="font-bold">webhousemediastudio@gmail.com</span>
-                  </a>
-                  <a href="tel:+2348060180077" className="flex items-center gap-4 group">
-                    <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                      <Phone className="w-6 h-6" />
-                    </div>
-                    <span className="font-bold">+234 806 018 0077</span>
-                  </a>
-                  <button 
-                    onClick={handleConsultation}
-                    className="flex items-center gap-4 group text-left"
-                  >
-                    <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                      <MessageCircle className="w-6 h-6" />
-                    </div>
-                    <span className="font-bold">Chat with us on WhatsApp</span>
-                  </button>
-                </div>
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-6xl font-black mb-6">Global <span className="text-indigo-600 font-serif italic font-medium">Success</span> Stories</h2>
+          </div>
 
-
-              </div>
-
-              <div className="bg-white rounded-3xl p-8 text-slate-900">
-                <form onSubmit={handleFormSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-xs font-black uppercase tracking-widest text-slate-400">Full Name</label>
-                      <input 
-                        type="text" 
-                        required
-                        className="w-full px-5 py-4 bg-slate-50 rounded-xl border border-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20" 
-                        placeholder="John Doe"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                       <label className="text-xs font-black uppercase tracking-widest text-slate-400">Email Address</label>
-                       <input 
-                        type="email" 
-                        required
-                        className="w-full px-5 py-4 bg-slate-50 rounded-xl border border-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20" 
-                        placeholder="john@company.com"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      />
-                    </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+             {testimonials.map((t, i) => (
+               <div key={i} className="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-100 relative group">
+                  <Quote size={40} className="text-indigo-100 absolute top-6 right-6 group-hover:text-indigo-200 transition-colors" />
+                  <div className="flex gap-1 mb-4">
+                     {[1,2,3,4,5].map(s => <Star key={s} size={14} className="fill-amber-400 text-amber-400" />)}
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-black uppercase tracking-widest text-slate-400">Project Type</label>
-                    <select 
-                      className="w-full px-5 py-4 bg-slate-50 rounded-xl border border-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                      value={formData.project}
-                      onChange={(e) => setFormData({ ...formData, project: e.target.value })}
-                    >
-                      <option>SMM Starter Package</option>
-                      <option>Growth Package</option>
-                      <option>Premium Enterprise</option>
-                      <option>Custom Request</option>
-                    </select>
+                  <p className="text-slate-600 text-sm italic font-medium leading-relaxed mb-6 relative z-10">
+                    "{t.text}"
+                  </p>
+                  <div>
+                    <div className="font-black text-slate-900">{t.name}</div>
+                    <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{t.role}</div>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-black uppercase tracking-widest text-slate-400">Message</label>
-                    <textarea 
-                      rows={4} 
-                      required
-                      className="w-full px-5 py-4 bg-slate-50 rounded-xl border border-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20" 
-                      placeholder="Tell us about your brand..."
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    ></textarea>
-                  </div>
-                  <button type="submit" className="w-full py-5 bg-blue-600 text-white font-black rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20 uppercase tracking-widest">
-                    Send Inquiry
-                  </button>
-                </form>
-              </div>
-            </div>
+               </div>
+             ))}
           </div>
         </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-32 text-center relative overflow-hidden">
+         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-50 rounded-full blur-[120px] -z-10" />
+         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-4xl md:text-7xl font-black mb-8 leading-tight tracking-tight">Ready To Grow Your <br /> <span className="text-indigo-600 underline decoration-indigo-200 underline-offset-8">Brand Online?</span></h2>
+            <p className="text-xl text-slate-500 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
+              Stop stressing about what to post. Partner with the experts and watch your engagement soar.
+            </p>
+            <div className="flex flex-wrap gap-6 justify-center">
+               <a href="tel:+2348060180077" className="bg-indigo-600 text-white px-12 py-6 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center gap-4 shadow-2xl shadow-indigo-500/40">
+                  Call Now <ArrowRight size={24} />
+               </a>
+               <a href="mailto:webhousemediastudio@gmail.com?subject=Strategic%20Social%20Media%20Growth%20Inquiry&body=Hi%20Webhouse%20Media%20Team%2C%0A%0AI'm%20interested%20in%20the%20PostPilot%20packages%20and%20would%20like%20to%20discuss%20growing%20my%20brand%20online." className="bg-slate-900 text-white px-12 py-6 rounded-full font-black text-xl hover:bg-black transition-all">
+                  Send Email
+               </a>
+            </div>
+         </div>
       </section>
     </div>
   );
 }
+

@@ -206,8 +206,13 @@ const ContactContent = () => {
             <div className="pt-12 border-t border-black/5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
                 {[
-                  { icon: Mail, label: "Email Us", value: "webhousemediastudio@gmail.com" },
-                  { icon: Phone, label: "Call Us", value: "+234 806 018 0077" },
+                  { 
+                    icon: Mail, 
+                    label: "Email Us", 
+                    value: "webhousemediastudio@gmail.com",
+                    href: "mailto:webhousemediastudio@gmail.com?subject=Strategic%20Digital%20Growth%20Inquiry&body=Hi%20Webhouse%20Media%20Team%2C%0A%0AI'm%20interested%20in%20scaling%20my%20business%20digital%20infrastructure%20and%20would%20like%20to%20learn%20more%20about%20your%20services." 
+                  },
+                  { icon: Phone, label: "Call Us", value: "+234 806 018 0077", href: "tel:+2348060180077" },
                   { icon: MapPin, label: "Visit Us", value: "15 Ring Road, Ibadan, Oyo State, Nigeria" }
                 ].map((item, i) => (
                   <div key={i} className="flex gap-4 items-start p-5 rounded-2xl bg-emerald-50/50 border border-emerald-500/10">
@@ -216,7 +221,13 @@ const ContactContent = () => {
                     </div>
                     <div>
                       <p className="text-[10px] font-bold text-black/40 uppercase tracking-wider mb-1">{item.label}</p>
-                      <p className="text-sm font-semibold break-words">{item.value}</p>
+                      {item.href ? (
+                        <a href={item.href} className="text-sm font-semibold break-words hover:text-emerald-600 transition-colors">
+                          {item.value}
+                        </a>
+                      ) : (
+                        <p className="text-sm font-semibold break-words">{item.value}</p>
+                      )}
                     </div>
                   </div>
                 ))}

@@ -3,8 +3,24 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { Menu, X, Facebook, Instagram, Linkedin, Youtube, MessageCircle } from 'lucide-react';
 import { cn } from '@/src/lib/utils';
+
+export const FloatingWhatsApp = () => {
+  return (
+    <a 
+      href="https://wa.me/2348060180077" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="fixed bottom-8 right-8 z-[60] bg-emerald-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all group flex items-center gap-2"
+    >
+      <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 font-bold whitespace-nowrap px-0 group-hover:px-2">
+        Chat with us
+      </span>
+      <MessageCircle size={32} />
+    </a>
+  );
+};
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -16,7 +32,8 @@ export const Navbar = () => {
     { name: 'Services', path: '/services' },
     { name: 'BrandBox', path: '/dfy-services' },
     { name: 'PostPilot', path: '/social-media' },
-    { name: 'Our Update', path: 'https://webhousemedia.blogspot.com/' },
+    { name: 'Our Work', path: '/portfolio' },
+    { name: 'Blog', path: '/blog' },
     { name: 'Contact', path: '/contact' },
   ];
 
@@ -121,16 +138,16 @@ export const Footer = () => {
                     className="w-full h-full object-cover"
                 />
               </div>
-              <span className="font-bold text-2xl tracking-tight">Webhouse Media</span>
+            <span className="font-bold text-2xl tracking-tight">Webhouse</span>
             </Link>
             <p className="text-white/60 max-w-md mb-8">
-              Webhouse Media and Marketing Solution provides full-service digital systems and marketing infrastructures for businesses looking to scale.
+              We help African businesses grow online with simple digital solutions. From website design to social media management, we make digital growth easy and affordable for every entrepreneur.
             </p>
             <div className="flex gap-4">
               <a href="https://www.facebook.com/webhouselab/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-emerald-500 transition-all text-white/60 hover:text-white" title="Facebook">
                 <Facebook size={20} />
               </a>
-              <a href="https://www.instagram.com/p/DV5FZ69DtLW/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-emerald-500 transition-all text-white/60 hover:text-white" title="Instagram">
+              <a href="https://www.instagram.com/webhousemedia/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-emerald-500 transition-all text-white/60 hover:text-white" title="Instagram">
                 <Instagram size={20} />
               </a>
               <a href="https://ng.linkedin.com/in/oluranti-clement-7116b078" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-emerald-500 transition-all text-white/60 hover:text-white" title="LinkedIn">
@@ -143,18 +160,34 @@ export const Footer = () => {
           </div>
           
           <div>
-            <h4 className="font-semibold mb-6">Company</h4>
+            <h4 className="font-black mb-6 uppercase tracking-widest text-[10px] text-emerald-500 italic">Our Services</h4>
             <ul className="space-y-4 text-white/60">
-              <li><Link href="/about" className="hover:text-emerald-400 transition-colors font-medium">About Us</Link></li>
-              <li><Link href="/services" className="hover:text-emerald-400 transition-colors font-medium">Services</Link></li>
-              <li><Link href="/dfy-services" className="hover:text-emerald-400 transition-colors font-medium">BrandBox</Link></li>
+              <li><Link href="/website-design" className="hover:text-emerald-400 transition-colors font-medium">Website Design</Link></li>
+              <li><Link href="/social-media" className="hover:text-emerald-400 transition-colors font-medium">PostPilot (Social Ads)</Link></li>
+              <li><Link href="/dfy-services" className="hover:text-emerald-400 transition-colors font-medium">BrandBox (Branding)</Link></li>
+              <li><Link href="/ai-video-content" className="hover:text-emerald-400 transition-colors font-medium">AI Video Production</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-semibold mb-6">Contact</h4>
+            <h4 className="font-black mb-6 uppercase tracking-widest text-[10px] text-emerald-500 italic">Quick Links</h4>
             <ul className="space-y-4 text-white/60">
-              <li className="font-medium">webhousemediastudio@gmail.com</li>
+              <li><Link href="/about" className="hover:text-emerald-400 transition-colors font-medium">About Webhouse</Link></li>
+              <li><Link href="/portfolio" className="hover:text-emerald-400 transition-colors font-medium">Our Work</Link></li>
+              <li><Link href="/pricing" className="hover:text-emerald-400 transition-colors font-medium">Price List</Link></li>
+              <li><Link href="/blog" className="hover:text-emerald-400 transition-colors font-medium">Business Tips Blog</Link></li>
+              <li><Link href="/contact" className="hover:text-emerald-400 transition-colors font-medium">Contact Us</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-black mb-6 uppercase tracking-widest text-[10px] text-emerald-500 italic">Contact</h4>
+            <ul className="space-y-4 text-white/60">
+              <li className="font-medium">
+                <a href="mailto:webhousemediastudio@gmail.com?subject=Strategic%20Digital%20Growth%20Inquiry&body=Hi%20Webhouse%20Media%20Team%2C%0A%0AI'm%20interested%20in%20scaling%20my%20business%20digital%20infrastructure%20and%20would%20like%20to%20learn%20more%20about%20your%20services." className="hover:text-emerald-400 transition-colors">
+                  webhousemediastudio@gmail.com
+                </a>
+              </li>
               <li className="font-medium">+234 806 018 0077</li>
               <li className="font-medium">15 Ring Road, Ibadan, Oyo State, Nigeria</li>
             </ul>

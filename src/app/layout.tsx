@@ -8,22 +8,24 @@ import { AppProvider } from '@/src/context/AppContext';
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.webhousemedia.com.ng'),
   title: {
-    default: 'Webhouse Media – Best Digital Marketing & AI Marketing Agency in Nigeria',
-    template: '%s | Webhouse Media'
+    default: 'Webhouse | Simple Digital Solutions for Growing Businesses',
+    template: '%s | Webhouse'
   },
-  description: 'Webhouse Media is the top digital marketing agency in Nigeria, specializing in AI marketing tools, social media growth, and SaaS development across Africa.',
-  keywords: ['digital marketing agency in Nigeria', 'social media marketing Lagos', 'best digital marketer Nigeria', 'AI marketing tools small business', 'Facebook ads expert Nigeria', 'Instagram growth Africa', 'website development Nigeria', 'SaaS development Africa'],
+  description: 'We help African businesses, schools, churches, and entrepreneurs grow online with affordable website design, social media management, and digital marketing.',
+  keywords: ['digital marketing Nigeria', 'website design Lagos', 'affordable branding Africa', 'social media management for small business', 'AI tools for business Nigeria', 'business growth solutions'],
   openGraph: {
-    title: 'Webhouse Media – Best Digital Marketing & AI Marketing Agency in Nigeria',
-    description: 'Scale your business with the best digital marketing, AI automation, and SaaS development services in Nigeria and Africa.',
-    url: 'https://webhousemedia.vercel.app',
-    siteName: 'Webhouse Media',
+    title: 'Webhouse | Grow Your Business Online Easily',
+    description: 'Affordable digital solutions for entrepreneurs and small businesses in Africa. Website design, branding, and marketing made simple.',
+    url: 'https://www.webhousemedia.com.ng',
+    siteName: 'Webhouse',
     images: [
       {
-        url: 'https://res.cloudinary.com/dhzouslh1/image/upload/v1773161041/591626377_1368804921611344_6068326484691096664_n_c1x0d4.jpg',
+        url: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200&h=630',
         width: 1200,
         height: 630,
+        alt: 'Webhouse - Digital Solutions for Businesses',
       }
     ],
     locale: 'en_NG',
@@ -31,14 +33,12 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Webhouse Media – Best Digital Marketing & AI Marketing Agency in Nigeria',
-    description: 'Scale your business with the best digital marketing, AI automation, and SaaS development services in Nigeria and Africa.',
-  },
-  verification: {
-    google: 'google780f93d2db1e5fc1',
+    title: 'Webhouse | Simple Digital Solutions',
+    description: 'Helping African businesses grow with smart, affordable digital tools.',
+    images: ['https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200&h=630'],
   },
   alternates: {
-    canonical: 'https://webhousemedia.vercel.app',
+    canonical: 'https://www.webhousemedia.com.ng',
   }
 };
 
@@ -47,13 +47,47 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Webhouse",
+    "url": "https://www.webhousemedia.com.ng",
+    "logo": "https://www.webhousemedia.com.ng/logo.png",
+    "image": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200",
+    "description": "We help African businesses grow online with simple digital solutions like website design and social media marketing.",
+    "telephone": "+234-806-018-0077",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Lagos",
+      "addressCountry": "NG"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+234-806-018-0077",
+      "contactType": "Customer Support",
+      "email": "webhousemediastudio@gmail.com",
+      "areaServed": ["NG", "Africa"]
+    },
+    "sameAs": [
+      "https://www.facebook.com/webhouselab/",
+      "https://www.instagram.com/webhousemedia/",
+      "https://www.linkedin.com/company/webhouse-media/"
+    ]
+  };
+
   return (
-    <html lang="en" className={`${inter.variable}`}>
-      <body className="min-h-screen bg-white font-sans selection:bg-emerald-500 selection:text-white antialiased">
+    <html lang="en" className={`${inter.variable} scroll-smooth`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
+      <body className="min-h-screen bg-white font-sans selection:bg-emerald-600 selection:text-white antialiased">
         <AppProvider>
           <Navbar />
           <WhatsAppButton />
-          <main>{children}</main>
+          <main className="overflow-x-hidden">{children}</main>
           <Footer />
         </AppProvider>
       </body>
