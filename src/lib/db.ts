@@ -24,13 +24,21 @@ try {
     }
   }
 } catch (error) {
-  console.error("Database connection error:", error);
-  // Fallback to in-memory if disk is unavailable/locked
-  db = new Database(':memory:');
+  console.warn("Standard database connection failed, attempting readonly mode:", error);
+  try {
+    // Try opening as readonly if read-write failed (common in serverless)
+    db = new Database(dbPath, { readonly: true, timeout: 10000 });
+  } catch (readOnlyError) {
+    console.error("Database connection error (both RW and RO):", readOnlyError);
+    // Fallback to in-memory if disk is unavailable/locked
+    db = new Database(':memory:');
+  }
 }
 
 // Initialize tables
 try {
+  // Check if we can write by attempting a schema change or just checking if tables exist
+  // We wrap this in a transaction or a simple check
   db.exec(`
     CREATE TABLE IF NOT EXISTS leads (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -57,7 +65,7 @@ try {
     );
   `);
 } catch (error) {
-  console.error("Database schema initialization error:", error);
+  console.warn("Database schema initialization skipped or failed (possibly read-only environment):", error);
 }
 
 export default db;

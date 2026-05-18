@@ -13,9 +13,9 @@ export const metadata: Metadata = {
   title: 'Grow your business online, simply',
   description: 'We help African businesses, schools, churches, and entrepreneurs grow online with affordable website design, social media management, and digital marketing.',
   icons: {
-    icon: '/logo.svg',
-    shortcut: '/logo.svg',
-    apple: '/logo.svg',
+    icon: 'https://res.cloudinary.com/dhzouslh1/image/upload/v1779114037/logo_cevoae.jpg',
+    shortcut: 'https://res.cloudinary.com/dhzouslh1/image/upload/v1779114037/logo_cevoae.jpg',
+    apple: 'https://res.cloudinary.com/dhzouslh1/image/upload/v1779114037/logo_cevoae.jpg',
   },
   keywords: ['digital marketing Nigeria', 'website design Lagos', 'affordable branding Africa', 'social media management for small business', 'AI tools for business Nigeria', 'business growth solutions'],
   openGraph: {
@@ -56,7 +56,7 @@ export default function RootLayout({
     "name": "Webhouse",
     "description": "Grow your business online, simply",
     "url": "https://www.webhousemedia.com.ng",
-    "logo": "/logo.svg",
+    "logo": "https://res.cloudinary.com/dhzouslh1/image/upload/v1779114037/logo_cevoae.jpg",
     "image": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200",
     "telephone": "+234-806-018-0077",
     "address": {
