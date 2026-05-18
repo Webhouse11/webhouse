@@ -40,7 +40,8 @@ const ContactContent = () => {
     otherService: '',
     budget: '',
     otherBudget: '',
-    message: ''
+    message: '',
+    twitter_handle: '' // Honeypot field
   });
 
   React.useEffect(() => {
@@ -56,6 +57,14 @@ const ContactContent = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    // Honeypot check
+    if (formData.twitter_handle) {
+      console.warn('Bot detected by honeypot');
+      setStatus('success'); // Fake success to bot
+      return;
+    }
+
     setStatus('submitting');
     
     const finalService = formData.service === 'Others' ? formData.otherService : formData.service;
@@ -114,6 +123,17 @@ const ContactContent = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <h2 className="text-3xl font-bold mb-8">Request a <span className="text-emerald-600">Quote</span></h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {/* Honeypot field - hidden from humans */}
+                  <div className="hidden" aria-hidden="true">
+                    <input 
+                      type="text" 
+                      name="twitter_handle" 
+                      tabIndex={-1} 
+                      autoComplete="off"
+                      value={formData.twitter_handle}
+                      onChange={handleChange}
+                    />
+                  </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Full Name</label>
                     <input 

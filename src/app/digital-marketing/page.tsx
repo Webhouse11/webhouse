@@ -5,7 +5,10 @@ import { motion } from 'motion/react';
 import { Megaphone, Target, BarChart, Zap, ArrowRight, MessageCircle, DollarSign } from 'lucide-react';
 import Link from 'next/link';
 
+import { useCurrency } from '@/src/hooks/useCurrency';
+
 export default function DigitalMarketingPage() {
+  const { formatPrice } = useCurrency();
   return (
     <div className="bg-white">
       {/* Hero */}
@@ -81,7 +84,7 @@ export default function DigitalMarketingPage() {
                   <div className="absolute inset-0 bg-emerald-950/40"></div>
                </div>
                <div>
-                  <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">Spending ₦1,000 to Make ₦10,000.</h2>
+                  <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">Spending {formatPrice("₦1,000")} to Make {formatPrice("₦10,000")}.</h2>
                   <p className="text-lg text-slate-400 mb-12 leading-relaxed">
                     That is the goal of digital marketing. We focus on ROI (Return on Investment). If your ads aren't bringing in more money than they cost, we fix them. Simple.
                   </p>

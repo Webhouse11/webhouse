@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Check, ArrowRight, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
+import { useCurrency } from '@/src/hooks/useCurrency';
 
 const webPackages = [
   {
@@ -62,6 +63,7 @@ const socialPackages = [
 ];
 
 export default function PricingPage() {
+  const { formatPrice } = useCurrency();
   return (
     <div className="bg-[#f8fafc]">
       <section className="pt-32 pb-24 bg-white">
@@ -107,7 +109,14 @@ export default function PricingPage() {
                   </div>
                 )}
                 <h3 className="text-xl font-black mb-4 uppercase tracking-tighter italic">{p.name}</h3>
-                <div className="text-4xl font-black text-slate-900 mb-6 tracking-tighter italic">{p.price}</div>
+                <div className="text-4xl font-black text-slate-900 mb-6 tracking-tighter italic">
+                  {p.price.includes('₦') ? (
+                    <>
+                      {p.price.split('₦')[0]}
+                      {formatPrice(p.price.split('₦')[1])}
+                    </>
+                  ) : p.price}
+                </div>
                 <p className="text-slate-500 mb-10 text-sm leading-relaxed font-medium h-12">{p.desc}</p>
                 
                 <ul className="space-y-5 mb-12">

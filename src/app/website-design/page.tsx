@@ -4,8 +4,10 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Globe, Smartphone, Zap, ShieldCheck, ArrowRight, MessageCircle, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
+import { useCurrency } from '@/src/hooks/useCurrency';
 
 export default function WebsiteDesignPage() {
+  const { formatPrice } = useCurrency();
   return (
     <div className="bg-[#f8fafc]">
       {/* Hero */}
@@ -119,7 +121,7 @@ export default function WebsiteDesignPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-emerald-600 rounded-[4rem] p-12 md:p-20 text-white text-center">
             <h2 className="text-3xl md:text-6xl font-black mb-8 leading-tight">Ready to build your digital home?</h2>
             <p className="text-xl md:text-2xl text-emerald-100 mb-12 max-w-2xl mx-auto">
-              Our packages start from ₦150,000. Let's create something beautiful for your brand today.
+              Our packages start from {formatPrice("₦150,000")}. Let's create something beautiful for your brand today.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
                <Link href="/pricing" className="bg-white text-emerald-600 px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all">

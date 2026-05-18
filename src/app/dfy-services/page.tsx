@@ -17,6 +17,7 @@ import {
   CheckCircle2,
   ArrowRight
 } from 'lucide-react';
+import { useCurrency } from '@/src/hooks/useCurrency';
 
 const brandBoxMenu = [
   { 
@@ -121,6 +122,7 @@ const brandBoxMenu = [
 ];
 
 export default function BrandBoxPage() {
+  const { formatPrice } = useCurrency();
   return (
     <div className="bg-[#f8fafc]">
       {/* Hero */}
@@ -164,11 +166,11 @@ export default function BrandBoxPage() {
                   </div>
                   <div className="text-right">
                     <div className="flex items-center justify-end gap-3 mb-1">
-                      <span className="text-slate-400/60 line-through text-[10px] font-bold tracking-tight">{item.oldPrice}</span>
+                      <span className="text-slate-400/60 line-through text-[10px] font-bold tracking-tight">{formatPrice(item.oldPrice)}</span>
                       <span className="bg-amber-400 text-slate-900 text-[9px] font-black px-2 py-0.5 rounded-md">BEST PRICE</span>
                     </div>
                     <div className="text-2xl md:text-3xl font-black text-slate-900 leading-none tracking-tighter">
-                      {item.currentPrice}
+                      {formatPrice(item.currentPrice)}
                     </div>
                   </div>
                 </div>
@@ -233,7 +235,7 @@ export default function BrandBoxPage() {
           <div className="inline-flex flex-col md:flex-row items-center gap-8">
             <div className="bg-white/10 backdrop-blur-md px-12 py-8 rounded-[2.5rem] border border-white/20">
               <div className="text-emerald-400 text-xs font-black uppercase tracking-widest mb-2 text-left">THE INFRASTRUCTURE BOX</div>
-              <div className="text-6xl font-black italic">₦1.25M</div>
+              <div className="text-6xl font-black italic">{formatPrice("₦1.25M")}</div>
             </div>
             <a 
               href="https://wa.me/2348060180077?text=I'm%20ready%20to%20order%20the%20Full%20Infrastructure%20Package." 

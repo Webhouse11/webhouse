@@ -8,6 +8,8 @@ import { cn } from '@/src/lib/utils';
 import { HeroSlider } from '@/src/components/HeroSlider';
 import { TestimonialSlider } from '@/src/components/TestimonialSlider';
 import { LeadMagnet } from '@/src/components/LeadMagnet';
+import EnrollmentNotification from '@/src/components/EnrollmentNotification';
+import CourseTicker from '@/src/components/CourseTicker';
 
 const services = [
   {
@@ -192,6 +194,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Course Slider Section */}
+      <CourseTicker />
+
       {/* Industries Grid */}
       <section className="py-24 bg-white">
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -236,6 +241,8 @@ export default function Home() {
 
       {/* Lead Magnet */}
       <LeadMagnet />
+
+      <EnrollmentNotification />
 
       {/* Quick Contact / WhatsApp Section */}
       <section className="py-24 bg-white">

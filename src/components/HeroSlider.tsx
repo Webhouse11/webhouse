@@ -38,6 +38,14 @@ const slides = [
     link: "/ai-video-content",
     image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=2400",
     accent: "bg-purple-600"
+  },
+  {
+    title: "Master High-Income Skills at DigitAcademy",
+    subtitle: "Join 1,200+ students learning AI tools, marketing, and freelance skills to thrive in the digital economy.",
+    cta: "Explore Courses",
+    link: "/digitacademy",
+    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=2400",
+    accent: "bg-emerald-500"
   }
 ];
 

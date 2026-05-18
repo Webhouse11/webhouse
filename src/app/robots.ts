@@ -5,7 +5,15 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/admin/',
+      disallow: [
+        '/admin/',
+        '/api/',
+        '/_next/',
+        '/wp-admin',
+        '/administrator',
+        '/.env',
+        '/*.php',
+      ],
     },
     sitemap: 'https://webhousemedia.vercel.app/sitemap.xml',
   };

@@ -2,6 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import Image from 'next/image';
+import EnrollmentNotification from '@/src/components/EnrollmentNotification';
+import CourseTicker from '@/src/components/CourseTicker';
 import { 
   Zap, 
   Target, 
@@ -27,6 +30,7 @@ import {
   Mail
 } from 'lucide-react';
 import Link from 'next/link';
+import { useCurrency } from '@/src/hooks/useCurrency';
 
 const courses = [
   // --- AI TOOLS (15) ---
@@ -105,8 +109,8 @@ const courses = [
     title: "AI SaaS Builder Guide",
     desc: "Build 'No-Code' AI applications and sell them as a service (SaaS).",
     outcome: "Your own AI software product.",
-    price: "₦45,000",
-    oldPrice: "₦120,000",
+    price: "₦120,000",
+    oldPrice: "₦240,000",
     tags: ["Startup", "Dev-Free"],
     level: "Advanced",
     duration: "15 Hours",
@@ -161,8 +165,8 @@ const courses = [
     title: "AI Automation for Agencies",
     desc: "Scale your agency by automating lead gen, onboarding, and fulfillment.",
     outcome: "Operate an agency with zero staff.",
-    price: "₦35,000",
-    oldPrice: "₦100,000",
+    price: "₦125,000",
+    oldPrice: "₦250,000",
     tags: ["Agency", "Scale"],
     level: "Advanced",
     duration: "12 Hours",
@@ -189,8 +193,8 @@ const courses = [
     title: "AI Agents & Autonomous Workflows",
     desc: "Build AI agents using CrewAI and LangChain to automate entire business processes.",
     outcome: "Fully automated 'Staff-less' workflows.",
-    price: "₦50,000",
-    oldPrice: "₦150,000",
+    price: "₦150,000",
+    oldPrice: "₦300,000",
     tags: ["Cutting Edge", "Automation"],
     level: "Advanced",
     duration: "15 Hours",
@@ -231,8 +235,8 @@ const courses = [
     title: "Custom GPTs for Enterprise",
     desc: "Build highly specific AI agents for large companies and consult for them.",
     outcome: "B2B AI consultancy deals.",
-    price: "₦50,000",
-    oldPrice: "₦150,000",
+    price: "₦185,000",
+    oldPrice: "₦350,000",
     tags: ["Enterprise", "B2B"],
     level: "Advanced",
     duration: "14 Hours",
@@ -473,8 +477,8 @@ const courses = [
     title: "Search Engine Optimization Pro",
     desc: "Rank on Page 1 of Google and drive consistent free traffic for years.",
     outcome: "Authority-level SEO skills.",
-    price: "₦50,000",
-    oldPrice: "₦150,000",
+    price: "₦110,000",
+    oldPrice: "₦220,000",
     tags: ["Organic", "Search"],
     level: "Intermediate",
     duration: "12 Hours",
@@ -585,8 +589,8 @@ const courses = [
     title: "High-Ticket Sales Funnels",
     desc: "Design and build $10k+ funnel systems for coaches, consultants, and agencies.",
     outcome: "Expert funnel architect status.",
-    price: "₦65,000",
-    oldPrice: "₦195,000",
+    price: "₦145,000",
+    oldPrice: "₦290,000",
     tags: ["High Ticket", "ROI"],
     level: "Advanced",
     duration: "12 Hours",
@@ -890,6 +894,7 @@ export default function DigitAcademy() {
   const [activeCat, setActiveCat] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [mounted, setMounted] = useState(false);
+  const { formatPrice } = useCurrency();
 
   useEffect(() => setMounted(true), []);
 
@@ -1032,6 +1037,8 @@ export default function DigitAcademy() {
         </div>
       </section>
 
+      <CourseTicker />
+
       {/* 3. FEATURED COURSES SECTION */}
       <section id="courses" className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1072,7 +1079,14 @@ export default function DigitAcademy() {
                     className="group bg-white rounded-[2rem] overflow-hidden border border-slate-100 hover:border-emerald-500 transition-all shadow-sm hover:shadow-2xl"
                   >
                     <div className="relative aspect-[16/10] overflow-hidden">
-                      <img src={course.image} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" title={course.title} />
+                      <Image 
+                        src={course.image} 
+                        alt={course.title} 
+                        fill 
+                        className="object-cover group-hover:scale-110 transition-transform duration-700" 
+                        title={course.title}
+                        referrerPolicy="no-referrer"
+                      />
                       <div className="absolute top-4 left-4">
                         <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-[10px] font-black uppercase tracking-widest text-slate-900 shadow-sm">
                           {course.level}
@@ -1100,7 +1114,7 @@ export default function DigitAcademy() {
                             <Target size={14} className="text-emerald-500" /> {course.outcome}
                          </div>
                          <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-widest">
-                            <TrendingUp size={14} className="text-emerald-500" /> Income: {course.income}
+                            <TrendingUp size={14} className="text-emerald-500" /> Income: {formatPrice(course.income)}
                          </div>
                          <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-widest">
                             <Clock size={14} className="text-emerald-500" /> {course.duration} to complete
@@ -1109,8 +1123,8 @@ export default function DigitAcademy() {
 
                       <div className="flex items-center justify-between gap-4 pt-6 border-t border-slate-50">
                          <div>
-                            <div className="text-slate-400 text-xs line-through font-bold">{course.oldPrice}</div>
-                            <div className="text-2xl font-black text-slate-900">{course.price}</div>
+                            <div className="text-slate-400 text-xs line-through font-bold">{formatPrice(course.oldPrice)}</div>
+                            <div className="text-2xl font-black text-slate-900">{formatPrice(course.price)}</div>
                          </div>
                          <button className="flex-grow bg-slate-950 hover:bg-emerald-600 text-white p-4 rounded-2xl font-black transition-all flex items-center justify-center gap-2 group-hover:scale-105">
                             Enroll Now <ChevronRight size={18} />
@@ -1170,7 +1184,14 @@ export default function DigitAcademy() {
              
              <div className="lg:w-1/2 relative">
                 <div className="relative aspect-square rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl">
-                   <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1200" alt="Process" className="w-full h-full object-cover opacity-60" title="Academy process" />
+                   <Image 
+                     src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1200" 
+                     alt="Process" 
+                     fill 
+                     className="object-cover opacity-60" 
+                     title="Academy process"
+                     referrerPolicy="no-referrer"
+                   />
                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
                    
                    {/* Floating Stats Card */}
@@ -1290,6 +1311,8 @@ export default function DigitAcademy() {
       {/* Footer minimal info */}
       <footer className="py-12 bg-white border-t border-slate-50 text-center">
       </footer>
+
+      <EnrollmentNotification />
     </div>
   );
 }

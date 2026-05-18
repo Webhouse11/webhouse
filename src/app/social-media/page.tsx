@@ -21,6 +21,7 @@ import {
   PlayCircle
 } from 'lucide-react';
 import Link from 'next/link';
+import { useCurrency } from '@/src/hooks/useCurrency';
 
 const stats = [
   { label: "Brands Managed", value: "500+" },
@@ -106,6 +107,7 @@ const testimonials = [
 ];
 
 export default function SocialMediaPage() {
+  const { formatPrice } = useCurrency();
   return (
     <div className="bg-[#f8fafc]">
       {/* Hero */}
@@ -260,7 +262,7 @@ export default function SocialMediaPage() {
                 <h3 className="text-2xl font-black mb-1">{plan.name}</h3>
                 <p className={`text-sm mb-6 ${plan.highlight ? 'text-indigo-100' : 'text-slate-500'}`}>{plan.desc}</p>
                 <div className="flex items-baseline gap-1 mb-8">
-                  <span className="text-4xl font-black tracking-tighter italic">{plan.price}</span>
+                  <span className="text-4xl font-black tracking-tighter italic">{formatPrice(plan.price)}</span>
                   <span className={`text-sm font-bold ${plan.highlight ? 'text-indigo-200' : 'text-slate-400'}`}>{plan.period}</span>
                 </div>
                 <ul className="space-y-4 mb-10">
