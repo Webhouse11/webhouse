@@ -46,10 +46,10 @@ export const Navbar = () => {
           <Link href="/" className="flex items-center gap-2">
             <div className="relative w-12 h-12 rounded-xl overflow-hidden shadow-sm">
               <Image 
-                src="https://www.webhousemedia.com.ng/logo.png" 
+                src="https://res.cloudinary.com/dhzouslh1/image/upload/v1778317070/314275151_524956896323533_5409386762391218944_n_hqqfpa.jpg" 
                 alt="Webhouse Media Logo" 
                 fill
-                className="object-contain"
+                className="object-cover"
                 referrerPolicy="no-referrer"
               />
             </div>
@@ -137,10 +137,10 @@ export const Footer = () => {
             <Link href="/" className="flex items-center gap-2 mb-6">
               <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-white p-1">
                 <Image 
-                    src="https://www.webhousemedia.com.ng/logo.png" 
+                    src="https://res.cloudinary.com/dhzouslh1/image/upload/v1778317070/314275151_524956896323533_5409386762391218944_n_hqqfpa.jpg" 
                     alt="Webhouse Media Logo" 
                     fill
-                    className="object-contain"
+                    className="object-cover"
                     referrerPolicy="no-referrer"
                 />
               </div>
