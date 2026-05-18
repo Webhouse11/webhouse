@@ -46,7 +46,7 @@ export const Navbar = () => {
           <Link href="/" className="flex items-center gap-2">
             <div className="relative w-12 h-12 rounded-xl overflow-hidden">
               <Image 
-                src="https://res.cloudinary.com/dhzouslh1/image/upload/v1779114037/logo_cevoae.jpg" 
+                src="/logo.svg" 
                 alt="Webhouse Media Logo" 
                 fill
                 className="object-cover"
@@ -137,7 +137,7 @@ export const Footer = () => {
             <Link href="/" className="flex items-center gap-2 mb-6">
               <div className="relative w-12 h-12 rounded-xl overflow-hidden p-0">
                 <Image 
-                    src="https://res.cloudinary.com/dhzouslh1/image/upload/v1779114037/logo_cevoae.jpg" 
+                    src="/logo.svg" 
                     alt="Webhouse Media Logo" 
                     fill
                     className="object-cover"
