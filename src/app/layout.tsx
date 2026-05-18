@@ -56,7 +56,7 @@ export default function RootLayout({
     "name": "Webhouse",
     "description": "Grow your business online, simply",
     "url": "https://www.webhousemedia.com.ng",
-    "logo": "https://res.cloudinary.com/dhzouslh1/image/upload/v1778317070/314275151_524956896323533_5409386762391218944_n_hqqfpa.jpg",
+    "logo": "https://res.cloudinary.com/dhzouslh1/image/upload/v1779094898/WEBHOUSE_BRAND_LOGO_cbcyof.jpg",
     "image": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200",
     "telephone": "+234-806-018-0077",
     "address": {

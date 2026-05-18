@@ -44,9 +44,9 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
           <Link href="/" className="flex items-center gap-2">
-            <div className="relative w-12 h-12 rounded-xl overflow-hidden shadow-sm">
+            <div className="relative w-12 h-12 rounded-xl overflow-hidden">
               <Image 
-                src="https://res.cloudinary.com/dhzouslh1/image/upload/v1778317070/314275151_524956896323533_5409386762391218944_n_hqqfpa.jpg" 
+                src="https://res.cloudinary.com/dhzouslh1/image/upload/v1779094898/WEBHOUSE_BRAND_LOGO_cbcyof.jpg" 
                 alt="Webhouse Media Logo" 
                 fill
                 className="object-cover"
@@ -135,9 +135,9 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-6">
-              <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-white p-1">
+              <div className="relative w-12 h-12 rounded-xl overflow-hidden p-0">
                 <Image 
-                    src="https://res.cloudinary.com/dhzouslh1/image/upload/v1778317070/314275151_524956896323533_5409386762391218944_n_hqqfpa.jpg" 
+                    src="https://res.cloudinary.com/dhzouslh1/image/upload/v1779094898/WEBHOUSE_BRAND_LOGO_cbcyof.jpg" 
                     alt="Webhouse Media Logo" 
                     fill
                     className="object-cover"

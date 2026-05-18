@@ -15,10 +15,6 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.webhousemedia.com.ng',
       },
-      {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-      },
     ],
   },
 };
