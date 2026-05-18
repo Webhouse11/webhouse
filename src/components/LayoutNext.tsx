@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Facebook, Instagram, Linkedin, Youtube, MessageCircle } from 'lucide-react';
 import { cn } from '@/src/lib/utils';
@@ -33,6 +34,7 @@ export const Navbar = () => {
     { name: 'BrandBox', path: '/dfy-services' },
     { name: 'PostPilot', path: '/social-media' },
     { name: 'Our Work', path: '/portfolio' },
+    { name: 'Academy', path: '/digitacademy' },
     { name: 'Blog', path: 'https://webhousemedia.blogspot.com/' },
     { name: 'Contact', path: '/contact' },
   ];
@@ -42,14 +44,16 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center">
-              <img 
-                src="https://res.cloudinary.com/dhzouslh1/image/upload/v1778317070/314275151_524956896323533_5409386762391218944_n_hqqfpa.jpg" 
+            <div className="relative w-12 h-12 rounded-xl overflow-hidden shadow-sm">
+              <Image 
+                src="https://www.webhousemedia.com.ng/logo.png" 
                 alt="Webhouse Media Logo" 
-                className="w-full h-full object-cover"
+                fill
+                className="object-contain"
+                referrerPolicy="no-referrer"
               />
             </div>
-            <span className="font-bold text-xl tracking-tight text-black hidden sm:block">
+            <span className="font-bold text-xl tracking-tight text-slate-900 hidden sm:block">
               Webhouse Media
             </span>
           </Link>
@@ -131,15 +135,18 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-6">
-              <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center">
-                <img 
-                    src="https://res.cloudinary.com/dhzouslh1/image/upload/v1778317070/314275151_524956896323533_5409386762391218944_n_hqqfpa.jpg" 
+              <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-white p-1">
+                <Image 
+                    src="https://www.webhousemedia.com.ng/logo.png" 
                     alt="Webhouse Media Logo" 
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-contain"
+                    referrerPolicy="no-referrer"
                 />
               </div>
             <span className="font-bold text-2xl tracking-tight">Webhouse</span>
             </Link>
+
             <p className="text-white/60 max-w-md mb-8">
               We help African businesses grow online with simple digital solutions. From website design to social media management, we make digital growth easy and affordable for every entrepreneur.
             </p>
@@ -175,6 +182,7 @@ export const Footer = () => {
               <li><Link href="/about" className="hover:text-emerald-400 transition-colors font-medium">About Webhouse</Link></li>
               <li><Link href="/portfolio" className="hover:text-emerald-400 transition-colors font-medium">Our Work</Link></li>
               <li><Link href="/pricing" className="hover:text-emerald-400 transition-colors font-medium">Price List</Link></li>
+              <li><Link href="/digitacademy" className="hover:text-emerald-400 transition-colors font-medium">DigitAcademy</Link></li>
               <li><a href="https://webhousemedia.blogspot.com/" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors font-medium">Business Tips Blog</a></li>
               <li><Link href="/contact" className="hover:text-emerald-400 transition-colors font-medium">Contact Us</Link></li>
             </ul>
