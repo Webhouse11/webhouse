@@ -13,9 +13,9 @@ export const metadata: Metadata = {
   title: 'Grow your business online, simply',
   description: 'We help African businesses, schools, churches, and entrepreneurs grow online with affordable website design, social media management, and digital marketing.',
   icons: {
-    icon: 'https://res.cloudinary.com/dhzouslh1/image/upload/v1778317070/314275151_524956896323533_5409386762391218944_n_hqqfpa.jpg',
-    shortcut: 'https://res.cloudinary.com/dhzouslh1/image/upload/v1778317070/314275151_524956896323533_5409386762391218944_n_hqqfpa.jpg',
-    apple: 'https://res.cloudinary.com/dhzouslh1/image/upload/v1778317070/314275151_524956896323533_5409386762391218944_n_hqqfpa.jpg',
+    icon: 'https://res.cloudinary.com/dhzouslh1/image/upload/v1779094898/WEBHOUSE_BRAND_LOGO_cbcyof.jpg',
+    shortcut: 'https://res.cloudinary.com/dhzouslh1/image/upload/v1779094898/WEBHOUSE_BRAND_LOGO_cbcyof.jpg',
+    apple: 'https://res.cloudinary.com/dhzouslh1/image/upload/v1779094898/WEBHOUSE_BRAND_LOGO_cbcyof.jpg',
   },
   keywords: ['digital marketing Nigeria', 'website design Lagos', 'affordable branding Africa', 'social media management for small business', 'AI tools for business Nigeria', 'business growth solutions'],
   openGraph: {
