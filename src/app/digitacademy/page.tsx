@@ -32,7 +32,22 @@ import {
 import Link from 'next/link';
 import { useCurrency } from '@/src/hooks/useCurrency';
 
-const courses = [
+const rawCourses = [
+  // --- FLAGSHIP COURSE ---
+  {
+    id: 100,
+    title: "Viral Storytelling & AI Content Automation",
+    desc: "Learn How to Create Viral Stories for 10+ Global Platforms, Use AI Automation to Work Smarter and Faster, Build Massive Audience Engagement, Grow a Loyal Community, and Turn Your Content Into Consistent Online Income.",
+    outcome: "Command 10+ platforms with AI scale.",
+    price: "₦75,000",
+    oldPrice: "₦180,000",
+    tags: ["Flagship", "Viral Masterclass"],
+    level: "All Levels",
+    duration: "18 Hours",
+    income: "₦500k - ₦2.5M/mo",
+    cat: "content",
+    image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=800"
+  },
   // --- AI TOOLS (15) ---
   {
     id: 1,
@@ -882,6 +897,39 @@ const courses = [
   }
 ];
 
+const courses = rawCourses.map(c => {
+  const num = parseInt(c.price.replace(/[^\d]/g, ''), 10);
+  let price = "₦15,000";
+  let oldPrice = "₦45,000";
+  let income = c.income;
+
+  if (num <= 35000) {
+    price = "₦15,000";
+    oldPrice = "₦45,000";
+  } else if (num >= 40000 && num <= 55000) {
+    price = "₦25,000";
+    oldPrice = "₦75,000";
+  } else {
+    // 60,000 and above
+    price = "₦60,000";
+    oldPrice = "₦180,000";
+  }
+
+  // Ensure flagship course (id: 100) maps strictly to ₦60,000
+  if (c.id === 100) {
+    price = "₦60,000";
+    oldPrice = "₦180,000";
+    income = "₦500k - ₦2.5M/mo";
+  }
+
+  return {
+    ...c,
+    price,
+    oldPrice,
+    income
+  };
+});
+
 const categories = [
   { id: 'all', label: 'All Skills', icon: Globe },
   { id: 'marketing', label: 'Marketing', icon: Target },
@@ -1039,6 +1087,91 @@ export default function DigitAcademy() {
 
       <CourseTicker />
 
+      {/* FLAGSHIP MASTERCLASS SECTOR */}
+      <section className="py-24 bg-slate-950 text-white relative overflow-hidden border-y border-emerald-500/10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent opacity-50"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-full text-xs font-bold tracking-widest uppercase mb-4 inline-flex items-center gap-2">
+              <Award size={14} className="text-emerald-400" /> Flagship Program of the Year
+            </span>
+            <h2 className="text-5xl md:text-7xl font-black tracking-tight mt-3">
+              The Flagship <span className="text-emerald-400">Masterclass</span>
+            </h2>
+          </div>
+
+          <div className="bg-slate-900/50 backdrop-blur-md rounded-[3rem] border border-white/10 overflow-hidden shadow-2xl">
+            <div className="grid grid-cols-1 lg:grid-cols-12">
+              {/* Product Info */}
+              <div className="p-8 sm:p-12 lg:p-16 lg:col-span-7 flex flex-col justify-center">
+                <div className="flex items-center gap-2 text-emerald-400 text-sm font-black uppercase tracking-widest mb-6">
+                  <Zap size={16} className="fill-emerald-400" /> Premium Blueprint
+                </div>
+                <h3 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white mb-6 leading-tight">
+                  Viral Storytelling & <br />AI Content Automation
+                </h3>
+                
+                <p className="text-lg sm:text-xl text-slate-300 leading-relaxed font-medium mb-8">
+                  Learn How to Create Viral Stories for 10+ Global Platforms, Use AI Automation to Work Smarter and Faster, Build Massive Audience Engagement, Grow a Loyal Community, and Turn Your Content Into Consistent Online Income.
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                  {[
+                    "Mastery across 10+ global social platforms",
+                    "Advanced AI automation workflows & engines",
+                    "Massive audience build & tribe engagement",
+                    "Predictable content monetization systems",
+                    "Personal Telegram advisory & mentorship group",
+                    "Lifetime downloads and interactive syllabus updates"
+                  ].map((benefit, idx) => (
+                    <div key={idx} className="flex items-start gap-3">
+                      <CheckCircle2 size={18} className="text-emerald-500 shrink-0 mt-1" />
+                      <span className="text-sm font-semibold text-slate-300">{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 pt-8 border-t border-white/10">
+                  <div className="mb-4 sm:mb-0">
+                    <span className="text-xs text-slate-400 font-bold uppercase tracking-widest block mb-1">Tuition Fee</span>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-3xl font-black text-white">{formatPrice("₦60,000")}</span>
+                      <span className="text-sm text-slate-500 line-through font-bold">{formatPrice("₦180,000")}</span>
+                    </div>
+                  </div>
+                  <a 
+                    href={`https://wa.me/2348060180077?text=${encodeURIComponent("Hello Webhouse Lab, I would like to enroll in the Flagship 'Viral Storytelling & AI Content Automation' Masterclass.")}`}
+                    target="_blank"
+                    className="w-full sm:w-auto px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-lg rounded-2xl transition-all shadow-xl shadow-emerald-500/20 active:scale-95 flex items-center justify-center gap-2 text-center"
+                    rel="noopener noreferrer"
+                  >
+                    Enroll & Gain Instant Access <ArrowRight size={20} />
+                  </a>
+                </div>
+              </div>
+
+              {/* Product Visual */}
+              <div className="lg:col-span-5 relative aspect-square lg:aspect-auto min-h-[400px] bg-slate-900 border-t lg:border-t-0 lg:border-l border-white/10">
+                <Image 
+                  src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=1200"
+                  alt="Flagship Masterclass visual"
+                  fill
+                  className="object-cover opacity-80"
+                  referrerPolicy="no-referrer"
+                  title="Flagship curriculum preview"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-slate-950 via-transparent to-transparent"></div>
+                
+                {/* Visual Accent badge */}
+                <div className="absolute top-8 right-8 bg-emerald-500 text-slate-950 font-black text-xs uppercase tracking-widest px-4 py-2 rounded-full shadow-lg">
+                  Flagship
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 3. FEATURED COURSES SECTION */}
       <section id="courses" className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1126,9 +1259,14 @@ export default function DigitAcademy() {
                             <div className="text-slate-400 text-xs line-through font-bold">{formatPrice(course.oldPrice)}</div>
                             <div className="text-2xl font-black text-slate-900">{formatPrice(course.price)}</div>
                          </div>
-                         <button className="flex-grow bg-slate-950 hover:bg-emerald-600 text-white p-4 rounded-2xl font-black transition-all flex items-center justify-center gap-2 group-hover:scale-105">
+                         <a 
+                            href={`https://wa.me/2348060180077?text=${encodeURIComponent(`Hello Webhouse Lab, I'm interested in enrolling in the "${course.title}" course on DigitAcademy.`)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-grow bg-slate-950 hover:bg-emerald-600 text-white p-4 rounded-2xl font-black transition-all flex items-center justify-center gap-2 group-hover:scale-105 text-center text-sm"
+                         >
                             Enroll Now <ChevronRight size={18} />
-                         </button>
+                         </a>
                       </div>
                     </div>
                   </motion.div>
