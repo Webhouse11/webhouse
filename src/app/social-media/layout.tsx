@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'PostPilot Social Media Management',
   description: 'Professional social media management. We manage your social media platforms while you focus on growing your business.',
   openGraph: {
-    title: 'PostPilot™ Social Management | Webhouse Media',
+    title: 'PostPilot™ Social Management | Webhouse Lab',
     description: 'Bespoke social media content and growth strategy for modern brands and creators world-wide.',
     url: '/social-media',
   },

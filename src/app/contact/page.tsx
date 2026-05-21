@@ -79,7 +79,7 @@ const ContactContent = () => {
     try {
       await submitLead(leadData);
       
-      const whatsappMessage = `Hello Webhouse Media, I would like to request a quote.
+      const whatsappMessage = `Hello Webhouse Lab, I would like to request a quote.
 
 *Name:* ${formData.name}
 *Email:* ${formData.email}

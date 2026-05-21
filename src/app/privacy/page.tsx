@@ -10,7 +10,7 @@ export default function PrivacyPage() {
         <div className="prose prose-slate max-w-none space-y-6 text-black/70">
           <p>Last updated: May 7, 2026</p>
           <p>
-            At Webhouse Media and PostPilot, we are committed to protecting your privacy. This Privacy Policy outlines how we collect, use, and safeguard your personal information when you interact with our brand, website, or social media management services.
+            At Webhouse Lab and PostPilot, we are committed to protecting your privacy. This Privacy Policy outlines how we collect, use, and safeguard your personal information when you interact with our brand, website, or social media management services.
           </p>
 
           <h2 className="text-2xl font-bold text-black mt-10 mb-4">1. Information We Collect</h2>
@@ -32,7 +32,7 @@ export default function PrivacyPage() {
             <li>Provide and maintain our services, including PostPilot social media management.</li>
             <li>Communicate with you regarding project updates, invoices, and strategy consultations.</li>
             <li>Analyze engagement data to improve your social media growth and conversion rates.</li>
-            <li>Notify you about changes to our services or special offers from Webhouse Media.</li>
+            <li>Notify you about changes to our services or special offers from Webhouse Lab.</li>
           </ul>
 
           <h2 className="text-2xl font-bold text-black mt-10 mb-4">3. Data Sharing & Third Parties</h2>
@@ -57,7 +57,7 @@ export default function PrivacyPage() {
 
           <h2 className="text-2xl font-bold text-black mt-10 mb-4">7. Contacting Us</h2>
           <p>
-            If you have any questions regarding this Privacy Policy or the practices of Webhouse Media/PostPilot, please reach out to us at:
+            If you have any questions regarding this Privacy Policy or the practices of Webhouse Lab/PostPilot, please reach out to us at:
           </p>
           <p>
             <strong>Email:</strong> webhousemediastudio@gmail.com<br />

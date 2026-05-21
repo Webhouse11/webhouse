@@ -47,14 +47,14 @@ export const Navbar = () => {
             <div className="relative w-12 h-12 rounded-xl overflow-hidden">
               <Image 
                 src="https://res.cloudinary.com/dhzouslh1/image/upload/v1779114037/logo_cevoae.jpg" 
-                alt="Webhouse Media Logo" 
+                alt="Webhouse Lab Logo" 
                 fill
-                className="object-cover"
+                className="object-contain"
                 referrerPolicy="no-referrer"
               />
             </div>
             <span className="font-bold text-xl tracking-tight text-slate-900 hidden sm:block">
-              Webhouse Media
+              Webhouse Lab
             </span>
           </Link>
 
@@ -138,13 +138,13 @@ export const Footer = () => {
               <div className="relative w-12 h-12 rounded-xl overflow-hidden p-0">
                 <Image 
                     src="https://res.cloudinary.com/dhzouslh1/image/upload/v1779114037/logo_cevoae.jpg" 
-                    alt="Webhouse Media Logo" 
+                    alt="Webhouse Lab Logo" 
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     referrerPolicy="no-referrer"
                 />
               </div>
-              <span className="font-bold text-2xl tracking-tight">Webhouse</span>
+              <span className="font-bold text-2xl tracking-tight">Webhouse Lab</span>
             </Link>
 
             <p className="text-white/60 max-w-md mb-8">
@@ -234,7 +234,7 @@ export const Footer = () => {
         
         <div className="border-t border-white/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-white/40 text-sm">
-            © 2026 Webhouse Media and Marketing Solution. All rights reserved.
+            © 2026 Webhouse Lab. All rights reserved.
           </p>
           <div className="flex gap-8 text-sm text-white/40">
             <Link href="/privacy" className="hover:text-white font-medium">Privacy Policy</Link>

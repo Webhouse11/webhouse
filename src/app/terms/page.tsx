@@ -10,17 +10,17 @@ export default function TermsPage() {
         <div className="prose prose-slate max-w-none space-y-6 text-black/70">
           <p>Last updated: May 7, 2026</p>
           <p>
-            Welcome to Webhouse Media and PostPilot. By accessing our website and using our services, you agree to comply with and be bound by the following terms and conditions.
+            Welcome to Webhouse Lab and PostPilot. By accessing our website and using our services, you agree to comply with and be bound by the following terms and conditions.
           </p>
 
           <h2 className="text-2xl font-bold text-black mt-10 mb-4">1. Acceptance of Terms</h2>
           <p>
-            By engaging with Webhouse Media or subscribing to a PostPilot management plan, you acknowledge that you have read, understood, and agree to be bound by these terms. These terms apply to all visitors, users, and others who access or use the Service.
+            By engaging with Webhouse Lab or subscribing to a PostPilot management plan, you acknowledge that you have read, understood, and agree to be bound by these terms. These terms apply to all visitors, users, and others who access or use the Service.
           </p>
 
           <h2 className="text-2xl font-bold text-black mt-10 mb-4">2. Description of Services</h2>
           <p>
-            Webhouse Media provides premium digital marketing services, including but not limited to branding, web development, and AI automation. Our "PostPilot" division specifically offers social media management, content creation, and growth strategy across platforms like Facebook, Instagram, LinkedIn, TikTok, and YouTube.
+            Webhouse Lab provides premium digital marketing services, including but not limited to branding, web development, and AI automation. Our "PostPilot" division specifically offers social media management, content creation, and growth strategy across platforms like Facebook, Instagram, LinkedIn, TikTok, and YouTube.
           </p>
 
           <h2 className="text-2xl font-bold text-black mt-10 mb-4">3. Subscription & Billing</h2>
@@ -30,7 +30,7 @@ export default function TermsPage() {
 
           <h2 className="text-2xl font-bold text-black mt-10 mb-4">4. Content & Intellectual Property</h2>
           <p>
-            All content created by Webhouse Media/PostPilot specifically for your brand (graphics, captions, videos) becomes your intellectual property upon full payment of the relevant invoice. However, Webhouse Media retains a non-exclusive, worldwide, royalty-free license to display such content in our portfolios and marketing materials to showcase our expertise.
+            All content created by Webhouse Lab/PostPilot specifically for your brand (graphics, captions, videos) becomes your intellectual property upon full payment of the relevant invoice. However, Webhouse Lab retains a non-exclusive, worldwide, royalty-free license to display such content in our portfolios and marketing materials to showcase our expertise.
           </p>
 
           <h2 className="text-2xl font-bold text-black mt-10 mb-4">5. Account Access</h2>
@@ -40,7 +40,7 @@ export default function TermsPage() {
 
           <h2 className="text-2xl font-bold text-black mt-10 mb-4">6. Limitation of Liability</h2>
           <p>
-            Webhouse Media and PostPilot shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, or other intangible losses, resulting from your access to or use of our services. We do not guarantee specific growth numbers as social media algorithms are beyond our external control.
+            Webhouse Lab and PostPilot shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, or other intangible losses, resulting from your access to or use of our services. We do not guarantee specific growth numbers as social media algorithms are beyond our external control.
           </p>
 
           <h2 className="text-2xl font-bold text-black mt-10 mb-4">7. Termination</h2>

@@ -19,10 +19,10 @@ export const metadata: Metadata = {
   },
   keywords: ['digital marketing Nigeria', 'website design Lagos', 'affordable branding Africa', 'social media management for small business', 'AI tools for business Nigeria', 'business growth solutions'],
   openGraph: {
-    title: 'Webhouse | Grow Your Business Online Easily',
+    title: 'Webhouse Lab | Grow Your Business Online Easily',
     description: 'Affordable digital solutions for entrepreneurs and small businesses in Africa. Website design, branding, and marketing made simple.',
     url: '/',
-    siteName: 'Webhouse',
+    siteName: 'Webhouse Lab',
     images: [
       {
         url: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200&h=630',
@@ -53,7 +53,7 @@ export default function RootLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "Webhouse",
+    "name": "Webhouse Lab",
     "description": "Grow your business online, simply",
     "url": "https://www.webhousemedia.com.ng",
     "logo": "https://res.cloudinary.com/dhzouslh1/image/upload/v1779114037/logo_cevoae.jpg",

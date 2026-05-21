@@ -124,7 +124,7 @@ export default function AboutPage() {
               >
                 <img 
                   src="https://res.cloudinary.com/dhzouslh1/image/upload/v1778308765/681239616_960194553518462_5873236656219850661_n_jaffx1.jpg" 
-                  alt="OLURANTI CLEMENT - Founder of Webhouse Media" 
+                  alt="OLURANTI CLEMENT - Founder of Webhouse Lab" 
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent" />
@@ -142,20 +142,20 @@ export default function AboutPage() {
               <h2 className="text-4xl md:text-6xl font-black mb-8 italic lowercase leading-none tracking-tighter">engineered for <span className="text-emerald-600">scale</span>.</h2>
               <div className="space-y-6 text-lg text-slate-600 leading-relaxed font-medium">
                 <p>
-                  "I started Webhouse because I saw too many businesses in Africa struggling with digital solutions that were either overpriced or under-delivered. Most agencies sold 'looks', but I wanted to sell 'results'."
+                  "I started Webhouse Lab because I saw too many businesses in Africa struggling with digital solutions that were either overpriced or under-delivered. Most agencies sold 'looks', but I wanted to sell 'results'."
                 </p>
                 <p>
                   My goal was to bridge the gap between high-level engineering and everyday business growth. We aren't just an agency; we are your strategic partner in building a digital infrastructure that works while you sleep.
                 </p>
                 <p>
-                  Today, Webhouse is more than just me. It's a team of hungry creatives and engineers dedicated to one thing: making your brand the most respected in your industry.
+                  Today, Webhouse Lab is more than just me. It's a team of hungry creatives and engineers dedicated to one thing: making your brand the most respected in your industry.
                 </p>
               </div>
               <div className="mt-12 flex items-center gap-6">
                  <div className="w-16 h-16 rounded-full bg-slate-100 border-2 border-emerald-500/20 flex items-center justify-center font-black text-emerald-600 italic text-xl">OC</div>
                  <div>
                     <h4 className="font-black text-xl italic lowercase">OLURANTI CLEMENT</h4>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Founder & CEO, Webhouse Media</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Founder & CEO, Webhouse Lab</p>
                  </div>
               </div>
             </motion.div>
