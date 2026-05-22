@@ -10,7 +10,10 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.webhousemedia.com.ng'),
-  title: 'Grow your business online, simply',
+  title: {
+    default: 'Webhouse Media & Marketing Solution | Digital Growth & AI Solutions',
+    template: '%s | Webhouse Media & Marketing Solution'
+  },
   description: 'We help African businesses, schools, churches, and entrepreneurs grow online with affordable website design, social media management, and digital marketing.',
   icons: {
     icon: 'https://res.cloudinary.com/dhzouslh1/image/upload/v1779114037/logo_cevoae.jpg',
@@ -19,7 +22,7 @@ export const metadata: Metadata = {
   },
   keywords: ['digital marketing Nigeria', 'website design Lagos', 'affordable branding Africa', 'social media management for small business', 'AI tools for business Nigeria', 'business growth solutions'],
   openGraph: {
-    title: 'Webhouse Lab | Grow Your Business Online Easily',
+    title: 'Webhouse Media & Marketing Solution | Digital Growth & AI Solutions',
     description: 'Affordable digital solutions for entrepreneurs and small businesses in Africa. Website design, branding, and marketing made simple.',
     url: '/',
     siteName: 'Webhouse Lab',
@@ -36,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Webhouse | Simple Digital Solutions',
+    title: 'Webhouse Media & Marketing Solution | Digital Growth & AI Solutions',
     description: 'Helping African businesses grow with smart, affordable digital tools.',
     images: ['https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200&h=630'],
   },
