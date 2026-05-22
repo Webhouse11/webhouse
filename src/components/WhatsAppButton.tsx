@@ -6,7 +6,7 @@ import { MessageCircle, X } from 'lucide-react';
 
 export const WhatsAppButton = () => {
   const [isVisible, setIsVisible] = React.useState(false);
-  const phoneNumber = "2348060180077";
+  const phoneNumber = "2348152469749";
   const message = "Hello Webhouse Media, I'm interested in your services.";
 
   React.useEffect(() => {

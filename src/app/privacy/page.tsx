@@ -61,7 +61,7 @@ export default function PrivacyPage() {
           </p>
           <p>
             <strong>Email:</strong> webhousemediastudio@gmail.com<br />
-            <strong>WhatsApp:</strong> +234 806 018 0077
+            <strong>WhatsApp:</strong> +234 815 246 9749
           </p>
         </div>
       </div>

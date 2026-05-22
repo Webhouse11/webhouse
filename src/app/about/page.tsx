@@ -280,7 +280,7 @@ export default function AboutPage() {
          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl md:text-6xl font-black mb-12 italic leading-none lowercase tracking-tighter">Ready to scale with the best team?</h2>
             <div className="flex flex-wrap justify-center gap-6">
-               <a href="https://wa.me/2348060180077" target="_blank" className="bg-white text-emerald-600 px-12 py-6 rounded-full font-black text-2xl hover:scale-105 transition-all flex items-center gap-4">
+               <a href="https://wa.me/2348152469749" target="_blank" className="bg-white text-emerald-600 px-12 py-6 rounded-full font-black text-2xl hover:scale-105 transition-all flex items-center gap-4">
                   START A PROJECT <ArrowRight size={28} />
                </a>
             </div>

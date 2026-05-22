@@ -61,15 +61,16 @@ export default function RootLayout({
     "url": "https://www.webhousemedia.com.ng",
     "logo": "https://res.cloudinary.com/dhzouslh1/image/upload/v1779114037/logo_cevoae.jpg",
     "image": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200",
-    "telephone": "+234-806-018-0077",
+    "telephone": "+234-815-246-9749",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "5 Admiralty Road, Lekki Phase 1",
       "addressLocality": "Lagos",
       "addressCountry": "NG"
     },
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+234-806-018-0077",
+      "telephone": "+234-815-246-9749",
       "contactType": "Customer Support",
       "email": "webhousemediastudio@gmail.com",
       "areaServed": ["NG", "Africa"]

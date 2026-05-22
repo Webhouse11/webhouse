@@ -89,7 +89,7 @@ const ContactContent = () => {
 *Message:* ${formData.message}`;
 
       const encodedMessage = encodeURIComponent(whatsappMessage);
-      const whatsappUrl = `https://wa.me/2348060180077?text=${encodedMessage}`;
+      const whatsappUrl = `https://wa.me/2348152469749?text=${encodedMessage}`;
       
       setStatus('success');
       window.open(whatsappUrl, '_blank');
@@ -232,8 +232,8 @@ const ContactContent = () => {
                     value: "webhousemediastudio@gmail.com",
                     href: "mailto:webhousemediastudio@gmail.com?subject=Strategic%20Digital%20Growth%20Inquiry&body=Hi%20Webhouse%20Media%20Team%2C%0A%0AI'm%20interested%20in%20scaling%20my%20business%20digital%20infrastructure%20and%20would%20like%20to%20learn%20more%20about%20your%20services." 
                   },
-                  { icon: Phone, label: "Call Us", value: "+234 806 018 0077", href: "tel:+2348060180077" },
-                  { icon: MapPin, label: "Visit Us", value: "15 Ring Road, Ibadan, Oyo State, Nigeria" }
+                  { icon: Phone, label: "Call Us", value: "+234 815 246 9749", href: "tel:+2348152469749" },
+                  { icon: MapPin, label: "Visit Us", value: "5 Admiralty Road, Lekki Phase 1, Lagos, Nigeria" }
                 ].map((item, i) => (
                   <div key={i} className="flex gap-4 items-start p-5 rounded-2xl bg-emerald-50/50 border border-emerald-500/10">
                     <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center flex-shrink-0 shadow-sm">

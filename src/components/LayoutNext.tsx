@@ -10,7 +10,7 @@ import { cn } from '@/src/lib/utils';
 export const FloatingWhatsApp = () => {
   return (
     <a 
-      href="https://wa.me/2348060180077" 
+      href="https://wa.me/2348152469749" 
       target="_blank" 
       rel="noopener noreferrer"
       className="fixed bottom-8 right-8 z-[60] bg-emerald-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all group flex items-center gap-2"
@@ -196,8 +196,8 @@ export const Footer = () => {
                   webhousemediastudio@gmail.com
                 </a>
               </li>
-              <li className="font-medium">+234 806 018 0077</li>
-              <li className="font-medium">15 Ring Road, Ibadan, Oyo State, Nigeria</li>
+              <li className="font-medium">+234 815 246 9749</li>
+              <li className="font-medium">5 Admiralty Road, Lekki Phase 1, Lagos, Nigeria</li>
             </ul>
           </div>
         </div>

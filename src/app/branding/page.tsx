@@ -22,7 +22,7 @@ export default function BrandingPage() {
               Good branding makes you look professional and established. We create logos, brand guides, and flyers that your customers will love.
             </p>
             <div className="flex flex-wrap gap-4">
-               <a href="https://wa.me/2348060180077" className="bg-emerald-600 text-white px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center gap-3 shadow-xl">
+               <a href="https://wa.me/2348152469749" className="bg-emerald-600 text-white px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center gap-3 shadow-xl">
                   <MessageCircle size={24} /> Let's Brand Your Business
                </a>
             </div>
@@ -105,7 +105,7 @@ export default function BrandingPage() {
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-4xl md:text-6xl font-black mb-8">Ready to Look Professional?</h2>
             <p className="text-xl text-slate-500 mb-12 max-w-2xl mx-auto">Our branding packages are designed to give you that "Big Company" feel without the "Big Company" price tag.</p>
-            <a href="https://wa.me/2348060180077" target="_blank" className="bg-slate-900 text-white px-10 py-5 rounded-full font-black text-xl hover:bg-black transition-all flex items-center justify-center gap-3 inline-flex">
+            <a href="https://wa.me/2348152469749" target="_blank" className="bg-slate-900 text-white px-10 py-5 rounded-full font-black text-xl hover:bg-black transition-all flex items-center justify-center gap-3 inline-flex">
                <MessageCircle size={24} /> Get a Custom Branding Quote
             </a>
          </div>

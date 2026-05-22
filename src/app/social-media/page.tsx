@@ -130,7 +130,7 @@ export default function SocialMediaPage() {
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16">
               <a 
-                href="https://wa.me/2348060180077?text=Hello,%20I'm%20ready%20to%20grow%20my%20brand%20with%20PostPilot." 
+                href="https://wa.me/2348152469749?text=Hello,%20I'm%20ready%20to%20grow%20my%20brand%20with%20PostPilot." 
                 className="bg-indigo-600 text-white px-10 py-5 rounded-full font-black text-lg hover:scale-105 transition-all shadow-xl shadow-indigo-500/20 flex items-center gap-3"
               >
                 Grow My Brand Now <ArrowRight size={20} />
@@ -274,7 +274,7 @@ export default function SocialMediaPage() {
                   ))}
                 </ul>
                 <a 
-                  href={`https://wa.me/2348060180077?text=I'm%20ready%20to%20order%20the%20${encodeURIComponent(plan.name)}.`}
+                  href={`https://wa.me/2348152469749?text=I'm%20ready%20to%20order%20the%20${encodeURIComponent(plan.name)}.`}
                   className={`w-full py-5 rounded-2xl font-black text-center block transition-all ${
                     plan.highlight 
                     ? 'bg-white text-indigo-600 hover:bg-slate-50' 
@@ -325,7 +325,7 @@ export default function SocialMediaPage() {
               Stop stressing about what to post. Partner with the experts and watch your engagement soar.
             </p>
             <div className="flex flex-wrap gap-6 justify-center">
-               <a href="tel:+2348060180077" className="bg-indigo-600 text-white px-12 py-6 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center gap-4 shadow-2xl shadow-indigo-500/40">
+               <a href="tel:+2348152469749" className="bg-indigo-600 text-white px-12 py-6 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center gap-4 shadow-2xl shadow-indigo-500/40">
                   Call Now <ArrowRight size={24} />
                </a>
                <a href="mailto:webhousemediastudio@gmail.com?subject=Strategic%20Social%20Media%20Growth%20Inquiry&body=Hi%20Webhouse%20Media%20Team%2C%0A%0AI'm%20interested%20in%20the%20PostPilot%20packages%20and%20would%20like%20to%20discuss%20growing%20my%20brand%20online." className="bg-slate-900 text-white px-12 py-6 rounded-full font-black text-xl hover:bg-black transition-all">

@@ -201,7 +201,7 @@ export default function CaseStudies() {
                      </div>
 
                      <a 
-                      href={`https://wa.me/2348060180077?text=I'm%20interested%20in%20a%20project%20similar%20to%20the%20${encodeURIComponent(c.title)}.`}
+                      href={`https://wa.me/2348152469749?text=I'm%20interested%20in%20a%20project%20similar%20to%20the%20${encodeURIComponent(c.title)}.`}
                       className="inline-flex items-center gap-6 text-sm font-black text-slate-900 group-hover:gap-10 transition-all uppercase tracking-[0.2em] border-b-2 border-slate-900 pb-3 w-fit"
                      >
                         Secure Similar ROI <ArrowRight size={20} />
@@ -237,7 +237,7 @@ export default function CaseStudies() {
             </div>
 
             <a 
-              href="https://wa.me/2348060180077?text=I'm%20ready%20to%20start%20my%20success%20story%20with%20Webhouse." 
+              href="https://wa.me/2348152469749?text=I'm%20ready%20to%20start%20my%20success%20story%20with%20Webhouse." 
               className="bg-emerald-600 hover:bg-emerald-500 text-white px-20 py-8 rounded-full font-black text-2xl shadow-2xl shadow-emerald-500/40 hover:scale-105 transition-all flex items-center gap-4 group"
             >
               ENGINEER YOUR GROWTH <ArrowRight size={32} className="group-hover:translate-x-2 transition-transform" />

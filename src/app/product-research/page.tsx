@@ -19,7 +19,7 @@ export default function ProductResearchPage() {
               Don't waste money on a business idea without checking the market first. We help you find "Market Gaps" and understand exactly what your future customers want.
             </p>
             <div className="flex flex-wrap gap-4">
-               <a href="https://wa.me/2348060180077" className="bg-emerald-600 text-white px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center gap-3">
+               <a href="https://wa.me/2348152469749" className="bg-emerald-600 text-white px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center gap-3">
                   <MessageCircle size={24} /> Discuss Your Idea
                </a>
             </div>
@@ -66,7 +66,7 @@ export default function ProductResearchPage() {
             <p className="text-xl text-slate-500 mb-12">
                We pride ourselves on 100% confidentiality. We help you build YOUR dream, not ours. Let's research, validate, and launch your next success story.
             </p>
-            <a href="https://wa.me/2348060180077" target="_blank" className="bg-emerald-600 text-white px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center justify-center gap-3 inline-flex shadow-xl">
+            <a href="https://wa.me/2348152469749" target="_blank" className="bg-emerald-600 text-white px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center justify-center gap-3 inline-flex shadow-xl">
                <MessageCircle size={24} /> Book a Strategy Session
             </a>
          </div>

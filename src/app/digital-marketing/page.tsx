@@ -22,7 +22,7 @@ export default function DigitalMarketingPage() {
               We build intelligent digital sales funnels and automated marketing systems that transform total strangers into loyal, paying customers 24/7.
             </p>
             <div className="flex flex-wrap gap-4">
-               <a href="https://wa.me/2348060180077?text=Hello,%20I'm%20interested%20in%20Digital%20Sales%20Funnels%20and%20Automated%20Marketing." className="bg-emerald-600 text-white px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center gap-3">
+               <a href="https://wa.me/2348152469749?text=Hello,%20I'm%20interested%20in%20Digital%20Sales%20Funnels%20and%20Automated%20Marketing." className="bg-emerald-600 text-white px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center gap-3">
                   <MessageCircle size={24} /> Get a Funnel Strategy
                </a>
             </div>
@@ -113,7 +113,7 @@ export default function DigitalMarketingPage() {
               Don't waste money on ads that don't work. Let our experts handle your marketing and watch your business grow.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-               <a href="https://wa.me/2348060180077" target="_blank" className="bg-emerald-600 text-white px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center gap-3">
+               <a href="https://wa.me/2348152469749" target="_blank" className="bg-emerald-600 text-white px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center gap-3">
                   <MessageCircle size={24} /> Get a Marketing Plan
                </a>
             </div>

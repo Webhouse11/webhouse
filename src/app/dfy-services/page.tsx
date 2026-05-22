@@ -211,7 +211,7 @@ export default function BrandBoxPage() {
 
                 {/* Button */}
                 <a 
-                  href={`https://wa.me/2348060180077?text=I'm%20ready%20to%20order%20the%20${encodeURIComponent(item.title)}.`}
+                  href={`https://wa.me/2348152469749?text=I'm%20ready%20to%20order%20the%20${encodeURIComponent(item.title)}.`}
                   className="w-full bg-[#0a0f1e] hover:bg-emerald-600 text-white font-black py-5 rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-[0.98] group-hover:shadow-2xl shadow-emerald-500/20"
                 >
                   <span className="mb-0.5 uppercase tracking-widest">GET IT NOW!</span>
@@ -238,7 +238,7 @@ export default function BrandBoxPage() {
               <div className="text-6xl font-black italic">{formatPrice("₦1.25M")}</div>
             </div>
             <a 
-              href="https://wa.me/2348060180077?text=I'm%20ready%20to%20order%20the%20Full%20Infrastructure%20Package." 
+              href="https://wa.me/2348152469749?text=I'm%20ready%20to%20order%20the%20Full%20Infrastructure%20Package." 
               className="bg-emerald-600 hover:bg-emerald-500 text-white px-16 py-8 rounded-full font-black text-2xl shadow-2xl shadow-emerald-500/40 hover:scale-105 transition-all flex items-center gap-4"
             >
               ORDER NOW <ArrowRight size={28} />

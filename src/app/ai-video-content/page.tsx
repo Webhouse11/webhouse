@@ -19,7 +19,7 @@ export default function AIVideoPage() {
               We create world-class video ads and content using advanced AI, designed specifically to help African brands win attention and sell more products instantly.
             </p>
             <div className="flex flex-wrap gap-4">
-               <a href="https://wa.me/2348060180077" className="bg-emerald-600 text-white px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center gap-3">
+               <a href="https://wa.me/2348152469749" className="bg-emerald-600 text-white px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center gap-3">
                   <MessageCircle size={24} /> Get a Video Quote
                </a>
             </div>
@@ -99,7 +99,7 @@ export default function AIVideoPage() {
                Our AI video systems allow you to create high-quality content faster than ever before. We help you dominate your market by being the most visible brand in your niche.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-               <a href="https://wa.me/2348060180077" target="_blank" className="bg-emerald-600 text-white px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center justify-center gap-3 inline-flex shadow-xl">
+               <a href="https://wa.me/2348152469749" target="_blank" className="bg-emerald-600 text-white px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center justify-center gap-3 inline-flex shadow-xl">
                   <MessageCircle size={24} /> Start Your Video Project
                </a>
             </div>

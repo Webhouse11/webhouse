@@ -131,7 +131,7 @@ export default function PricingPage() {
                 </ul>
 
                 <a 
-                  href={`https://wa.me/2348060180077?text=Hello,%20I'm%20interested%20in%20the%20${p.name}%20package.`}
+                  href={`https://wa.me/2348152469749?text=Hello,%20I'm%20interested%20in%20the%20${p.name}%20package.`}
                   target="_blank"
                   className={p.highlight 
                     ? "w-full flex items-center justify-center gap-4 bg-emerald-600 text-white py-6 rounded-2xl font-black shadow-2xl shadow-emerald-500/40 hover:scale-[1.02] transition-all uppercase tracking-widest text-xs"
@@ -171,7 +171,7 @@ export default function PricingPage() {
                       ))}
                    </ul>
                    <a 
-                    href="https://wa.me/2348060180077"
+                    href="https://wa.me/2348152469749"
                     target="_blank"
                     className="inline-flex items-center gap-4 text-emerald-400 font-black text-sm uppercase tracking-[0.2em] hover:gap-6 transition-all border-b-2 border-emerald-400/0 hover:border-emerald-400 pb-2"
                    >
@@ -191,7 +191,7 @@ export default function PricingPage() {
               Every enterprise is unique. We engineer bespoke packages that align with your specific objectives and capital allocation.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-               <a href="https://wa.me/2348060180077" target="_blank" className="bg-emerald-600 text-white px-12 py-6 rounded-full font-black text-2xl hover:scale-105 transition-all flex items-center gap-4 shadow-2xl shadow-emerald-500/40">
+               <a href="https://wa.me/2348152469749" target="_blank" className="bg-emerald-600 text-white px-12 py-6 rounded-full font-black text-2xl hover:scale-105 transition-all flex items-center gap-4 shadow-2xl shadow-emerald-500/40">
                   <MessageCircle size={28} /> Build My Custom Suite
                </a>
                <Link href="/contact" className="bg-slate-900 text-white px-12 py-6 rounded-full font-black text-2xl hover:bg-black transition-all">

@@ -260,7 +260,7 @@ export default function Home() {
                   Join hundreds of businesses growing with Webhouse. Message us today to get a free price quote.
                 </p>
                 <div className="flex flex-wrap gap-4 justify-center">
-                   <a href="https://wa.me/2348060180077" target="_blank" className="bg-white text-emerald-600 px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all shadow-2xl flex items-center gap-3">
+                   <a href="https://wa.me/2348152469749" target="_blank" className="bg-white text-emerald-600 px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all shadow-2xl flex items-center gap-3">
                      Chat on WhatsApp <ArrowRight size={24} />
                    </a>
                    <Link href="/contact" className="bg-emerald-700 text-white px-10 py-5 rounded-full font-black text-xl hover:bg-emerald-800 transition-all">

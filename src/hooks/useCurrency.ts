@@ -23,6 +23,9 @@ export function useCurrency() {
 
   useEffect(() => {
     async function detectLocation() {
+      let countryCode: string | null = null;
+
+      // 1. Core Geo IP API lookups first (highest precision)
       const services = [
         {
           url: 'https://ipapi.co/json/',
@@ -34,35 +37,61 @@ export function useCurrency() {
         }
       ];
 
-      let countryCode: string | null = null;
-
       for (const service of services) {
         try {
-          const response = await fetch(service.url);
-          if (response.ok) {
-            const data = await response.json();
-            const extracted = service.parser(data);
-            if (extracted) {
-              countryCode = extracted.toUpperCase();
-              break; // Successfully detected location, exit search
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 second max wait
+          
+          const response = await fetch(service.url, { signal: controller.signal }).catch(() => null);
+          clearTimeout(timeoutId);
+
+          if (response && response.ok) {
+            const data = await response.json().catch(() => null);
+            if (data) {
+              const extracted = service.parser(data);
+              if (extracted) {
+                countryCode = extracted.toUpperCase();
+                break; 
+              }
             }
           }
         } catch (error) {
-          // Silently log as a warning/info in development rather than a noisy error
-          console.warn(`Location detection: service ${service.url} failed. Trying next or fallback.`);
+          // Silently swallow fetch exceptions to prevent console pollution
+        }
+      }
+
+      // 2. Synchronous timezone heuristic acts as a fallback if the API is slow/offline/blocked
+      if (!countryCode) {
+        try {
+          const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          if (tz) {
+            if (tz.includes('Lagos') || tz.includes('Nigeria')) {
+              countryCode = 'NG';
+            } else if (tz.includes('Accra') || tz.includes('Ghana')) {
+              countryCode = 'GH';
+            } else if (tz.includes('London') || tz.includes('Belfast')) {
+              countryCode = 'GB';
+            } else if (tz.startsWith('Europe/')) {
+              countryCode = 'EU';
+            } else if (tz.startsWith('America/')) {
+              countryCode = 'US';
+            }
+          }
+        } catch (tzError) {
+          // Fallback silently
         }
       }
 
       if (countryCode) {
         if (CURRENCIES[countryCode]) {
           setCurrency(CURRENCIES[countryCode]);
-        } else if (['FR', 'DE', 'IT', 'ES', 'NL', 'BE', 'FI', 'SE', 'IE', 'PT', 'AT', 'GR'].includes(countryCode)) {
+        } else if (['FR', 'DE', 'IT', 'ES', 'NL', 'BE', 'FI', 'SE', 'IE', 'PT', 'AT', 'GR', 'PL', 'CH', 'DK', 'NO'].includes(countryCode)) {
           setCurrency(CURRENCIES.EU);
         } else if (countryCode !== 'NG') {
           setCurrency(CURRENCIES.DEFAULT);
         }
       } else {
-        // Silent fallback to Nigerian Naira (NGN) without console.error
+        // Default silently to Nigerian Naira
         setCurrency(CURRENCIES.NG);
       }
       setLoading(false);

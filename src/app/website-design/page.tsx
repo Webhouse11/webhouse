@@ -24,7 +24,7 @@ export default function WebsiteDesignPage() {
               We design high-converting websites, complex SaaS platforms, and digital infrastructures built for serious scale and business growth.
             </p>
             <div className="flex flex-wrap gap-4">
-               <a href="https://wa.me/2348060180077?text=Hello,%20I'm%20interested%20in%20Web%20Development%20and%20SaaS%20solutions." className="bg-emerald-600 text-white px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center gap-3 shadow-xl">
+               <a href="https://wa.me/2348152469749?text=Hello,%20I'm%20interested%20in%20Web%20Development%20and%20SaaS%20solutions." className="bg-emerald-600 text-white px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all flex items-center gap-3 shadow-xl">
                   <MessageCircle size={24} /> Get a Technical Quote
                </a>
                <Link href="/portfolio" className="bg-white border border-slate-200 text-slate-900 px-10 py-5 rounded-full font-black text-xl hover:bg-slate-50 transition-all">
@@ -127,7 +127,7 @@ export default function WebsiteDesignPage() {
                <Link href="/pricing" className="bg-white text-emerald-600 px-10 py-5 rounded-full font-black text-xl hover:scale-105 transition-all">
                   See Price List
                </Link>
-               <a href="https://wa.me/2348060180077" target="_blank" className="bg-slate-900 text-white px-10 py-5 rounded-full font-black text-xl hover:bg-black transition-all flex items-center gap-3">
+               <a href="https://wa.me/2348152469749" target="_blank" className="bg-slate-900 text-white px-10 py-5 rounded-full font-black text-xl hover:bg-black transition-all flex items-center gap-3">
                   <MessageCircle size={24} /> Chat on WhatsApp
                </a>
             </div>
