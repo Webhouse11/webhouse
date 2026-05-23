@@ -64,8 +64,9 @@ export default function RootLayout({
     "telephone": "+234-815-246-9749",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "5 Admiralty Road, Lekki Phase 1",
-      "addressLocality": "Lagos",
+      "streetAddress": "15 Ring Road",
+      "addressLocality": "Ibadan",
+      "addressRegion": "Oyo State",
       "addressCountry": "NG"
     },
     "contactPoint": {

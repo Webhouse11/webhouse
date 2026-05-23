@@ -197,38 +197,23 @@ export const Footer = () => {
                 </a>
               </li>
               <li className="font-medium">+234 815 246 9749</li>
-              <li className="font-medium">5 Admiralty Road, Lekki Phase 1, Lagos, Nigeria</li>
+              <li className="font-medium">15 Ring Road, Ibadan, Oyo State, Nigeria</li>
             </ul>
           </div>
         </div>
 
-        <div className="sr-only">
-          <h4 className="text-sm font-bold text-white/40 uppercase tracking-widest mb-8">Relevant Keywords for Digital Marketing and Related Services in Nigeria and Africa</h4>
-          <div className="flex flex-wrap gap-x-6 gap-y-3 text-[10px] text-white/30 uppercase tracking-wider">
-            <span>Digital marketing agency Nigeria</span>
-            <span>Social media marketing services Lagos</span>
-            <span>Best digital marketer Nigeria</span>
-            <span>AI marketing tools for small business</span>
-            <span>Facebook ads expert Nigeria</span>
-            <span>Instagram growth services Africa</span>
-            <span>WhatsApp marketing for business Nigeria</span>
-            <span>Brand design and creative services</span>
-            <span>Logo design company Nigeria</span>
-            <span>Brand identity design services Africa</span>
-            <span>Affordable graphic designer Lagos</span>
-            <span>Branding agency for startups Nigeria</span>
-            <span>Website development company Nigeria</span>
-            <span>Affordable website design Lagos</span>
-            <span>SaaS development company Africa</span>
-            <span>Custom software development Nigeria</span>
-            <span>Ghostwriting services Nigeria</span>
-            <span>Content writing services for business Africa</span>
-            <span>Personal brand storytelling writer</span>
-            <span>Marketing consultant Nigeria</span>
-            <span>Business growth strategy for startups Africa</span>
-            <span>Local SEO Nigeria Lagos</span>
-            <span>AI and marketing automation</span>
-            <span>WhatsApp and social commerce Africa</span>
+        <div className="border-t border-white/5 pt-8 mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-[11px] text-white/40 leading-relaxed">
+          <div>
+            <span className="font-semibold text-white/60 uppercase tracking-widest block mb-2 font-mono">Brand & Creative Solutions</span>
+            Our premier <strong className="font-medium text-white/50">brand identity design services</strong> help African startups project an established image. As a reliable <strong className="font-medium text-white/50">logo design company in Nigeria</strong> with a highly talented creative network, we deliver tailored client brand guides and assets. Whether you need an <strong className="font-medium text-white/50 font-sans">affordable graphic designer in Lagos</strong>, high-caliber <strong className="font-medium text-white/50 font-sans">ghostwriting and content writing services</strong>, or specialized <strong className="font-medium text-white/50 font-sans">personal brand storytelling</strong>, our creative suite ensures your business stands out.
+          </div>
+          <div>
+            <span className="font-semibold text-white/60 uppercase tracking-widest block mb-2 font-mono">Digital Marketing & Growth</span>
+            Accelerate your scaling with structured <strong className="font-medium text-white/50">social media marketing services in Lagos</strong> and across Nigeria. From executing powerful Facebook ads and Instagram campaigns to integrating customized <strong className="font-medium text-white/50 font-sans">WhatsApp marketing for business</strong> workflows, we cover all touchpoints. Partner with an expert <strong className="font-medium text-white/50 font-sans">marketing consultant in Nigeria</strong> to craft a sustainable, modern <strong className="font-medium text-white/50 font-sans">business growth strategy</strong> designed specifically for local expansion.
+          </div>
+          <div>
+            <span className="font-semibold text-white/60 uppercase tracking-widest block mb-2 font-mono">Web & Software Infrastructure</span>
+            Establish a dominant digital presence with our tier-one <strong className="font-medium text-white/50">website development company in Nigeria</strong>. We build conversion-focused platforms that pair beautifully with <strong className="font-medium text-white/50 font-sans">local SEO strategies in Lagos & Nigeria</strong>. From affordable web design solutions for small business owners to complex <strong className="font-medium text-white/50 font-sans">SaaS development and custom software solutions</strong>, we engineer secure, fast digital systems aligned with your commercial growth.
           </div>
         </div>
         
