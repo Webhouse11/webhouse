@@ -1,4 +1,12 @@
 {
   "framework": "nextjs",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "webhousemedia.com.ng" }],
+      "destination": "https://www.webhousemedia.com.ng/:path*",
+      "permanent": true
+    }
+  ]
 }

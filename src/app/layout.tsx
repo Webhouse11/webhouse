@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     title: 'Webhouse Media & Marketing Solution | Digital Growth & AI Solutions',
     description: 'Affordable digital solutions for entrepreneurs and small businesses in Africa. Website design, branding, and marketing made simple.',
     url: '/',
-    siteName: 'Webhouse Lab',
+    siteName: 'Webhouse Media & Marketing Solutions',
     images: [
       {
         url: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200&h=630',
