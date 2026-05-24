@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     default: 'Webhouse Media & Marketing Solution | Digital Growth & AI Solutions',
     template: '%s | Webhouse Media & Marketing Solution'
   },
-  description: 'We help African businesses, schools, churches, and entrepreneurs grow online with affordable website design, social media management, and digital marketing.',
+  description: 'Webhouse Media helps businesses grow online through digital marketing, branding, SEO, AI automation, website design, and digital skills training in Nigeria.',
   icons: {
     icon: 'https://res.cloudinary.com/dhzouslh1/image/upload/v1779114037/logo_cevoae.jpg',
     shortcut: 'https://res.cloudinary.com/dhzouslh1/image/upload/v1779114037/logo_cevoae.jpg',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   keywords: ['digital marketing Nigeria', 'website design Lagos', 'affordable branding Africa', 'social media management for small business', 'AI tools for business Nigeria', 'business growth solutions'],
   openGraph: {
     title: 'Webhouse Media & Marketing Solution | Digital Growth & AI Solutions',
-    description: 'Affordable digital solutions for entrepreneurs and small businesses in Africa. Website design, branding, and marketing made simple.',
+    description: 'Webhouse Media helps businesses grow online through digital marketing, branding, SEO, AI automation, website design, and digital skills training in Nigeria.',
     url: '/',
     siteName: 'Webhouse Lab',
     images: [
@@ -40,11 +40,14 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Webhouse Media & Marketing Solution | Digital Growth & AI Solutions',
-    description: 'Helping African businesses grow with smart, affordable digital tools.',
+    description: 'Webhouse Media helps businesses grow online through digital marketing, branding, SEO, AI automation, website design, and digital skills training in Nigeria.',
     images: ['https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200&h=630'],
   },
   alternates: {
     canonical: '/',
+  },
+  verification: {
+    google: 'b8HNEJAm_x4mp-ZxhQYqiO5MlJHqvNsURISfrKXP3DE',
   }
 };
 
@@ -57,7 +60,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Webhouse Lab",
-    "description": "Grow your business online, simply",
+    "description": "Webhouse Media helps businesses grow online through digital marketing, branding, SEO, AI automation, website design, and digital skills training in Nigeria.",
     "url": "https://www.webhousemedia.com.ng",
     "logo": "https://res.cloudinary.com/dhzouslh1/image/upload/v1779114037/logo_cevoae.jpg",
     "image": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200",
