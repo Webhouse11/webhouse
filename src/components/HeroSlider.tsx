@@ -40,6 +40,14 @@ const slides = [
     accent: "bg-purple-600"
   },
   {
+    title: "Authority Scaling with Bulk Video Creation",
+    subtitle: "Scale your reach with batch-created videos. Up to 100 high-quality completely managed videos written, recorded, edited, and uploaded for you.",
+    cta: "Explore Bulk Videos",
+    link: "/bulk-video-creation",
+    image: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=2400",
+    accent: "bg-red-600"
+  },
+  {
     title: "Master High-Income Skills at DigitAcademy",
     subtitle: "Join 1,200+ students learning AI tools, marketing, and freelance skills to thrive in the digital economy.",
     cta: "Explore Courses",
