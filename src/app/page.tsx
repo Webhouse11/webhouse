@@ -10,51 +10,7 @@ import { TestimonialSlider } from '@/src/components/TestimonialSlider';
 import { LeadMagnet } from '@/src/components/LeadMagnet';
 import EnrollmentNotification from '@/src/components/EnrollmentNotification';
 import CourseTicker from '@/src/components/CourseTicker';
-
-const services = [
-  {
-    title: "Website Development",
-    desc: "We build high-converting websites and complex web applications designed to scale with your business growth.",
-    icon: Globe,
-    href: "/website-design",
-    color: "bg-emerald-50 text-emerald-600"
-  },
-  {
-    title: "PostPilot™ Social Growth",
-    desc: "Professional social media systems that transform your digital presence into a loyal customer community.",
-    icon: Smartphone,
-    href: "/social-media",
-    color: "bg-blue-50 text-blue-600"
-  },
-  {
-    title: "BrandBox™ DFY Suite",
-    desc: "A complete professional brand identity system delivered in one powerful, conversion-focused box.",
-    icon: Palette,
-    href: "/dfy-services",
-    color: "bg-orange-50 text-orange-600"
-  },
-  {
-    title: "Digital Sales Funnels",
-    desc: "Automated marketing systems and high-converting funnels that turn visitors into long-term clients.",
-    icon: Megaphone,
-    href: "/digital-marketing",
-    color: "bg-purple-50 text-purple-600"
-  },
-  {
-    title: "AI Video Production",
-    desc: "Cinematic AI-generated video content and high-impact ads that capture attention and drive sales instantly.",
-    icon: Video,
-    href: "/ai-video-content",
-    color: "bg-pink-50 text-pink-600"
-  },
-  {
-    title: "Custom SaaS & AI Systems",
-    desc: "Intelligent workflows and custom software solutions that automate your business tasks and reduce costs.",
-    icon: Search,
-    href: "/services",
-    color: "bg-teal-50 text-teal-600"
-  }
-];
+import { ServicesSlider } from '@/src/components/ServicesSlider';
 
 const faqs = [
   {
@@ -132,42 +88,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Simplified Services Grid */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-4xl mx-auto mb-20">
-            <div className="inline-block px-4 py-2 rounded-full bg-slate-100 text-slate-600 font-black text-[10px] uppercase tracking-widest mb-6">
-              Our Core Services
-            </div>
-            <h2 className="text-4xl md:text-7xl font-black mb-8 tracking-tighter italic lowercase leading-none">everything you need <br /> to <span className="text-emerald-600">grow.</span></h2>
-            <p className="text-slate-500 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-medium">
-              We provide all the tools you need to build your brand and find more customers online with obsessive attention to detail.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((s, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
-                viewport={{ once: true }}
-                className="group p-10 rounded-[2.5rem] border border-slate-100 hover:border-emerald-500/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.05)] transition-all bg-white relative overflow-hidden flex flex-col h-full"
-              >
-                <div className={cn("w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-transform group-hover:scale-110 shadow-inner bg-slate-50", s.color.split(' ')[1])}>
-                  <s.icon className="w-8 h-8" />
-                </div>
-                <h3 className="text-2xl font-black mb-4 group-hover:text-emerald-600 transition-colors uppercase tracking-tight italic">{s.title}</h3>
-                <p className="text-slate-500 leading-relaxed mb-8 flex-grow font-medium text-sm">{s.desc}</p>
-                <Link href={s.href} className="text-emerald-600 font-black text-xs uppercase tracking-widest flex items-center gap-2 group-hover:gap-4 transition-all border-b-2 border-emerald-50/0 hover:border-emerald-600 w-fit pb-1">
-                   Get Started <ArrowRight size={16} />
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Elegant Services Slider */}
+      <ServicesSlider />
 
       {/* How We Work Section (Process) */}
       <section className="py-24 bg-slate-900 text-white mx-4 md:mx-8 mb-20 rounded-[4rem] relative overflow-hidden">

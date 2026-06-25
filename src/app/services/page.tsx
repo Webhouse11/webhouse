@@ -47,6 +47,13 @@ const services = [
     icon: Video,
     features: ["Viral Reels/TikToks", "AI Product Ads", "Automated Editing", "Sales Video Scripts"],
     href: "/ai-video-content"
+  },
+  {
+    title: "Bulk Video Creation",
+    desc: "Never run out of content again. Professional bulk video creation and channel uploads for busy brands, personal brands, ministries, and businesses.",
+    icon: Video,
+    features: ["Script Writing & Captions", "Up to 100 Videos Batch", "Optional Channel Uploading", "Naira & Global Pricing"],
+    href: "/bulk-video-creation"
   }
 ];
 

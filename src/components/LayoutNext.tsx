@@ -31,8 +31,7 @@ export const Navbar = () => {
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Services', path: '/services' },
-    { name: 'BrandBox', path: '/dfy-services' },
-    { name: 'PostPilot', path: '/social-media' },
+    { name: 'Bulk Video', path: '/bulk-video-creation' },
     { name: 'Our Work', path: '/portfolio' },
     { name: 'Academy', path: '/digitacademy' },
     { name: 'Blog', path: 'https://webhousemedia.blogspot.com/' },
@@ -169,10 +168,8 @@ export const Footer = () => {
           <div>
             <h4 className="font-black mb-6 uppercase tracking-widest text-[10px] text-emerald-500 italic">Our Services</h4>
             <ul className="space-y-4 text-white/60">
-              <li><Link href="/website-design" className="hover:text-emerald-400 transition-colors font-medium">Website Design</Link></li>
               <li><Link href="/social-media" className="hover:text-emerald-400 transition-colors font-medium">PostPilot (Social Ads)</Link></li>
               <li><Link href="/dfy-services" className="hover:text-emerald-400 transition-colors font-medium">BrandBox (Branding)</Link></li>
-              <li><Link href="/ai-video-content" className="hover:text-emerald-400 transition-colors font-medium">AI Video Production</Link></li>
             </ul>
           </div>
 
@@ -181,9 +178,7 @@ export const Footer = () => {
             <ul className="space-y-4 text-white/60">
               <li><Link href="/about" className="hover:text-emerald-400 transition-colors font-medium">About Webhouse</Link></li>
               <li><Link href="/portfolio" className="hover:text-emerald-400 transition-colors font-medium">Our Work</Link></li>
-              <li><Link href="/pricing" className="hover:text-emerald-400 transition-colors font-medium">Price List</Link></li>
               <li><Link href="/digitacademy" className="hover:text-emerald-400 transition-colors font-medium">DigitAcademy</Link></li>
-              <li><a href="https://webhousemedia.blogspot.com/" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors font-medium">Business Tips Blog</a></li>
               <li><Link href="/contact" className="hover:text-emerald-400 transition-colors font-medium">Contact Us</Link></li>
             </ul>
           </div>
