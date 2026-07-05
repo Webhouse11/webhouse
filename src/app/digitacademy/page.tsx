@@ -27,7 +27,8 @@ import {
   ExternalLink,
   Send,
   MessageCircle,
-  Mail
+  Mail,
+  Briefcase
 } from 'lucide-react';
 import Link from 'next/link';
 import { useCurrency } from '@/src/hooks/useCurrency';
@@ -1397,6 +1398,126 @@ const courseDirectoryData = [
     income: "Variable Income",
     trending: true,
     new: true,
+  },
+  {
+    rank: 41,
+    category: "freelance-va",
+    categoryLabel: "Freelance & VA",
+    title: "How to Become a Freelance Virtual Assistant with No Experience",
+    desc1: "Learn the foundational skills, core administration tools, and calendar management secrets",
+    desc2: "How to package your basic computer skills into services that busy executives pay for",
+    level: "Beginner-friendly",
+    income: "$30–75K",
+    trending: true,
+    new: true,
+  },
+  {
+    rank: 42,
+    category: "freelance-va",
+    categoryLabel: "Freelance & VA",
+    title: "How to Start Freelancing as a Beginner",
+    desc1: "A complete launchpad covering billing setups, digital portfolios, and client handshakes",
+    desc2: "How to land your very first project within 14 days without a tech degree",
+    level: "Beginner-friendly",
+    income: "$25–60K",
+    trending: false,
+    new: true,
+  },
+  {
+    rank: 43,
+    category: "freelance-va",
+    categoryLabel: "Freelance & VA",
+    title: "How to Find Virtual Assistant Jobs That Pay Well",
+    desc1: "Unlock hidden remote jobs on specialized networks and elite VA agencies",
+    desc2: "How to position your application to stand out to international multi-million dollar clients",
+    level: "Intermediate",
+    income: "$45–90K",
+    trending: true,
+    new: true,
+  },
+  {
+    rank: 44,
+    category: "freelance-va",
+    categoryLabel: "Freelance & VA",
+    title: "How to Get Your First Freelance Client",
+    desc1: "Step-by-step outreach systems, quick-win networks, and direct email pitching scripts",
+    desc2: "How to build immediate trust and sign your first deal with total confidence",
+    level: "Beginner-friendly",
+    income: "$30–80K",
+    trending: true,
+    new: true,
+  },
+  {
+    rank: 45,
+    category: "freelance-va",
+    categoryLabel: "Freelance & VA",
+    title: "How to Create a Winning Freelance Profile on Upwork",
+    desc1: "SEO-optimizing your title, crafting a compelling bio, and designing visual case studies",
+    desc2: "How to pass the Upwork algorithm and get invited to high-ticket interview loops",
+    level: "Beginner-friendly",
+    income: "$40–120K",
+    trending: true,
+    new: true,
+  },
+  {
+    rank: 46,
+    category: "freelance-va",
+    categoryLabel: "Freelance & VA",
+    title: "How to Make Money as a Virtual Assistant from Home",
+    desc1: "Designing your daily work-from-home layout, organizing priorities, and tracking bills",
+    desc2: "How to handle 3-4 concurrent international remote client retainers seamlessly",
+    level: "Beginner-friendly",
+    income: "$35–80K",
+    trending: false,
+    new: true,
+  },
+  {
+    rank: 47,
+    category: "freelance-va",
+    categoryLabel: "Freelance & VA",
+    title: "How to Set Your Freelance Rates Without Losing Clients",
+    desc1: "The psychology of value-based pricing: moving away from low hourly rates to packages",
+    desc2: "How to increase your rates with existing clients while boosting their satisfaction",
+    level: "Intermediate",
+    income: "$50–150K",
+    trending: true,
+    new: true,
+  },
+  {
+    rank: 48,
+    category: "freelance-va",
+    categoryLabel: "Freelance & VA",
+    title: "How to Write a Freelance Proposal That Wins Clients",
+    desc1: "Deconstructing winning cover letters, bespoke project proposals, and loom video pitches",
+    desc2: "How to address client pain points instantly so they reply to you within hours",
+    level: "Beginner-friendly",
+    income: "$35–100K",
+    trending: true,
+    new: true,
+  },
+  {
+    rank: 49,
+    category: "freelance-va",
+    categoryLabel: "Freelance & VA",
+    title: "How to Build a Successful Virtual Assistant Business",
+    desc1: "Scaling up from a solo freelancer to building your own virtual assistant agency",
+    desc2: "How to hire, delegate tasks, white-label services, and manage quality at scale",
+    level: "Advanced",
+    income: "$100K+",
+    trending: true,
+    new: true,
+  },
+  {
+    rank: 50,
+    category: "freelance-va",
+    categoryLabel: "Freelance & VA",
+    title: "How to Find Freelance Clients Without Upwork or Fiverr",
+    desc1: "Leveraging organic LinkedIn marketing, cold emailing, and warm referral loops",
+    desc2: "How to build a reliable source of high-paying off-platform direct clients",
+    level: "Intermediate",
+    income: "$50–130K",
+    trending: true,
+    new: true,
   }
 ];
 
@@ -1421,6 +1542,7 @@ const courses = courseDirectoryData.map(course => {
 
 const categories = [
   { id: 'all', label: 'All', icon: Globe },
+  { id: 'freelance-va', label: 'Freelance & VA', icon: Briefcase },
   { id: 'ai-automation', label: 'AI & Automation', icon: Cpu },
   { id: 'content-creation', label: 'Content Creation', icon: Smartphone },
   { id: 'marketing', label: 'Marketing', icon: Target },
@@ -1434,6 +1556,7 @@ const categories = [
 
 const getCategoryColor = (cat: string) => {
   switch (cat) {
+    case 'freelance-va': return { accent: 'bg-emerald-500', text: 'text-emerald-600', border: 'border-emerald-100', bg: 'bg-emerald-50/50' };
     case 'ai-automation': return { accent: 'bg-indigo-500', text: 'text-indigo-600', border: 'border-indigo-100', bg: 'bg-indigo-50/50' };
     case 'content-creation': return { accent: 'bg-rose-500', text: 'text-rose-600', border: 'border-rose-100', bg: 'bg-rose-50/50' };
     case 'marketing': return { accent: 'bg-sky-500', text: 'text-sky-600', border: 'border-sky-100', bg: 'bg-sky-50/50' };
@@ -1449,6 +1572,45 @@ const getCategoryColor = (cat: string) => {
 
 const getModulesForCourse = (title: string, categoryLabel: string, category: string) => {
   switch (category) {
+    case 'freelance-va':
+      return [
+        {
+          name: "Module 1: Getting Started & Essential VA Skillsets",
+          lessons: [
+            `Understanding the fundamentals of virtual assistance and client expectations for "${title}"`,
+            `Mastering core productivity tools: Google Workspace, Slack, Trello, and Zoom`,
+            `Managing calendars, inbox filters, and scheduling workflows for busy international executives`,
+            `Establishing your secure workspace, professional email, and remote workstation setup`
+          ]
+        },
+        {
+          name: "Module 2: Landing High-Paying Gigs & Platform Mastery",
+          lessons: [
+            `SEO-optimizing your freelancer profiles on Upwork, Fiverr, and LinkedIn`,
+            `Crafting high-conversion proposals and cover letters that instantly get replies`,
+            `Nailing the discovery call: How to interview confidently and close the deal`,
+            `Handling contract negotiations, setting up secure international payments, and invoicing`
+          ]
+        },
+        {
+          name: "Module 3: Advanced Operations & Client Retention",
+          lessons: [
+            `Basic project coordination, social media scheduling, and simple digital tools`,
+            `Automating repetitive task updates and managing daily administrative priorities`,
+            `How to manage 3-4 concurrent clients without burnout or scheduling conflicts`,
+            `Developing top-tier communication habits that make you irreplaceable to your clients`
+          ]
+        },
+        {
+          name: "Module 4: Scaling to a Full-Time Agency Business",
+          lessons: [
+            `Setting higher freelance package rates and value-based premium pricing`,
+            `Outsourcing tasks, building a subcontractor list, and white-labeling VA services`,
+            `Creating standard operating procedures (SOPs) to guarantee consistent output quality`,
+            `Capstone graduation assignment: Launching your custom freelancer brand proposal`
+          ]
+        }
+      ];
     case 'ai-automation':
       return [
         {
