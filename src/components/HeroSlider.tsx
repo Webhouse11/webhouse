@@ -19,7 +19,7 @@ const slides = [
     title: "PostPilot: Social Media Organic Growth",
     subtitle: "Let our experts handle your Facebook, Instagram, and LinkedIn to bring you real business results and loyal followers.",
     cta: "Learn About PostPilot",
-    link: "/social-media",
+    link: "/services",
     image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=2400",
     accent: "bg-blue-600"
   },
@@ -27,7 +27,7 @@ const slides = [
     title: "BrandBox: Your Done-For-You Brand Suite",
     subtitle: "Original logos, business cards, social media kits, and brand guidelines delivered in one complete, professional box.",
     cta: "Order Your BrandBox",
-    link: "/dfy-services",
+    link: "/services",
     image: "https://images.unsplash.com/photo-1572021335469-31716248e15c?auto=format&fit=crop&q=80&w=2400",
     accent: "bg-orange-600"
   },
@@ -35,7 +35,7 @@ const slides = [
     title: "Viral AI Videos That Sell More",
     subtitle: "We create cinematic AI video ads and TikToks designed to capture attention and drive sales for your products.",
     cta: "Start Your Video",
-    link: "/ai-video-content",
+    link: "/services",
     image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=2400",
     accent: "bg-purple-600"
   },
@@ -43,7 +43,7 @@ const slides = [
     title: "Authority Scaling with Bulk Video Creation",
     subtitle: "Scale your reach with batch-created videos. Up to 100 high-quality completely managed videos written, recorded, edited, and uploaded for you.",
     cta: "Explore Bulk Videos",
-    link: "/bulk-video-creation",
+    link: "/services",
     image: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=2400",
     accent: "bg-red-600"
   },

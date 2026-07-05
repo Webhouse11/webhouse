@@ -101,13 +101,6 @@ export default function ServicesPage() {
                   </div>
                 ))}
               </div>
-
-              <Link 
-                href={s.href} 
-                className="inline-flex items-center gap-4 font-black text-slate-900 group-hover:gap-6 transition-all uppercase tracking-[0.2em] text-[10px] border-b-2 border-slate-100 hover:border-emerald-600 pb-2 w-fit"
-              >
-                Learn More <ArrowRight className="w-4 h-4" />
-              </Link>
             </motion.div>
           ))}
         </div>

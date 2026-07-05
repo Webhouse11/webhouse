@@ -167,9 +167,9 @@ export const Footer = () => {
           
           <div>
             <h4 className="font-black mb-6 uppercase tracking-widest text-[10px] text-emerald-500 italic">Our Services</h4>
-            <ul className="space-y-4 text-white/60">
-              <li><Link href="/social-media" className="hover:text-emerald-400 transition-colors font-medium">PostPilot (Social Ads)</Link></li>
-              <li><Link href="/dfy-services" className="hover:text-emerald-400 transition-colors font-medium">BrandBox (Branding)</Link></li>
+            <ul className="space-y-4 text-white/40">
+              <li className="font-medium">PostPilot (Social Ads)</li>
+              <li className="font-medium">BrandBox (Branding)</li>
             </ul>
           </div>
 

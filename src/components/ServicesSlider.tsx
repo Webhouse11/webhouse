@@ -179,15 +179,15 @@ export const ServicesSlider = () => {
                   style={{ width: `${100 / services.length}%` }}
                   className="px-1"
                 >
-                  <Link href={s.href} className="block h-full cursor-pointer">
+                  <div className="block h-full">
                     <motion.div
-                      className={`h-full group p-8 md:p-10 rounded-[2.5rem] border border-slate-100/80 bg-gradient-to-br ${s.color} hover:border-emerald-500/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.04)] transition-all flex flex-col justify-between`}
-                      whileHover={{ y: -8 }}
+                      className={`h-full group p-8 md:p-10 rounded-[2.5rem] border border-slate-100/80 bg-gradient-to-br ${s.color} hover:shadow-[0_20px_50px_rgba(0,0,0,0.04)] transition-all flex flex-col justify-between`}
+                      whileHover={{ y: -4 }}
                       transition={{ duration: 0.3 }}
                     >
                       <div>
                         {/* Icon */}
-                        <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 shadow-inner ${s.iconBg} group-hover:scale-110 transition-transform`}>
+                        <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 shadow-inner ${s.iconBg} group-hover:scale-105 transition-transform`}>
                           <s.icon size={28} />
                         </div>
 
@@ -209,15 +209,8 @@ export const ServicesSlider = () => {
                           ))}
                         </div>
                       </div>
-
-                      {/* CTA Button */}
-                      <div 
-                        className="text-emerald-600 font-black text-xs uppercase tracking-widest flex items-center gap-2 group-hover:gap-4 transition-all border-b-2 border-emerald-50/0 group-hover:border-emerald-600 w-fit pb-1 mt-4"
-                      >
-                        Get Started <ArrowRight size={16} />
-                      </div>
                     </motion.div>
-                  </Link>
+                  </div>
                 </div>
               ))}
             </motion.div>

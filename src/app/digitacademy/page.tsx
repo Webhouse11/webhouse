@@ -1401,14 +1401,14 @@ const courseDirectoryData = [
 ];
 
 const courses = courseDirectoryData.map(course => {
-  let price = "₦35,000";
-  let oldPrice = "₦105,000";
+  let price = "₦65,000";
+  let oldPrice = "₦195,000";
   if (course.level === "Beginner-friendly") {
-    price = "₦20,000";
-    oldPrice = "₦60,000";
+    price = "₦50,000";
+    oldPrice = "₦150,000";
   } else if (course.level === "Advanced" || course.rank === 1 || course.rank === 30) {
-    price = "₦55,000";
-    oldPrice = "₦165,000";
+    price = "₦85,000";
+    oldPrice = "₦255,000";
   }
   
   return {
@@ -1866,6 +1866,43 @@ export default function DigitAcademy() {
 
   return (
     <div className="bg-white min-h-screen">
+      {/* 24/7 Mentorship & Certification Ticker */}
+      <div className="relative w-full overflow-hidden bg-gradient-to-r from-emerald-950 via-slate-900 to-emerald-950 py-3.5 border-b border-emerald-500/20 text-white select-none z-20">
+        <div className="flex whitespace-nowrap gap-12 animate-marquee-fast hover:[animation-play-state:paused] uppercase tracking-wider text-[11px] sm:text-xs font-black">
+          <div className="flex items-center gap-12 shrink-0">
+            <span className="flex items-center gap-2">
+              <span className="text-emerald-400">🎓</span> UPON SUCCESSFUL PROJECT COMPLETION, WE SHALL BE HAPPY TO AWARD YOU AN OFFICIAL CERTIFICATE OF EXCELLENCE!
+            </span>
+            <span className="text-emerald-500/40 text-lg">✦</span>
+            <span className="flex items-center gap-2 text-yellow-400">
+              <span>⚡</span> WE PROVIDE MORE THAN 100% MENTORSHIP & 24/7 ACTIVE SUPPORT — 100% FREE!
+            </span>
+            <span className="text-emerald-500/40 text-lg">✦</span>
+          </div>
+          <div className="flex items-center gap-12 shrink-0">
+            <span className="flex items-center gap-2">
+              <span className="text-emerald-400">🎓</span> UPON SUCCESSFUL PROJECT COMPLETION, WE SHALL BE HAPPY TO AWARD YOU AN OFFICIAL CERTIFICATE OF EXCELLENCE!
+            </span>
+            <span className="text-emerald-500/40 text-lg">✦</span>
+            <span className="flex items-center gap-2 text-yellow-400">
+              <span>⚡</span> WE PROVIDE MORE THAN 100% MENTORSHIP & 24/7 ACTIVE SUPPORT — 100% FREE!
+            </span>
+            <span className="text-emerald-500/40 text-lg">✦</span>
+          </div>
+        </div>
+        <style>{`
+          @keyframes marquee-fast {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
+          }
+          .animate-marquee-fast {
+            display: inline-flex;
+            white-space: nowrap;
+            animation: marquee-fast 35s linear infinite;
+          }
+        `}</style>
+      </div>
+
       {/* 1. HERO SECTION */}
       <section className="relative pt-32 pb-24 overflow-hidden bg-slate-950">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent opacity-50"></div>
@@ -2042,8 +2079,8 @@ export default function DigitAcademy() {
                   <div className="mb-4 sm:mb-0">
                     <span className="text-xs text-slate-400 font-bold uppercase tracking-widest block mb-1">Tuition Fee</span>
                     <div className="flex items-baseline gap-2">
-                      <span className="text-3xl font-black text-white">{formatPrice("₦55,000")}</span>
-                      <span className="text-sm text-slate-500 line-through font-bold">{formatPrice("₦165,000")}</span>
+                      <span className="text-3xl font-black text-white">{formatPrice("₦95,000")}</span>
+                      <span className="text-sm text-slate-500 line-through font-bold">{formatPrice("₦285,000")}</span>
                     </div>
                   </div>
                   <a 
@@ -2233,6 +2270,7 @@ export default function DigitAcademy() {
                                     </span>
                                   </div>
                                   <motion.a
+                                    onClick={(e) => e.stopPropagation()}
                                     href={`https://wa.me/2348152469749?text=${encodeURIComponent(
                                       `Hello Webhouse, I want to get the resource pack and secure my access for: "${course.title}" (${course.categoryLabel}) under DigitAcademy. Please guide me on payment or delivery!`
                                     )}`}
@@ -2376,6 +2414,7 @@ export default function DigitAcademy() {
                                 </span>
                               </div>
                               <motion.a
+                                onClick={(e) => e.stopPropagation()}
                                 href={`https://wa.me/2348152469749?text=${encodeURIComponent(
                                   `Hello Webhouse, I want to get the resource pack and secure my access for: "${course.title}" (${course.categoryLabel}) under DigitAcademy. Please guide me on payment or delivery!`
                                 )}`}
