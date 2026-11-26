@@ -17,10 +17,10 @@ BRAND POSITIONING:
 "WE DON'T JUST OFFER SERVICES — WE DESIGN SYSTEMS."
 
 PERSONA & TONE:
-- Warm, friendly, approachable, enthusiastic, knowledgeable, professional, and solution-driven. Make every visitor feel genuinely welcomed! 😊
-- ALWAYS include tasteful, well-matched emojis in every reply (for example: 👋, ✨, 🚀, 💡, 🌐, 🎨, 📱, 🤖, 🎬, 🎓, 💬, ✅) to keep conversations lively, warm, and easy to read — without overdoing it or sacrificing clarity.
-- Communicate like an experienced, friendly digital systems consultant and customer care representative.
-- Be clear, structured, and concise. Avoid robotic, repetitive, or unnecessarily lengthy essays. Use bullet points sparingly where helpful.
+- Sound like a real, warm, caring human consultant — never stiff, scripted, or robotic! 😊
+- Use natural everyday conversational language and contractions (like "we'd love to", "here's how", "that sounds awesome!") while staying sharp, respectful, and business-savvy.
+- ALWAYS include tasteful, well-matched emojis in every reply (such as 👋, ✨, 🚀, 💡, 🌐, 🎨, 📱, 🤖, 🎬, 🎓, 💬, ✅, 😊) so the chat feels genuinely friendly and alive.
+- Keep replies concise, engaging, and easy to skim — chat naturally in short paragraphs instead of dumping giant robotic walls of text. Ask one thoughtful, natural follow-up question when helpful!
 
 MANDATORY ACCURACY & SAFETY RULES:
 1. Prioritize the VERIFIED WEBHOUSE KNOWLEDGE BASE below. Do NOT fabricate prices, discounts, timelines, client testimonials, portfolio projects, or unconfirmed service capabilities.
@@ -102,7 +102,7 @@ export async function POST(request: Request) {
     }
     return new Response(
       JSON.stringify({
-        error: `Too many messages in a short time. Please wait ${rate.retryAfterSeconds} seconds and try again.`,
+        error: `Whoa, you're moving fast! 😄 Give me about ${rate.retryAfterSeconds} seconds to catch my breath and send that again! ✨`,
       }),
       {
         status: 429,
@@ -246,9 +246,10 @@ export async function POST(request: Request) {
       try {
         const systemInstruction = SYSTEM_PROMPT_TEMPLATE(contextBlock);
         const attempts: Array<{ model: string; useThinking: boolean; timeoutMs: number; delayMs: number }> = [
-          { model: CHAT_MODEL, useThinking: true, timeoutMs: 7000, delayMs: 0 },
-          { model: FALLBACK_CHAT_MODEL, useThinking: false, timeoutMs: 12000, delayMs: 200 },
-          { model: FALLBACK_CHAT_MODEL, useThinking: false, timeoutMs: 15000, delayMs: 400 },
+          { model: CHAT_MODEL, useThinking: true, timeoutMs: 8000, delayMs: 0 },
+          { model: FALLBACK_CHAT_MODEL, useThinking: false, timeoutMs: 10000, delayMs: 350 },
+          { model: FALLBACK_CHAT_MODEL, useThinking: false, timeoutMs: 12000, delayMs: 1200 },
+          { model: CHAT_MODEL, useThinking: true, timeoutMs: 12000, delayMs: 2000 },
         ];
 
         let responseStream: Awaited<ReturnType<typeof ai.models.generateContentStream>> | null = null;
@@ -282,6 +283,10 @@ export async function POST(request: Request) {
             const isTransient =
               name === 'TimeoutError' ||
               name === 'AbortError' ||
+              msg.includes('429') ||
+              msg.includes('RESOURCE_EXHAUSTED') ||
+              msg.includes('Too Many Requests') ||
+              msg.includes('quota') ||
               msg.includes('503') ||
               msg.includes('UNAVAILABLE') ||
               msg.includes('500') ||
@@ -406,14 +411,14 @@ export async function POST(request: Request) {
         const latencyMs = Date.now() - startTime;
         const errMessage = err instanceof Error ? err.message : String(err);
         let userMessage =
-          'I ran into a temporary issue connecting to the AI engine. Please try again in a moment or chat directly with our team on WhatsApp at +234 815 246 9749.';
+          "Hey there! 👋 Sorry about the tiny hiccup — my connection blinked for a second! 😅 Mind sending that again in a moment? You can also reach our team directly on WhatsApp anytime at +234 815 246 9749 💬";
 
         if (errMessage.includes('429') || errMessage.includes('RESOURCE_EXHAUSTED')) {
           userMessage =
-            'Our AI assistant is currently handling high demand. Please try again shortly or reach us on WhatsApp at +234 815 246 9749.';
+            "Hey there! 👋 Sorry to keep you waiting — a lot of people are messaging right now and we hit our temporary AI quota limit 😅 Please try again in a few seconds, or chat with our team directly on WhatsApp at +234 815 246 9749 💬✨";
         } else if (errMessage.includes('403') || errMessage.includes('API_KEY_INVALID')) {
           userMessage =
-            'The server Gemini API key appears invalid or lacks permission. Please verify GEMINI_API_KEY in Settings > Secrets.';
+            "Oops! 👋 It looks like the Gemini API key on the server needs checking in Settings > Secrets before I can reply. Feel free to reach our team on WhatsApp at +234 815 246 9749 in the meantime! 💬";
         }
 
         try {
