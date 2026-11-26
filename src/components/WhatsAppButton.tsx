@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MessageCircle, X } from 'lucide-react';
+import { X } from 'lucide-react';
 
 export const WhatsAppButton = () => {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -26,7 +26,7 @@ export const WhatsAppButton = () => {
           initial={{ opacity: 0, scale: 0.5, x: 20 }}
           animate={{ opacity: 1, scale: 1, x: 0 }}
           exit={{ opacity: 0, scale: 0.5, x: 20 }}
-          className="fixed bottom-8 right-8 z-[100] flex flex-col items-end gap-4"
+          className="fixed bottom-24 right-6 z-[100] flex flex-col items-end gap-4"
         >
           {/* Tooltip/Message Bubble */}
           <motion.div

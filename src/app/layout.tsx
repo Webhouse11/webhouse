@@ -4,6 +4,7 @@ import '@/src/index.css';
 import { Navbar, Footer } from '@/src/components/LayoutNext'; // I will create LayoutNext
 import { WhatsAppButton } from '@/src/components/WhatsAppButton';
 import { TelegramButton } from '@/src/components/TelegramButton';
+import { WebhouseAIChat } from '@/src/components/WebhouseAIChat';
 import { AppProvider } from '@/src/context/AppContext';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
@@ -87,18 +88,22 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${inter.variable} scroll-smooth`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} scroll-smooth`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen bg-white font-sans selection:bg-emerald-600 selection:text-white antialiased">
+      <body
+        suppressHydrationWarning
+        className="min-h-screen bg-white font-sans selection:bg-emerald-600 selection:text-white antialiased"
+      >
         <AppProvider>
           <Navbar />
           <WhatsAppButton />
           <TelegramButton />
+          <WebhouseAIChat />
           <main className="overflow-x-hidden pt-[112px]">{children}</main>
           <Footer />
         </AppProvider>

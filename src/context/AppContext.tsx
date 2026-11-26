@@ -118,12 +118,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const submitLead = async (data: any) => {
-    await fetch('/api/leads', {
+    const res = await fetch('/api/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
-    await refreshLeads();
+    if (!res.ok) {
+      throw new Error('Failed to submit lead');
+    }
   };
 
   const updateLead = async (id: number, status: string) => {
@@ -160,7 +162,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   useEffect(() => {
     setLoading(true);
-    Promise.all([refreshLeads(), refreshPosts(), detectCurrency()])
+    Promise.all([refreshPosts(), detectCurrency()])
       .catch(err => console.error("Initial load error:", err))
       .finally(() => setLoading(false));
   }, []);

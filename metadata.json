@@ -3,5 +3,8 @@
   "description": "Webhouse Media helps businesses grow online through digital marketing, branding, SEO, AI automation, website design, and digital skills training in Nigeria.",
   "requestFramePermissions": [
     "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
   ]
 }
