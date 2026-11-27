@@ -140,8 +140,48 @@ try {
       is_active INTEGER DEFAULT 1,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+
+    CREATE TABLE IF NOT EXISTS ai_providers (
+      id TEXT PRIMARY KEY,
+      display_name TEXT NOT NULL,
+      enabled INTEGER NOT NULL DEFAULT 1,
+      is_primary INTEGER NOT NULL DEFAULT 0,
+      priority_order INTEGER NOT NULL,
+      selected_model TEXT NOT NULL,
+      allow_paid_models INTEGER NOT NULL DEFAULT 0,
+      daily_request_limit INTEGER NOT NULL DEFAULT 500,
+      monthly_budget_usd REAL NOT NULL DEFAULT 0,
+      estimated_spend_usd REAL NOT NULL DEFAULT 0,
+      encrypted_api_key TEXT DEFAULT '',
+      encrypted_account_id TEXT DEFAULT '',
+      circuit_state TEXT NOT NULL DEFAULT 'closed',
+      consecutive_failures INTEGER NOT NULL DEFAULT 0,
+      cooldown_until DATETIME DEFAULT NULL,
+      last_error TEXT DEFAULT '',
+      last_error_code INTEGER DEFAULT NULL,
+      last_latency_ms INTEGER DEFAULT 0,
+      last_success_at DATETIME DEFAULT NULL,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS ai_global_settings (
+      key TEXT PRIMARY KEY,
+      value TEXT NOT NULL,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
   `);
 
+  // Safe migrations for existing usage_logs table
+  const usageCols = db.prepare('PRAGMA table_info(usage_logs)').all() as Array<{ name: string }>;
+  const usageColNames = new Set(usageCols.map((c) => c.name));
+  if (!usageColNames.has('provider')) {
+    db.exec(`ALTER TABLE usage_logs ADD COLUMN provider TEXT DEFAULT 'gemini'`);
+  }
+  if (!usageColNames.has('estimated_cost_usd')) {
+    db.exec(`ALTER TABLE usage_logs ADD COLUMN estimated_cost_usd REAL DEFAULT 0`);
+  }
+
+  // Seed default knowledge base if empty
   const countRow = db.prepare('SELECT COUNT(*) as count FROM knowledge_items').get() as { count: number };
   if (countRow.count === 0) {
     const insertStmt = db.prepare(`
@@ -162,6 +202,33 @@ try {
     });
     seedTransaction();
   }
+
+  // Seed default multi-provider configuration if empty (Groq Primary -> OpenRouter -> Gemini -> Cloudflare)
+  const providerCount = db.prepare('SELECT COUNT(*) as count FROM ai_providers').get() as { count: number };
+  if (providerCount.count === 0) {
+    const insertProvider = db.prepare(`
+      INSERT OR IGNORE INTO ai_providers (
+        id, display_name, enabled, is_primary, priority_order,
+        selected_model, allow_paid_models, daily_request_limit, monthly_budget_usd
+      ) VALUES (?, ?, ?, ?, ?, ?, 0, ?, 0)
+    `);
+    const seedProviders = db.transaction(() => {
+      insertProvider.run('groq', 'Groq Cloud', 1, 1, 1, 'llama-3.3-70b-versatile', 1000);
+      insertProvider.run('openrouter', 'OpenRouter', 1, 0, 2, 'openrouter/free', 500);
+      insertProvider.run('gemini', 'Google Gemini', 1, 0, 3, 'gemini-4-hydrogen', 500);
+      insertProvider.run('cloudflare', 'Cloudflare Workers AI', 0, 0, 4, '@cf/meta/llama-3.3-70b-instruct-fp8-fast', 500);
+    });
+    seedProviders();
+  } else {
+    db.prepare(
+      `UPDATE ai_providers SET selected_model = 'openrouter/free' WHERE id = 'openrouter' AND selected_model = 'meta-llama/llama-3.3-70b-instruct:free'`
+    ).run();
+  }
+
+  // Seed default global cost/usage settings
+  const insertSetting = db.prepare(`INSERT OR IGNORE INTO ai_global_settings (key, value) VALUES (?, ?)`);
+  insertSetting.run('max_monthly_spend_usd', '0');
+  insertSetting.run('allow_paid_fallback', '0');
 } catch (error) {
   console.warn('Database schema initialization skipped or failed (possibly read-only environment):', error);
 }

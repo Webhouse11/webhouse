@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const baseConfig = {
   serverExternalPackages: ['better-sqlite3'],
   images: {
     remotePatterns: [
@@ -40,4 +40,9 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default function nextConfig(phase) {
+  return {
+    ...baseConfig,
+    distDir: phase === 'phase-development-server' ? '.next-dev' : '.next',
+  };
+}

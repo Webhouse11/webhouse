@@ -70,7 +70,21 @@ export async function GET(request: Request) {
     .all();
 
   const recentErrors = db
-    .prepare("SELECT id, endpoint, model, status, error_message, created_at FROM usage_logs WHERE status != 'success' ORDER BY created_at DESC LIMIT 15")
+    .prepare("SELECT id, endpoint, COALESCE(provider, 'gemini') as provider, model, status, error_message, created_at FROM usage_logs WHERE status != 'success' ORDER BY created_at DESC LIMIT 15")
+    .all();
+
+  const providerBreakdown = db
+    .prepare(
+      `SELECT COALESCE(provider, 'gemini') as provider,
+              COUNT(*) as total,
+              SUM(CASE WHEN status = 'success' THEN 1 ELSE 0 END) as successes,
+              SUM(CASE WHEN status = 'rate_limited' THEN 1 ELSE 0 END) as rateLimits,
+              SUM(CASE WHEN status = 'error' THEN 1 ELSE 0 END) as errors,
+              ROUND(AVG(CASE WHEN status = 'success' THEN latency_ms END)) as avgLatencyMs,
+              COALESCE(SUM(estimated_cost_usd), 0) as spendUsd
+       FROM usage_logs
+       GROUP BY COALESCE(provider, 'gemini')`
+    )
     .all();
 
   const kbStats = db
@@ -101,6 +115,7 @@ export async function GET(request: Request) {
     unansweredQuestions,
     recentSessions,
     recentErrors,
+    providerBreakdown,
   });
 }
 

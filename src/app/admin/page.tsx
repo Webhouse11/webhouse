@@ -4,18 +4,24 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
   Activity,
+  ArrowDown,
+  ArrowUp,
   BarChart3,
   BookOpen,
   CheckCircle2,
   ClipboardList,
+  Cpu,
   Database,
+  DollarSign,
   Edit3,
   HelpCircle,
   KeyRound,
   LogOut,
   MessageSquare,
+  PlugZap,
   Plus,
   RefreshCw,
+  RotateCcw,
   Search,
   Shield,
   Trash2,
@@ -105,7 +111,74 @@ interface ChatTranscriptMsg {
   created_at: string;
 }
 
-type AdminTab = 'overview' | 'knowledge' | 'enquiries' | 'unanswered' | 'conversations' | 'users';
+interface ProviderModelOption {
+  id: string;
+  label: string;
+  isPaid: boolean;
+  inputCostPer1M: number;
+  outputCostPer1M: number;
+}
+
+interface ProviderConfig {
+  id: 'groq' | 'openrouter' | 'gemini' | 'cloudflare';
+  displayName: string;
+  description: string;
+  envVarName: string;
+  secondaryEnvVarName: string | null;
+  docsUrl: string;
+  enabled: boolean;
+  isPrimary: boolean;
+  priorityOrder: number;
+  selectedModel: string;
+  selectedModelIsPaid: boolean;
+  allowPaidModels: boolean;
+  dailyRequestLimit: number;
+  dailyUsed: number;
+  monthlyBudgetUsd: number;
+  estimatedSpendUsd: number;
+  models: ProviderModelOption[];
+  credentials: {
+    configured: boolean;
+    source: 'admin' | 'env' | 'none';
+    maskedKey: string | null;
+    maskedAccountId: string | null;
+  };
+  health: {
+    circuitState: 'closed' | 'open' | 'half_open';
+    consecutiveFailures: number;
+    cooldownUntil: string | null;
+    lastError: string;
+    lastErrorCode: number | null;
+    lastLatencyMs: number;
+    lastSuccessAt: string | null;
+  };
+  stats: {
+    totalRequests: number;
+    successCount: number;
+    rateLimitCount: number;
+    errorCount: number;
+    avgLatencyMs: number;
+  };
+}
+
+interface GlobalProviderSettings {
+  maxMonthlySpendUsd: number;
+  allowPaidFallback: boolean;
+  totalMonthlySpendUsd: number;
+  encryptionKeyConfigured: boolean;
+}
+
+interface ProviderBreakdownRow {
+  provider: string;
+  total: number;
+  successes: number;
+  rateLimits: number;
+  errors: number;
+  avgLatencyMs: number | null;
+  spendUsd: number;
+}
+
+type AdminTab = 'overview' | 'providers' | 'knowledge' | 'enquiries' | 'unanswered' | 'conversations' | 'users';
 
 const KB_CATEGORIES = [
   'general',
@@ -179,6 +252,23 @@ export default function AdminDashboardPage() {
     role: 'editor' as AdminRole,
   });
 
+  // Multi-provider state
+  const [providers, setProviders] = useState<ProviderConfig[]>([]);
+  const [globalAiSettings, setGlobalAiSettings] = useState<GlobalProviderSettings>({
+    maxMonthlySpendUsd: 0,
+    allowPaidFallback: false,
+    totalMonthlySpendUsd: 0,
+    encryptionKeyConfigured: false,
+  });
+  const [providerBreakdown, setProviderBreakdown] = useState<ProviderBreakdownRow[]>([]);
+  const [providerCredInputs, setProviderCredInputs] = useState<
+    Record<string, { apiKey: string; accountId: string }>
+  >({});
+  const [providerDrafts, setProviderDrafts] = useState<
+    Record<string, { dailyRequestLimit: number; monthlyBudgetUsd: number }>
+  >({});
+  const [testingProviderId, setTestingProviderId] = useState<string | null>(null);
+
   const showNotice = (type: 'ok' | 'err', text: string) => {
     setToast({ type, text });
     setTimeout(() => setToast(null), 4500);
@@ -211,12 +301,13 @@ export default function AdminDashboardPage() {
   const loadDashboardData = useCallback(async () => {
     if (!token || !user) return;
     try {
-      const [analyticsRes, kbRes, enqRes] = await Promise.all([
+      const [analyticsRes, kbRes, enqRes, providersRes] = await Promise.all([
         authFetch('/api/admin/analytics'),
         authFetch(
           `/api/admin/knowledge?category=${encodeURIComponent(kbCategoryFilter)}&q=${encodeURIComponent(kbSearch)}`
         ),
         authFetch(`/api/admin/enquiries?status=${encodeURIComponent(enquiryFilter)}`),
+        authFetch('/api/admin/providers'),
       ]);
 
       if (analyticsRes.ok) {
@@ -227,6 +318,7 @@ export default function AdminDashboardPage() {
         setUnanswered(aData.unansweredQuestions || []);
         setSessions(aData.recentSessions || []);
         setRecentErrors(aData.recentErrors || []);
+        setProviderBreakdown(aData.providerBreakdown || []);
       }
 
       if (kbRes.ok) {
@@ -237,6 +329,27 @@ export default function AdminDashboardPage() {
       if (enqRes.ok) {
         const eData = await enqRes.json();
         setEnquiries(eData.enquiries || []);
+      }
+
+      if (providersRes.ok) {
+        const pData = await providersRes.json();
+        const loadedProviders = (pData.providers || []) as ProviderConfig[];
+        setProviders(loadedProviders);
+        if (pData.globalSettings) {
+          setGlobalAiSettings(pData.globalSettings);
+        }
+        setProviderDrafts((prev) => {
+          const next = { ...prev };
+          for (const p of loadedProviders) {
+            if (!next[p.id]) {
+              next[p.id] = {
+                dailyRequestLimit: p.dailyRequestLimit,
+                monthlyBudgetUsd: p.monthlyBudgetUsd,
+              };
+            }
+          }
+          return next;
+        });
       }
 
       if (user.role === 'super_admin') {
@@ -287,6 +400,97 @@ export default function AdminDashboardPage() {
       setAuthError('Network error while authenticating.');
     } finally {
       setAuthBusy(false);
+    }
+  };
+
+  const handleUpdateProvider = async (
+    providerId: string,
+    patch: Record<string, unknown>,
+    successMsg?: string
+  ) => {
+    setBusyMessage(`Updating ${providerId}...`);
+    try {
+      const res = await authFetch('/api/admin/providers', {
+        method: 'PATCH',
+        body: JSON.stringify({ providerId, ...patch }),
+      });
+      const d = await res.json();
+      if (res.ok) {
+        showNotice('ok', successMsg || `Updated ${providerId} settings.`);
+        await loadDashboardData();
+      } else {
+        showNotice('err', d.error || 'Failed to update provider.');
+      }
+    } catch {
+      showNotice('err', 'Network error updating provider.');
+    } finally {
+      setBusyMessage(null);
+    }
+  };
+
+  const handleReorderProvider = async (index: number, direction: 'up' | 'down') => {
+    const targetIdx = direction === 'up' ? index - 1 : index + 1;
+    if (targetIdx < 0 || targetIdx >= providers.length) return;
+    const nextOrder = providers.map((p) => p.id);
+    const [moved] = nextOrder.splice(index, 1);
+    nextOrder.splice(targetIdx, 0, moved);
+    setBusyMessage('Updating fallback order...');
+    try {
+      const res = await authFetch('/api/admin/providers', {
+        method: 'PATCH',
+        body: JSON.stringify({ action: 'reorder', order: nextOrder }),
+      });
+      if (res.ok) {
+        showNotice('ok', 'Fallback priority order updated.');
+        await loadDashboardData();
+      }
+    } finally {
+      setBusyMessage(null);
+    }
+  };
+
+  const handleTestProvider = async (providerId: string) => {
+    setTestingProviderId(providerId);
+    try {
+      const res = await authFetch('/api/admin/providers', {
+        method: 'POST',
+        body: JSON.stringify({ providerId }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        showNotice('ok', `${providerId.toUpperCase()} connected (${data.latencyMs}ms · ${data.model})`);
+      } else {
+        showNotice('err', `${providerId.toUpperCase()} test failed: ${data.error}`);
+      }
+      await loadDashboardData();
+    } catch {
+      showNotice('err', 'Failed to test provider connection.');
+    } finally {
+      setTestingProviderId(null);
+    }
+  };
+
+  const handleSaveGlobalAiSettings = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBusyMessage('Saving global cost controls...');
+    try {
+      const res = await authFetch('/api/admin/providers', {
+        method: 'PATCH',
+        body: JSON.stringify({
+          action: 'update_global',
+          maxMonthlySpendUsd: globalAiSettings.maxMonthlySpendUsd,
+          allowPaidFallback: globalAiSettings.allowPaidFallback,
+        }),
+      });
+      const d = await res.json();
+      if (res.ok) {
+        showNotice('ok', 'Global budget & paid-model guard updated.');
+        await loadDashboardData();
+      } else {
+        showNotice('err', d.error || 'Failed to update global settings.');
+      }
+    } finally {
+      setBusyMessage(null);
     }
   };
 
@@ -744,6 +948,7 @@ export default function AdminDashboardPage() {
         <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-3">
           {[
             { id: 'overview', label: 'Analytics & Health', icon: BarChart3 },
+            { id: 'providers', label: `AI Providers (${providers.filter((p) => p.enabled).length}/${providers.length})`, icon: Cpu },
             { id: 'knowledge', label: `Knowledge Base (${kbItems.length})`, icon: BookOpen },
             { id: 'enquiries', label: `Enquiries (${enquiries.length})`, icon: ClipboardList },
             {
@@ -843,6 +1048,31 @@ export default function AdminDashboardPage() {
               </div>
             </div>
 
+            {providerBreakdown.length > 0 && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+                <h2 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
+                  <Cpu className="w-4 h-4 text-emerald-600" />
+                  AI Provider Usage & Reliability
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+                  {providerBreakdown.map((pb) => (
+                    <div key={pb.provider} className="p-3 rounded-xl border border-slate-200 bg-slate-50 space-y-1">
+                      <p className="font-bold uppercase text-slate-900">{pb.provider}</p>
+                      <p className="text-slate-600">
+                        Success: <strong>{pb.successes}</strong> / {pb.total}
+                      </p>
+                      <p className="text-slate-600">
+                        429s: <strong>{pb.rateLimits}</strong> · Errors: <strong>{pb.errors}</strong>
+                      </p>
+                      <p className="text-slate-500">
+                        Avg Latency: {pb.avgLatencyMs ? `${Math.round(pb.avgLatencyMs)}ms` : '—'} · Spend: ${Number(pb.spendUsd || 0).toFixed(4)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {recentErrors.length > 0 && (
               <div className="bg-white rounded-2xl border border-amber-200 p-5 shadow-sm">
                 <h2 className="text-sm font-bold text-amber-950 mb-3">Recent AI API / Rate-Limit Events</h2>
@@ -859,6 +1089,431 @@ export default function AdminDashboardPage() {
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {/* AI PROVIDERS TAB */}
+        {activeTab === 'providers' && (
+          <div className="space-y-6">
+            {/* Global Cost & Paid Guard */}
+            <form
+              onSubmit={handleSaveGlobalAiSettings}
+              className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm flex flex-wrap items-center justify-between gap-4"
+            >
+              <div className="space-y-1 max-w-xl">
+                <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <DollarSign className="w-4 h-4 text-emerald-600" />
+                  Cost Protection & Free-Tier Priority
+                </h2>
+                <p className="text-xs text-slate-600">
+                  Webhouse AI routes through free-tier providers first. Paid models are blocked unless explicitly authorized below. Monthly tracked spend:{' '}
+                  <strong>${globalAiSettings.totalMonthlySpendUsd.toFixed(4)}</strong>.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 text-xs">
+                <label className="flex items-center gap-2 font-medium text-slate-700">
+                  Monthly Cap ($):
+                  <input
+                    type="number"
+                    min={0}
+                    step="0.5"
+                    disabled={!isSuperAdmin}
+                    value={globalAiSettings.maxMonthlySpendUsd}
+                    onChange={(e) =>
+                      setGlobalAiSettings((p) => ({
+                        ...p,
+                        maxMonthlySpendUsd: Math.max(0, Number(e.target.value) || 0),
+                      }))
+                    }
+                    className="w-24 px-2.5 py-1.5 rounded-lg border border-slate-200"
+                  />
+                </label>
+
+                <label className="flex items-center gap-2 font-medium text-slate-700 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    disabled={!isSuperAdmin}
+                    checked={globalAiSettings.allowPaidFallback}
+                    onChange={(e) =>
+                      setGlobalAiSettings((p) => ({ ...p, allowPaidFallback: e.target.checked }))
+                    }
+                  />
+                  Authorize Paid Models
+                </label>
+
+                {isSuperAdmin && (
+                  <button
+                    type="submit"
+                    className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold"
+                  >
+                    Save Budget Guard
+                  </button>
+                )}
+              </div>
+            </form>
+
+            {/* Provider Priority List */}
+            <div className="space-y-4">
+              {providers.map((p, index) => {
+                const credsInput = providerCredInputs[p.id] || { apiKey: '', accountId: '' };
+                const draft = providerDrafts[p.id] || {
+                  dailyRequestLimit: p.dailyRequestLimit,
+                  monthlyBudgetUsd: p.monthlyBudgetUsd,
+                };
+                const statusBadge = !p.enabled
+                  ? { label: 'Disabled', cls: 'bg-slate-100 text-slate-600' }
+                  : !p.credentials.configured
+                  ? { label: 'Needs API Key', cls: 'bg-amber-50 text-amber-800' }
+                  : p.health.circuitState === 'open'
+                  ? { label: 'Cooldown / Circuit Open', cls: 'bg-red-50 text-red-700' }
+                  : { label: 'Healthy & Ready', cls: 'bg-emerald-50 text-emerald-700' };
+
+                return (
+                  <div
+                    key={p.id}
+                    className={`bg-white rounded-2xl border p-5 shadow-sm space-y-4 ${
+                      p.isPrimary ? 'border-emerald-400' : 'border-slate-200'
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div className="space-y-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-slate-900 text-white">
+                            #{index + 1}
+                          </span>
+                          <h3 className="text-base font-bold text-slate-900">{p.displayName}</h3>
+                          {p.isPrimary && (
+                            <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-600 text-white">
+                              PRIMARY
+                            </span>
+                          )}
+                          <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-md ${statusBadge.cls}`}>
+                            {statusBadge.label}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-500">{p.description}</p>
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-1.5 text-xs">
+                        {canEdit && (
+                          <>
+                            <button
+                              type="button"
+                              disabled={index === 0}
+                              onClick={() => handleReorderProvider(index, 'up')}
+                              className="p-2 rounded-lg border border-slate-200 hover:border-slate-400 disabled:opacity-30"
+                              title="Move higher in fallback order"
+                            >
+                              <ArrowUp className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                              type="button"
+                              disabled={index === providers.length - 1}
+                              onClick={() => handleReorderProvider(index, 'down')}
+                              className="p-2 rounded-lg border border-slate-200 hover:border-slate-400 disabled:opacity-30"
+                              title="Move lower in fallback order"
+                            >
+                              <ArrowDown className="w-3.5 h-3.5" />
+                            </button>
+                            {!p.isPrimary && (
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleUpdateProvider(
+                                    p.id,
+                                    { setAsPrimary: true },
+                                    `${p.displayName} set as primary provider.`
+                                  )
+                                }
+                                className="px-3 py-1.5 rounded-lg border border-emerald-300 text-emerald-800 font-semibold hover:bg-emerald-50"
+                              >
+                                Set Primary
+                              </button>
+                            )}
+                            <button
+                              type="button"
+                              onClick={() =>
+                                handleUpdateProvider(
+                                  p.id,
+                                  { enabled: !p.enabled },
+                                  `${p.displayName} ${p.enabled ? 'disabled' : 'enabled'}.`
+                                )
+                              }
+                              className={`px-3 py-1.5 rounded-lg font-semibold border ${
+                                p.enabled
+                                  ? 'border-slate-200 text-slate-700 hover:bg-slate-50'
+                                  : 'bg-emerald-600 text-white border-emerald-600'
+                              }`}
+                            >
+                              {p.enabled ? 'Disable' : 'Enable'}
+                            </button>
+                          </>
+                        )}
+
+                        {canEdit && (
+                          <button
+                            type="button"
+                            disabled={testingProviderId === p.id}
+                            onClick={() => handleTestProvider(p.id)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold disabled:opacity-50"
+                          >
+                            <PlugZap className="w-3.5 h-3.5" />
+                            {testingProviderId === p.id ? 'Testing...' : 'Test Connection'}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Model & Limits Row */}
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs">
+                      <div className="md:col-span-2">
+                        <label className="block font-semibold text-slate-600 mb-1">Active Model</label>
+                        <select
+                          disabled={!canEdit}
+                          value={p.selectedModel}
+                          onChange={(e) =>
+                            handleUpdateProvider(
+                              p.id,
+                              { selectedModel: e.target.value },
+                              `${p.displayName} model updated.`
+                            )
+                          }
+                          className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white"
+                        >
+                          {p.models.map((m) => (
+                            <option key={m.id} value={m.id} disabled={m.isPaid && !p.allowPaidModels}>
+                              {m.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block font-semibold text-slate-600 mb-1">
+                          Daily Request Limit ({p.dailyUsed} used today)
+                        </label>
+                        <div className="flex gap-1.5">
+                          <input
+                            type="number"
+                            min={0}
+                            disabled={!canEdit}
+                            value={draft.dailyRequestLimit}
+                            onChange={(e) =>
+                              setProviderDrafts((prev) => ({
+                                ...prev,
+                                [p.id]: {
+                                  ...draft,
+                                  dailyRequestLimit: Math.max(0, Number(e.target.value) || 0),
+                                },
+                              }))
+                            }
+                            className="w-full px-2.5 py-2 rounded-xl border border-slate-200"
+                          />
+                          {canEdit && (
+                            <button
+                              type="button"
+                              onClick={() =>
+                                handleUpdateProvider(
+                                  p.id,
+                                  { dailyRequestLimit: draft.dailyRequestLimit },
+                                  'Daily limit updated.'
+                                )
+                              }
+                              className="px-2.5 py-2 rounded-xl border border-slate-200 font-semibold hover:border-emerald-500"
+                            >
+                              Save
+                            </button>
+                          )}
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block font-semibold text-slate-600 mb-1">
+                          Monthly Cap $ (Spent: ${p.estimatedSpendUsd.toFixed(4)})
+                        </label>
+                        <div className="flex gap-1.5">
+                          <input
+                            type="number"
+                            min={0}
+                            step="0.5"
+                            disabled={!isSuperAdmin}
+                            value={draft.monthlyBudgetUsd}
+                            onChange={(e) =>
+                              setProviderDrafts((prev) => ({
+                                ...prev,
+                                [p.id]: {
+                                  ...draft,
+                                  monthlyBudgetUsd: Math.max(0, Number(e.target.value) || 0),
+                                },
+                              }))
+                            }
+                            className="w-full px-2.5 py-2 rounded-xl border border-slate-200"
+                          />
+                          {isSuperAdmin && (
+                            <button
+                              type="button"
+                              onClick={() =>
+                                handleUpdateProvider(
+                                  p.id,
+                                  { monthlyBudgetUsd: draft.monthlyBudgetUsd },
+                                  'Monthly cap updated.'
+                                )
+                              }
+                              className="px-2.5 py-2 rounded-xl border border-slate-200 font-semibold hover:border-emerald-500"
+                            >
+                              Save
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Secure Credential Management (Super Admin only) */}
+                    {isSuperAdmin && (
+                      <div className="bg-slate-50 rounded-xl p-3 border border-slate-200/80 space-y-2 text-xs">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <span className="font-semibold text-slate-700">
+                            Credentials ({p.envVarName}
+                            {p.secondaryEnvVarName ? ` + ${p.secondaryEnvVarName}` : ''}):{' '}
+                            {p.credentials.configured ? (
+                              <span className="text-emerald-700">
+                                {p.credentials.maskedKey} (via {p.credentials.source})
+                              </span>
+                            ) : (
+                              <span className="text-amber-700">Not configured</span>
+                            )}
+                          </span>
+
+                          <label className="flex items-center gap-1.5 text-slate-700 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={p.allowPaidModels}
+                              onChange={(e) =>
+                                handleUpdateProvider(
+                                  p.id,
+                                  { allowPaidModels: e.target.checked },
+                                  `Paid models ${e.target.checked ? 'authorized' : 'blocked'} for ${p.displayName}.`
+                                )
+                              }
+                            />
+                            Allow Paid Models on {p.displayName}
+                          </label>
+                        </div>
+
+                        <div className="flex flex-wrap gap-2">
+                          <input
+                            type="password"
+                            autoComplete="new-password"
+                            placeholder={`Enter ${p.envVarName} to store encrypted override`}
+                            value={credsInput.apiKey}
+                            onChange={(e) =>
+                              setProviderCredInputs((prev) => ({
+                                ...prev,
+                                [p.id]: { ...credsInput, apiKey: e.target.value },
+                              }))
+                            }
+                            className="flex-1 min-w-[200px] px-3 py-1.5 rounded-lg border border-slate-200 bg-white"
+                          />
+                          {p.id === 'cloudflare' && (
+                            <input
+                              type="text"
+                              placeholder="CLOUDFLARE_ACCOUNT_ID"
+                              value={credsInput.accountId}
+                              onChange={(e) =>
+                                setProviderCredInputs((prev) => ({
+                                  ...prev,
+                                  [p.id]: { ...credsInput, accountId: e.target.value },
+                                }))
+                              }
+                              className="w-52 px-3 py-1.5 rounded-lg border border-slate-200 bg-white"
+                            />
+                          )}
+                          <button
+                            type="button"
+                            disabled={!credsInput.apiKey.trim() && !credsInput.accountId.trim()}
+                            onClick={async () => {
+                              await handleUpdateProvider(
+                                p.id,
+                                {
+                                  apiKey: credsInput.apiKey.trim() || undefined,
+                                  accountId: credsInput.accountId.trim() || undefined,
+                                },
+                                `${p.displayName} encrypted credential saved.`
+                              );
+                              setProviderCredInputs((prev) => ({
+                                ...prev,
+                                [p.id]: { apiKey: '', accountId: '' },
+                              }));
+                            }}
+                            className="px-3 py-1.5 rounded-lg bg-emerald-600 text-white font-semibold disabled:opacity-40"
+                          >
+                            Save Key
+                          </button>
+                          {p.credentials.source === 'admin' && (
+                            <button
+                              type="button"
+                              onClick={() =>
+                                handleUpdateProvider(
+                                  p.id,
+                                  { clearCredentials: true },
+                                  `Cleared admin key override for ${p.displayName}.`
+                                )
+                              }
+                              className="px-3 py-1.5 rounded-lg border border-slate-300 text-slate-600 font-semibold hover:text-red-600"
+                            >
+                              Clear Override
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Health & Telemetry Strip */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-[11px] text-slate-500 border-t border-slate-100">
+                      <div className="flex flex-wrap gap-3">
+                        <span>
+                          Requests: <strong>{p.stats.successCount}</strong> ok / {p.stats.totalRequests} total
+                        </span>
+                        <span>
+                          429 Rate Limits: <strong>{p.stats.rateLimitCount}</strong>
+                        </span>
+                        <span>
+                          Errors: <strong>{p.stats.errorCount}</strong>
+                        </span>
+                        <span>
+                          Avg Response: <strong>{p.stats.avgLatencyMs || 0} ms</strong>
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        {p.health.lastError && (
+                          <span className="text-red-600 truncate max-w-[260px]" title={p.health.lastError}>
+                            Last error ({p.health.lastErrorCode || 'ERR'}): {p.health.lastError}
+                          </span>
+                        )}
+                        {p.health.circuitState !== 'closed' && canEdit && (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              handleUpdateProvider(
+                                p.id,
+                                { resetCircuit: true },
+                                `Reset circuit breaker for ${p.displayName}.`
+                              )
+                            }
+                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded border border-amber-300 text-amber-800 font-semibold hover:bg-amber-50"
+                          >
+                            <RotateCcw className="w-3 h-3" />
+                            Reset Circuit
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
 
