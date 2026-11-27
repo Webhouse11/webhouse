@@ -4,24 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Facebook, Instagram, Linkedin, Youtube, MessageCircle } from 'lucide-react';
+import { Menu, X, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 import { cn } from '@/src/lib/utils';
-
-export const FloatingWhatsApp = () => {
-  return (
-    <a 
-      href="https://wa.me/2348152469749" 
-      target="_blank" 
-      rel="noopener noreferrer"
-      className="fixed bottom-8 right-8 z-[60] bg-emerald-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all group flex items-center gap-2"
-    >
-      <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 font-bold whitespace-nowrap px-0 group-hover:px-2">
-        Chat with us
-      </span>
-      <MessageCircle size={32} />
-    </a>
-  );
-};
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);

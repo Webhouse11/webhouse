@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '@/src/index.css';
 import { Navbar, Footer } from '@/src/components/LayoutNext'; // I will create LayoutNext
-import { WhatsAppButton } from '@/src/components/WhatsAppButton';
 import { TelegramButton } from '@/src/components/TelegramButton';
 import { WebhouseAIChat } from '@/src/components/WebhouseAIChat';
 import { AppProvider } from '@/src/context/AppContext';
@@ -101,7 +100,6 @@ export default function RootLayout({
       >
         <AppProvider>
           <Navbar />
-          <WhatsAppButton />
           <TelegramButton />
           <WebhouseAIChat />
           <main className="overflow-x-hidden pt-[112px]">{children}</main>
