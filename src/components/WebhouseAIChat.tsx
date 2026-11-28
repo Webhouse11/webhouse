@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Markdown from 'react-markdown';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
   BellOff,
+  Bot,
   Check,
   CheckCircle2,
   ClipboardList,
@@ -17,10 +19,11 @@ import {
   Minimize2,
   RotateCcw,
   Send,
-  Smile,
+  Sparkles,
   User,
   X,
 } from 'lucide-react';
+import robotAvatar from '@/src/assets/images/webhouse_robot_avatar_1795846309041.jpg';
 
 interface SourceItem {
   title: string;
@@ -45,15 +48,13 @@ const WELCOME_STATE_KEY = 'webhouse_ai_welcome_state'; // 'shown' | 'dismissed' 
 const MUTE_PREF_KEY = 'webhouse_ai_mute_welcome';
 const SESSION_MESSAGES_KEY = 'webhouse_ai_session_messages';
 
-const WELCOME_PARAGRAPHS = [
-  'Hello! 👋 Welcome to Webhouse Media and Marketing Solution!',
-  "It's wonderful to have you here.",
-  'What would you love to know about us? Are you looking for a professional website, business automation, digital marketing, branding, AI solutions or something special for your business?',
-  "I'm Webhouse AI, your intelligent digital assistant.",
-  "Tell me what you need, and let's explore how Webhouse can help you achieve it. 😊",
-];
+const WELCOME_CHAT_MESSAGE = `**HELLO! WELCOME TO WEBHOUSE.** 👋
 
-const WELCOME_CHAT_MESSAGE = `${WELCOME_PARAGRAPHS.join('\n\n')}\n\n**How can we be of help to you today?**`;
+I'm **Webhouse AI**, your intelligent digital assistant.
+
+How can we be of help to you today? What would you love to know about our services, products, digital solutions or business systems?
+
+Tell me what you need. I'm here to help you find the right solution. 😊`;
 
 const QUICK_SUGGESTIONS = [
   '🌐 I Need a Website.',
@@ -96,12 +97,50 @@ function generateSessionId(): string {
   return `wh_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
 }
 
-function emitPanelState(isPanelVisible: boolean) {
-  if (typeof window !== 'undefined') {
-    window.dispatchEvent(
-      new CustomEvent('webhouse-ai-panel-state', { detail: { open: isPanelVisible } })
-    );
-  }
+function RoboticAvatar({
+  size = 'md',
+  animated = true,
+}: {
+  size?: 'sm' | 'md' | 'lg';
+  animated?: boolean;
+}) {
+  const [imgError, setImgError] = useState(false);
+
+  const dims =
+    size === 'lg'
+      ? 'w-20 h-20 sm:w-24 sm:h-24 rounded-3xl'
+      : size === 'md'
+      ? 'w-10 h-10 rounded-2xl'
+      : 'w-8 h-8 rounded-xl';
+
+  return (
+    <div
+      className={`relative ${dims} shrink-0 overflow-hidden bg-slate-900 border border-sky-400/50 shadow-[0_0_24px_-4px_rgba(56,189,248,0.5)] flex items-center justify-center`}
+    >
+      {animated && (
+        <motion.div
+          aria-hidden="true"
+          animate={{ opacity: [0.35, 0.75, 0.35] }}
+          transition={{ repeat: Infinity, duration: 2.8, ease: 'easeInOut' }}
+          className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.24),transparent_72%)] pointer-events-none z-10"
+        />
+      )}
+      {!imgError ? (
+        <Image
+          src={robotAvatar}
+          alt="Webhouse AI Robotic Assistant"
+          fill
+          sizes={size === 'lg' ? '96px' : size === 'md' ? '40px' : '32px'}
+          className="object-cover object-top"
+          referrerPolicy="no-referrer"
+          onError={() => setImgError(true)}
+          priority={size === 'lg'}
+        />
+      ) : (
+        <Bot className={size === 'lg' ? 'w-10 h-10 text-sky-300' : 'w-5 h-5 text-sky-300'} />
+      )}
+    </div>
+  );
 }
 
 export function WebhouseAIChat() {
@@ -141,9 +180,9 @@ export function WebhouseAIChat() {
 
   useEffect(() => {
     viewModeRef.current = viewMode;
-    emitPanelState(viewMode === 'welcome' || viewMode === 'chat');
   }, [viewMode]);
 
+  // 1. Hydrate session and persisted conversation once on mount
   useEffect(() => {
     setMounted(true);
 
@@ -161,7 +200,6 @@ export function WebhouseAIChat() {
     }
     setSessionId(activeSessionId);
 
-    // Restore conversation messages for this browsing session if available
     let restoredMessages: ChatMessage[] | null = null;
     try {
       const rawMessages = window.sessionStorage.getItem(SESSION_MESSAGES_KEY);
@@ -179,12 +217,13 @@ export function WebhouseAIChat() {
         }
       }
     } catch {
-      // ignore corrupted session storage
+      // ignore corrupted storage
     }
 
     setMessages(restoredMessages ?? [createWelcomeMessage()]);
   }, []);
 
+  // 2. Wait for full document load + 1000ms before triggering the left-to-center robotic entrance
   useEffect(() => {
     if (!mounted || pathname?.startsWith('/admin')) return;
     if (welcomeTimerRef.current || viewModeRef.current !== 'closed') return;
@@ -203,29 +242,45 @@ export function WebhouseAIChat() {
       sessionWelcomeState === 'engaged' ||
       sessionWelcomeState === 'shown';
 
-    if (!mutedPermanently && !alreadyHandledThisSession) {
+    if (mutedPermanently || alreadyHandledThisSession) return;
+
+    let cancelled = false;
+
+    const scheduleEntrance = () => {
+      if (cancelled || welcomeTimerRef.current) return;
       welcomeTimerRef.current = setTimeout(() => {
         welcomeTimerRef.current = null;
-        if (viewModeRef.current === 'closed') {
-          try {
-            const latestState = window.sessionStorage.getItem(WELCOME_STATE_KEY);
-            if (
-              latestState === 'dismissed' ||
-              latestState === 'engaged' ||
-              latestState === 'shown'
-            ) {
-              return;
-            }
-            window.sessionStorage.setItem(WELCOME_STATE_KEY, 'shown');
-          } catch {
-            // ignore
+        if (cancelled || viewModeRef.current !== 'closed') return;
+        try {
+          const latestState = window.sessionStorage.getItem(WELCOME_STATE_KEY);
+          if (
+            latestState === 'dismissed' ||
+            latestState === 'engaged' ||
+            latestState === 'shown'
+          ) {
+            return;
           }
-          setViewMode('welcome');
+          window.sessionStorage.setItem(WELCOME_STATE_KEY, 'shown');
+        } catch {
+          // ignore
         }
-      }, 2000);
+        setViewMode('welcome');
+      }, 1000); // 800-1200ms after full load
+    };
+
+    const onWindowLoad = () => {
+      scheduleEntrance();
+    };
+
+    if (document.readyState === 'complete') {
+      scheduleEntrance();
+    } else {
+      window.addEventListener('load', onWindowLoad, { once: true });
     }
 
     return () => {
+      cancelled = true;
+      window.removeEventListener('load', onWindowLoad);
       if (welcomeTimerRef.current) {
         clearTimeout(welcomeTimerRef.current);
         welcomeTimerRef.current = null;
@@ -233,7 +288,7 @@ export function WebhouseAIChat() {
     };
   }, [mounted, pathname]);
 
-  // Save messages to sessionStorage so navigation / reload preserves conversation
+  // 3. Persist active messages across page navigation within the browsing session
   useEffect(() => {
     if (!mounted || !sessionId || messages.length === 0) return;
     try {
@@ -246,6 +301,7 @@ export function WebhouseAIChat() {
     }
   }, [mounted, sessionId, messages]);
 
+  // 4. Scroll feed smoothly on new messages
   useEffect(() => {
     if (viewMode === 'chat') {
       messagesEndRef.current?.scrollIntoView({
@@ -253,6 +309,23 @@ export function WebhouseAIChat() {
       });
     }
   }, [messages, viewMode, showEnquiryForm, enquirySuccess, prefersReducedMotion]);
+
+  // 5. Escape key closes welcome/chat cleanly
+  useEffect(() => {
+    if (!mounted) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && viewModeRef.current === 'welcome') {
+        try {
+          window.sessionStorage.setItem(WELCOME_STATE_KEY, 'dismissed');
+        } catch {
+          // ignore
+        }
+        setViewMode('closed');
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [mounted]);
 
   if (!mounted || pathname?.startsWith('/admin')) {
     return null;
@@ -273,7 +346,7 @@ export function WebhouseAIChat() {
     }
   };
 
-  const transitionToFullChat = (focusInput = true) => {
+  const transitionToRightChat = (focusInput = true) => {
     cancelWelcomeTimer();
     markSessionState('engaged');
     setViewMode('chat');
@@ -286,10 +359,10 @@ export function WebhouseAIChat() {
         try {
           el.setSelectionRange(len, len);
         } catch {
-          // ignore selection range errors on unsupported input types
+          // ignore unsupported selection range
         }
       }
-    }, 30);
+    }, 50);
   };
 
   const handleDismissWelcome = (muteForever = false) => {
@@ -309,12 +382,11 @@ export function WebhouseAIChat() {
     cancelWelcomeTimer();
     markSessionState('engaged');
     setViewMode('chat');
-    setTimeout(() => inputRef.current?.focus(), 60);
+    setTimeout(() => inputRef.current?.focus(), 70);
   };
 
   const handleCloseChat = () => {
     cancelWelcomeTimer();
-    // Once user closes, keep welcome dismissed for rest of browsing session
     markSessionState('dismissed');
     setViewMode('closed');
   };
@@ -366,7 +438,6 @@ export function WebhouseAIChat() {
     const trimmed = (textOverride ?? input).trim();
     if (!trimmed || isStreaming) return;
 
-    // Ensure seamless promotion into full chat if invoked from welcome view
     if (viewMode !== 'chat') {
       cancelWelcomeTimer();
       markSessionState('engaged');
@@ -597,586 +668,662 @@ export function WebhouseAIChat() {
   const isChatMode = viewMode === 'chat';
   const isMinimizedMode = viewMode === 'minimized';
 
-  const morphTransition = prefersReducedMotion
-    ? { duration: 0.01 }
-    : { type: 'spring' as const, stiffness: 320, damping: 30, mass: 0.85 };
+  const stageAlignmentClass = isWelcomeMode
+    ? 'items-center justify-center p-3 sm:p-6'
+    : isChatMode
+    ? 'items-end justify-center sm:items-end sm:justify-end sm:p-6'
+    : 'items-end justify-end p-4 sm:p-6';
 
   return (
-    <div
-      className={`fixed z-[110] flex flex-col items-end pointer-events-none ${
-        isChatMode
-          ? 'inset-x-0 bottom-0 sm:inset-auto sm:bottom-6 sm:right-6'
-          : 'bottom-4 right-4 sm:bottom-6 sm:right-6'
-      }`}
-    >
-      <AnimatePresence mode="wait">
-        {panelOpen && (
-          <motion.section
-            key="webhouse-ai-shell"
-            layout={!prefersReducedMotion}
-            role="dialog"
-            aria-label="Webhouse AI Digital Receptionist"
-            initial={
-              prefersReducedMotion
-                ? { opacity: 0 }
-                : { opacity: 0, y: 24, scale: 0.94 }
-            }
-            animate={
-              prefersReducedMotion
-                ? { opacity: 1 }
-                : { opacity: 1, y: 0, scale: 1 }
-            }
-            exit={
-              prefersReducedMotion
-                ? { opacity: 0 }
-                : { opacity: 0, y: 18, scale: 0.94 }
-            }
-            transition={morphTransition}
-            style={{ transformOrigin: 'bottom right' }}
-            className={`pointer-events-auto bg-white shadow-[0_24px_60px_-15px_rgba(15,23,42,0.28)] border border-slate-200/90 overflow-hidden flex flex-col ${
-              isChatMode
-                ? 'w-full sm:w-[420px] h-[min(88dvh,640px)] sm:h-[min(640px,calc(100dvh-4.5rem))] rounded-t-3xl sm:rounded-3xl'
-                : isWelcomeMode
-                ? 'w-[calc(100vw-2rem)] sm:w-[400px] max-h-[min(82dvh,600px)] rounded-3xl'
-                : 'w-[calc(100vw-2rem)] sm:w-[360px] rounded-2xl'
-            }`}
-          >
-            {/* Unified Brand Header */}
-            <div className="bg-slate-900 text-white px-4 py-3.5 flex items-center justify-between gap-2 shrink-0 border-b border-white/10">
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center shrink-0 shadow-md ring-2 ring-emerald-400/25">
-                  <Smile className="w-5 h-5 text-white" />
-                  <span
-                    className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-slate-900"
-                    title="Online and ready to help"
-                  />
-                </div>
-                <div className="min-w-0">
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-bold text-sm tracking-tight truncate">Webhouse AI</h3>
-                    <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-300 whitespace-nowrap">
-                      <span
-                        className={`w-1.5 h-1.5 rounded-full bg-emerald-400 ${
-                          prefersReducedMotion ? '' : 'animate-pulse'
-                        }`}
-                      />
-                      Online
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-slate-300 truncate">
-                    {isWelcomeMode
-                      ? 'Digital Receptionist · Webhouse Media'
-                      : 'We design systems · Webhouse Media'}
-                  </p>
-                </div>
-              </div>
+    <>
+      {/* Full-viewport choreographed stage (zero horizontal overflow, zero layout shift) */}
+      <div
+        className={`fixed inset-0 z-[110] pointer-events-none overflow-hidden flex ${stageAlignmentClass}`}
+      >
+        {/* Subtle Glass Backdrop Overlay during Central Welcome */}
+        <AnimatePresence>
+          {isWelcomeMode && (
+            <motion.div
+              key="webhouse-welcome-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: prefersReducedMotion ? 0.05 : 0.4 }}
+              onClick={() => handleDismissWelcome(false)}
+              aria-hidden="true"
+              className="fixed inset-0 bg-slate-950/45 backdrop-blur-[4px] pointer-events-auto"
+            />
+          )}
+        </AnimatePresence>
 
-              <div className="flex items-center gap-1 shrink-0">
-                {isChatMode && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={() => setShowEnquiryForm((v) => !v)}
-                      title="Start a Project Enquiry"
-                      aria-label="Start a Project Enquiry"
-                      className="min-w-[36px] min-h-[36px] flex items-center justify-center rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
-                    >
-                      <ClipboardList className="w-4 h-4" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleResetChat}
-                      disabled={isStreaming}
-                      title="New Conversation"
-                      aria-label="New Conversation"
-                      className="min-w-[36px] min-h-[36px] flex items-center justify-center rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors disabled:opacity-40"
-                    >
-                      <RotateCcw className="w-4 h-4" />
-                    </button>
-                  </>
-                )}
-
-                {!isWelcomeMode && (
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setViewMode(isMinimizedMode ? 'chat' : 'minimized')
+        {/* Single Persistent Morphing Assistant Container (slides from left -> center -> transforms to right) */}
+        <AnimatePresence>
+          {panelOpen && (
+            <motion.section
+              key="webhouse-ai-shell"
+              layout={!prefersReducedMotion}
+              role="dialog"
+              aria-modal={isWelcomeMode ? 'true' : undefined}
+              aria-label="Webhouse AI Digital Assistant"
+              initial={
+                prefersReducedMotion
+                  ? { opacity: 0 }
+                  : isWelcomeMode
+                  ? { opacity: 0, x: '-100vw', scale: 0.94 }
+                  : { opacity: 0, x: 48, scale: 0.96 }
+              }
+              animate={
+                prefersReducedMotion
+                  ? { opacity: 1 }
+                  : { opacity: 1, x: 0, scale: 1 }
+              }
+              exit={
+                prefersReducedMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, x: 40, scale: 0.94 }
+              }
+              transition={
+                prefersReducedMotion
+                  ? { duration: 0.01 }
+                  : {
+                      duration: 0.65,
+                      ease: [0.16, 1, 0.3, 1],
+                      layout: { duration: 0.58, ease: [0.16, 1, 0.3, 1] },
                     }
-                    title={isMinimizedMode ? 'Expand Chat' : 'Minimize Chat'}
-                    aria-label={isMinimizedMode ? 'Expand Chat' : 'Minimize Chat'}
-                    className="min-w-[36px] min-h-[36px] flex items-center justify-center rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
-                  >
-                    {isMinimizedMode ? (
-                      <Maximize2 className="w-4 h-4" />
-                    ) : (
-                      <Minimize2 className="w-4 h-4" />
-                    )}
-                  </button>
-                )}
+              }
+              className={`relative z-10 pointer-events-auto flex flex-col overflow-hidden backdrop-blur-xl ${
+                isWelcomeMode
+                  ? 'w-full max-w-[560px] max-h-[min(88dvh,720px)] rounded-3xl bg-slate-950/92 text-white border border-sky-400/30 shadow-[0_0_70px_-15px_rgba(56,189,248,0.42),0_32px_80px_-20px_rgba(2,6,23,0.75)]'
+                  : isChatMode
+                  ? 'w-full sm:w-[430px] md:w-[450px] h-[90dvh] sm:h-[min(660px,calc(100dvh-7.5rem))] rounded-t-3xl sm:rounded-3xl bg-white/95 text-slate-900 border border-sky-200/80 shadow-[0_0_50px_-15px_rgba(56,189,248,0.28),0_25px_70px_-15px_rgba(15,23,42,0.35)]'
+                  : 'w-[calc(100vw-2rem)] sm:w-[360px] rounded-2xl bg-slate-950/95 text-white border border-sky-400/35 shadow-[0_18px_45px_-12px_rgba(15,23,42,0.55)]'
+              }`}
+            >
+              {/* Subtle illuminated top rim glow */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-sky-400/80 to-transparent pointer-events-none"
+              />
 
-                <button
-                  type="button"
-                  onClick={isWelcomeMode ? () => handleDismissWelcome(false) : handleCloseChat}
-                  title={isWelcomeMode ? 'Dismiss welcome' : 'Close Assistant'}
-                  aria-label={isWelcomeMode ? 'Dismiss welcome' : 'Close Assistant'}
-                  className="min-w-[36px] min-h-[36px] flex items-center justify-center rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* Body Area: Smoothly morphs between Welcome Invitation & Full Conversation */}
-            {!isMinimizedMode && (
-              <>
-                {isWelcomeMode ? (
-                  <motion.div
-                    key="welcome-body"
-                    initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.22 }}
-                    className="flex-1 overflow-y-auto px-4 py-4 space-y-3.5 bg-gradient-to-b from-slate-50 to-white"
-                  >
-                    {/* Greeting Card */}
-                    <div className="bg-white border border-slate-200/80 rounded-2xl p-3.5 shadow-sm space-y-2 text-[13px] leading-relaxed text-slate-700">
-                      {WELCOME_PARAGRAPHS.map((paragraph, idx) => (
-                        <p
-                          key={idx}
-                          className={
-                            idx === 0
-                              ? 'font-semibold text-slate-900 text-[13.5px]'
-                              : ''
-                          }
-                        >
-                          {paragraph}
-                        </p>
-                      ))}
-                      <p className="pt-1 font-semibold text-emerald-700">
-                        How can we be of help to you today?
-                      </p>
-                    </div>
-
-                    {/* Quick Suggestions */}
-                    <div className="space-y-2">
-                      <p className="text-[11px] font-semibold text-slate-500 px-0.5">
-                        Quick ways to get started
-                      </p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                        {QUICK_SUGGESTIONS.map((suggestion) => (
-                          <button
-                            key={suggestion}
-                            type="button"
-                            onClick={() => sendMessage(suggestion)}
-                            className="text-left text-[12.5px] font-medium px-3 py-2.5 min-h-[42px] rounded-xl bg-white border border-slate-200 text-slate-800 hover:border-emerald-500 hover:text-emerald-800 hover:bg-emerald-50/60 active:scale-[0.99] transition-all shadow-[0_1px_2px_rgba(15,23,42,0.03)]"
-                          >
-                            {suggestion}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Brand Ethos & Optional Mute */}
-                    <div className="flex items-center justify-between gap-2 pt-0.5 px-0.5 text-[11px] text-slate-400">
-                      <span className="italic truncate">
-                        We don&apos;t just offer services — we design systems.
+              {/* Persistent Morphing Header */}
+              <motion.div
+                layout={!prefersReducedMotion ? 'position' : false}
+                className={`px-4 sm:px-5 py-3.5 flex items-center justify-between gap-3 shrink-0 ${
+                  isWelcomeMode
+                    ? 'border-b border-white/10 bg-slate-900/60'
+                    : 'bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 text-white border-b border-sky-400/20'
+                }`}
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <RoboticAvatar size="md" animated={!prefersReducedMotion} />
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-[10px] sm:text-[11px] font-semibold tracking-wider text-sky-300 uppercase flex items-center gap-1.5 truncate">
+                        <span
+                          className={`w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.9)] shrink-0 ${
+                            prefersReducedMotion ? '' : 'animate-pulse'
+                          }`}
+                        />
+                        WEBHOUSE AI — SYSTEM ONLINE
                       </span>
+                    </div>
+                    <p className="text-xs text-slate-300 truncate mt-0.5">
+                      {isWelcomeMode
+                        ? 'Digital Receptionist · Webhouse Media'
+                        : 'Intelligent Digital Assistant · Webhouse Media'}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1 shrink-0">
+                  {isChatMode && (
+                    <>
                       <button
                         type="button"
-                        onClick={() => handleDismissWelcome(true)}
-                        className="inline-flex items-center gap-1 text-slate-400 hover:text-slate-700 whitespace-nowrap shrink-0 transition-colors"
-                        title="Do not show this welcome automatically again"
+                        onClick={() => setShowEnquiryForm((v) => !v)}
+                        title="Start a Project Enquiry"
+                        aria-label="Start a Project Enquiry"
+                        className="min-w-[36px] min-h-[36px] flex items-center justify-center rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
                       >
-                        <BellOff className="w-3 h-3" />
-                        <span>Mute greeting</span>
+                        <ClipboardList className="w-4 h-4" />
                       </button>
-                    </div>
-                  </motion.div>
-                ) : (
-                  /* Full Conversation Message Feed */
-                  <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-slate-50">
-                    {messages.map((msg) => {
-                      const isUser = msg.role === 'user';
-                      return (
-                        <motion.div
-                          key={msg.id}
-                          initial={
-                            prefersReducedMotion
-                              ? { opacity: 1 }
-                              : { opacity: 0, y: 8 }
-                          }
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.18 }}
-                          className={`flex gap-2.5 ${
-                            isUser ? 'justify-end' : 'justify-start'
-                          }`}
-                        >
-                          {!isUser && (
-                            <div className="w-7 h-7 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
-                              <Smile className="w-4 h-4" />
-                            </div>
-                          )}
+                      <button
+                        type="button"
+                        onClick={handleResetChat}
+                        disabled={isStreaming}
+                        title="Clear Conversation"
+                        aria-label="Clear Conversation"
+                        className="min-w-[36px] min-h-[36px] flex items-center justify-center rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors disabled:opacity-40"
+                      >
+                        <RotateCcw className="w-4 h-4" />
+                      </button>
+                    </>
+                  )}
 
-                          <div
-                            className={`max-w-[85%] space-y-2 ${
-                              isUser ? 'items-end flex flex-col' : ''
-                            }`}
+                  {!isWelcomeMode && (
+                    <button
+                      type="button"
+                      onClick={() => setViewMode(isMinimizedMode ? 'chat' : 'minimized')}
+                      title={isMinimizedMode ? 'Expand Chat' : 'Minimize Chat'}
+                      aria-label={isMinimizedMode ? 'Expand Chat' : 'Minimize Chat'}
+                      className="min-w-[36px] min-h-[36px] flex items-center justify-center rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+                    >
+                      {isMinimizedMode ? (
+                        <Maximize2 className="w-4 h-4" />
+                      ) : (
+                        <Minimize2 className="w-4 h-4" />
+                      )}
+                    </button>
+                  )}
+
+                  {isWelcomeMode ? (
+                    <button
+                      type="button"
+                      onClick={() => handleDismissWelcome(false)}
+                      aria-label="Cancel welcome experience"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[36px] rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white text-xs font-semibold transition-colors border border-white/10"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                      <span>Cancel</span>
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={handleCloseChat}
+                      title="Close Assistant"
+                      aria-label="Close Assistant"
+                      className="min-w-[36px] min-h-[36px] flex items-center justify-center rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+              </motion.div>
+
+              {/* Content Body */}
+              {!isMinimizedMode && (
+                <>
+                  {isWelcomeMode ? (
+                    /* CENTRAL ROBOTIC WELCOME CONSOLE */
+                    <div
+                      key="welcome-body"
+                      className="flex-1 overflow-y-auto px-5 sm:px-7 py-5 sm:py-6 space-y-5 relative"
+                    >
+                      {/* Subtle electric-blue ambient radial behind robot */}
+                      <div
+                        aria-hidden="true"
+                        className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-40 bg-sky-500/15 blur-3xl rounded-full pointer-events-none"
+                      />
+
+                      {/* 3D Robotic Showcase + Headline */}
+                      <div className="relative flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5 text-center sm:text-left">
+                        <div className="relative shrink-0">
+                          <RoboticAvatar size="lg" animated={!prefersReducedMotion} />
+                          <span
+                            aria-hidden="true"
+                            className="absolute -bottom-1 -right-1 w-6 h-6 rounded-xl bg-sky-500 text-white flex items-center justify-center shadow-lg border-2 border-slate-950"
                           >
-                            <div
-                              className={`rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-relaxed shadow-sm ${
-                                isUser
-                                  ? 'bg-slate-900 text-white rounded-tr-sm'
-                                  : msg.isError
-                                  ? 'bg-amber-50 border border-amber-200 text-amber-950 rounded-tl-sm'
-                                  : 'bg-white border border-slate-200/80 text-slate-800 rounded-tl-sm'
-                              }`}
-                            >
-                              {!isUser && !msg.content && isStreaming ? (
-                                <div className="flex items-center gap-2 py-1">
-                                  <div className="flex items-center gap-1">
-                                    <span
-                                      className={`w-2 h-2 rounded-full bg-emerald-500 ${
-                                        prefersReducedMotion ? '' : 'animate-bounce'
-                                      }`}
-                                    />
-                                    <span
-                                      className={`w-2 h-2 rounded-full bg-emerald-500 ${
-                                        prefersReducedMotion ? '' : 'animate-bounce'
-                                      }`}
-                                      style={{ animationDelay: '150ms' }}
-                                    />
-                                    <span
-                                      className={`w-2 h-2 rounded-full bg-emerald-500 ${
-                                        prefersReducedMotion ? '' : 'animate-bounce'
-                                      }`}
-                                      style={{ animationDelay: '300ms' }}
-                                    />
-                                  </div>
-                                  <span className="text-xs text-slate-400 font-medium">
-                                    Webhouse AI is typing...
-                                  </span>
-                                </div>
-                              ) : isUser ? (
-                                <p className="whitespace-pre-wrap">{msg.content}</p>
-                              ) : (
-                                <div className="prose prose-sm max-w-none prose-p:my-1.5 prose-ul:my-1.5 prose-li:my-0.5 prose-strong:text-slate-900 prose-a:text-emerald-700">
-                                  <Markdown>{msg.content}</Markdown>
-                                </div>
-                              )}
+                            <Sparkles className="w-3 h-3" />
+                          </span>
+                        </div>
 
-                              {/* Timestamp & Copy */}
-                              {!isUser && msg.content && (
-                                <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between gap-2 text-[11px] text-slate-400">
-                                  <span>{msg.timestamp}</span>
-                                  <button
-                                    type="button"
-                                    onClick={() => handleCopy(msg.id, msg.content)}
-                                    className="inline-flex items-center gap-1 text-slate-500 hover:text-emerald-700 transition-colors"
-                                  >
-                                    {copiedId === msg.id ? (
-                                      <>
-                                        <Check className="w-3 h-3 text-emerald-600" />
-                                        <span className="text-emerald-600">Copied</span>
-                                      </>
-                                    ) : (
-                                      <>
-                                        <Copy className="w-3 h-3" />
-                                        <span>Copy</span>
-                                      </>
-                                    )}
-                                  </button>
-                                </div>
-                              )}
-                            </div>
+                        <div className="space-y-2 min-w-0">
+                          <h2 className="text-lg sm:text-xl font-bold tracking-tight text-white leading-snug">
+                            HELLO! WELCOME TO WEBHOUSE.
+                          </h2>
+                          <p className="text-sm font-medium text-sky-200">
+                            I&apos;m Webhouse AI, your intelligent digital assistant.
+                          </p>
+                          <p className="text-[13px] text-slate-300 leading-relaxed">
+                            How can we be of help to you today?
+                          </p>
+                        </div>
+                      </div>
 
-                            {/* Verified Sources */}
-                            {!isUser && msg.sources && msg.sources.length > 0 && (
-                              <div className="flex flex-wrap gap-1.5">
-                                {msg.sources.map((src, idx) =>
-                                  src.url.startsWith('http') ? (
-                                    <a
-                                      key={`${msg.id}-src-${idx}`}
-                                      href={src.url}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md bg-white border border-slate-200 text-slate-600 hover:border-emerald-500 hover:text-emerald-700 transition-colors"
-                                    >
-                                      <span className="truncate max-w-[160px]">{src.title}</span>
-                                      <ExternalLink className="w-2.5 h-2.5 shrink-0" />
-                                    </a>
-                                  ) : (
-                                    <Link
-                                      key={`${msg.id}-src-${idx}`}
-                                      href={src.url}
-                                      className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md bg-white border border-slate-200 text-slate-600 hover:border-emerald-500 hover:text-emerald-700 transition-colors"
-                                    >
-                                      <span className="truncate max-w-[160px]">{src.title}</span>
-                                      <ExternalLink className="w-2.5 h-2.5 shrink-0" />
-                                    </Link>
-                                  )
-                                )}
-                              </div>
-                            )}
-
-                            {/* WhatsApp Handoff Card */}
-                            {!isUser && msg.action === 'show_whatsapp_handoff' && (
-                              <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-xs text-slate-700 space-y-2">
-                                <p className="font-semibold text-emerald-950">
-                                  Connect with the Webhouse Team
-                                </p>
-                                <p className="text-slate-600 leading-relaxed">
-                                  You can message us directly on WhatsApp or continue chatting with Webhouse AI here.
-                                </p>
-                                <div className="flex flex-wrap gap-2 pt-1">
-                                  <a
-                                    href={`https://wa.me/2348152469749?text=${encodeURIComponent(
-                                      'Hello Webhouse Media, I was chatting with Webhouse AI and would like to speak with your team.'
-                                    )}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#25D366] text-white font-semibold hover:brightness-95 transition"
-                                  >
-                                    <MessageSquare className="w-3.5 h-3.5" />
-                                    WhatsApp (+234 815 246 9749)
-                                  </a>
-                                  <button
-                                    type="button"
-                                    onClick={() => setShowEnquiryForm(true)}
-                                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white border border-emerald-300 text-emerald-900 font-semibold hover:bg-emerald-100/60 transition"
-                                  >
-                                    <ClipboardList className="w-3.5 h-3.5" />
-                                    Leave Project Brief
-                                  </button>
-                                </div>
-                              </div>
-                            )}
-                          </div>
-
-                          {isUser && (
-                            <div className="w-7 h-7 rounded-xl bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 mt-0.5">
-                              <User className="w-4 h-4" />
-                            </div>
-                          )}
-                        </motion.div>
-                      );
-                    })}
-
-                    {/* Quick Suggestions when conversation is fresh in chat view */}
-                    {messages.length === 1 && !showEnquiryForm && (
-                      <div className="space-y-2 pt-1">
-                        <p className="text-[11px] font-semibold text-slate-500 px-1">
-                          Quick ways to get started
+                      {/* Core Reception Message */}
+                      <div className="rounded-2xl bg-white/[0.06] border border-white/10 p-4 space-y-2 text-[13.5px] leading-relaxed text-slate-200">
+                        <p>
+                          What would you love to know about our services, products, digital solutions or business systems?
                         </p>
-                        <div className="flex flex-wrap gap-1.5">
+                        <p className="text-sky-200 font-medium">
+                          Tell me what you need. I&apos;m here to help you find the right solution.
+                        </p>
+                      </div>
+
+                      {/* Quick Launch Prompts */}
+                      <div className="space-y-2">
+                        <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400">
+                          Quick Ways To Start
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                           {QUICK_SUGGESTIONS.map((q) => (
                             <button
                               key={q}
                               type="button"
                               onClick={() => sendMessage(q)}
-                              className="text-left text-xs font-medium px-3 py-2 min-h-[40px] rounded-xl bg-white border border-slate-200 text-slate-700 hover:border-emerald-500 hover:text-emerald-700 hover:bg-emerald-50/50 transition-colors"
+                              className="text-left text-xs font-medium px-3 py-2.5 min-h-[42px] rounded-xl bg-white/[0.05] hover:bg-sky-500/15 border border-white/10 hover:border-sky-400/50 text-slate-100 transition-all"
                             >
                               {q}
                             </button>
                           ))}
                         </div>
                       </div>
-                    )}
 
-                    {/* Inline Consent-Gated Project Enquiry Form */}
-                    {showEnquiryForm && (
-                      <div className="bg-white border border-emerald-200 rounded-2xl p-4 shadow-sm space-y-3">
-                        <div className="flex items-center justify-between">
-                          <h4 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
-                            <ClipboardList className="w-4 h-4 text-emerald-600" />
-                            Project Enquiry Form
-                          </h4>
-                          <button
-                            type="button"
-                            onClick={() => setShowEnquiryForm(false)}
-                            className="text-slate-400 hover:text-slate-700 p-1"
-                            aria-label="Close Enquiry Form"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
-                        </div>
-
-                        {enquirySuccess ? (
-                          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 space-y-2 text-xs text-emerald-950">
-                            <div className="flex items-center gap-2 font-bold text-emerald-800">
-                              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                              Enquiry Recorded ({enquirySuccess.referenceCode})
-                            </div>
-                            <p>{enquirySuccess.message}</p>
-                            <a
-                              href={`https://wa.me/2348152469749?text=${encodeURIComponent(
-                                `Hello Webhouse Media, I just submitted enquiry ${enquirySuccess.referenceCode}.`
-                              )}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#25D366] text-white font-semibold"
-                            >
-                              Follow up on WhatsApp
-                            </a>
-                          </div>
-                        ) : (
-                          <form onSubmit={handleEnquirySubmit} className="space-y-2.5 text-xs">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                              <input
-                                type="text"
-                                required
-                                placeholder="Full Name *"
-                                value={fullName}
-                                onChange={(e) => setFullName(e.target.value)}
-                                className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:border-emerald-500"
-                              />
-                              <input
-                                type="text"
-                                placeholder="Business Name"
-                                value={businessName}
-                                onChange={(e) => setBusinessName(e.target.value)}
-                                className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:border-emerald-500"
-                              />
-                            </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                              <input
-                                type="email"
-                                required
-                                placeholder="Email Address *"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:border-emerald-500"
-                              />
-                              <input
-                                type="tel"
-                                required
-                                placeholder="WhatsApp / Phone *"
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                                className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:border-emerald-500"
-                              />
-                            </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                              <select
-                                value={serviceInterest}
-                                onChange={(e) => setServiceInterest(e.target.value)}
-                                className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-white focus:outline-none focus:border-emerald-500"
-                              >
-                                {SERVICE_OPTIONS.map((opt) => (
-                                  <option key={opt} value={opt}>
-                                    {opt}
-                                  </option>
-                                ))}
-                              </select>
-                              <input
-                                type="text"
-                                placeholder="Estimated Budget (e.g. ₦250k)"
-                                value={estimatedBudget}
-                                onChange={(e) => setEstimatedBudget(e.target.value)}
-                                className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:border-emerald-500"
-                              />
-                            </div>
-                            <select
-                              value={preferredContact}
-                              onChange={(e) => setPreferredContact(e.target.value)}
-                              className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-white focus:outline-none focus:border-emerald-500"
-                            >
-                              <option value="WhatsApp">Preferred Contact: WhatsApp</option>
-                              <option value="Email">Preferred Contact: Email</option>
-                              <option value="Phone Call">Preferred Contact: Phone Call</option>
-                            </select>
-                            <textarea
-                              required
-                              rows={2}
-                              placeholder="Briefly describe your project goals or questions *"
-                              value={projectDescription}
-                              onChange={(e) => setProjectDescription(e.target.value)}
-                              className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:border-emerald-500"
-                            />
-                            <label className="flex items-start gap-2 text-[11px] text-slate-600 cursor-pointer">
-                              <input
-                                type="checkbox"
-                                checked={consentGiven}
-                                onChange={(e) => setConsentGiven(e.target.checked)}
-                                className="mt-0.5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
-                              />
-                              <span>
-                                I consent to Webhouse Media storing my enquiry details and contacting me regarding this request.
-                              </span>
-                            </label>
-                            {enquiryError && (
-                              <p className="text-[11px] text-red-600 font-medium">{enquiryError}</p>
-                            )}
-                            <button
-                              type="submit"
-                              disabled={enquirySubmitting}
-                              className="w-full py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors disabled:opacity-60"
-                            >
-                              {enquirySubmitting ? 'Submitting Enquiry...' : 'Submit Project Enquiry'}
-                            </button>
-                          </form>
-                        )}
+                      {/* Brand Ethos & Mute Option */}
+                      <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-[11px] text-slate-400 border-t border-white/10">
+                        <span className="font-mono tracking-wide text-slate-400">
+                          WE DON&apos;T JUST OFFER SERVICES — WE DESIGN SYSTEMS.
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handleDismissWelcome(true)}
+                          className="inline-flex items-center gap-1 text-slate-400 hover:text-sky-300 transition-colors py-1"
+                        >
+                          <BellOff className="w-3 h-3" />
+                          <span>Don&apos;t auto-show again</span>
+                        </button>
                       </div>
-                    )}
-
-                    <div ref={messagesEndRef} />
-                  </div>
-                )}
-
-                {/* Shared Persistent Question Input Footer (preserves text & focus smoothly during expansion) */}
-                <form
-                  key="webhouse-shared-input-form"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    if (input.trim()) {
-                      sendMessage();
-                    } else if (isWelcomeMode) {
-                      transitionToFullChat(true);
-                    }
-                  }}
-                  className="p-3 bg-white border-t border-slate-200/90 shrink-0 pb-[max(0.75rem,env(safe-area-inset-bottom))]"
-                >
-                  <div className="flex items-center gap-2">
-                    <input
-                      ref={inputRef}
-                      type="text"
-                      value={input}
-                      onFocus={() => {
-                        if (isWelcomeMode) {
-                          transitionToFullChat(false);
-                        }
-                      }}
-                      onChange={(e) => {
-                        setInput(e.target.value);
-                        if (isWelcomeMode) {
-                          transitionToFullChat(false);
-                        }
-                      }}
-                      placeholder="Type your question here or ask me anything..."
-                      disabled={isStreaming}
-                      maxLength={2000}
-                      aria-label="Ask Webhouse AI a question"
-                      className="flex-1 min-h-[44px] px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/15 transition-colors text-slate-900 placeholder:text-slate-400"
-                    />
-                    <button
-                      type="submit"
-                      disabled={isStreaming || !input.trim()}
-                      className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0 shadow-sm"
-                      aria-label="Send message"
+                    </div>
+                  ) : (
+                    /* RIGHT-SIDE FULL CONVERSATION WORKSPACE */
+                    <div
+                      key="chat-body"
+                      className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-slate-50/95"
                     >
-                      <Send className="w-4 h-4" />
-                    </button>
-                  </div>
-                </form>
-              </>
-            )}
-          </motion.section>
-        )}
-      </AnimatePresence>
+                      {messages.map((msg) => {
+                        const isUser = msg.role === 'user';
+                        return (
+                          <motion.div
+                            key={msg.id}
+                            initial={
+                              prefersReducedMotion
+                                ? { opacity: 1 }
+                                : { opacity: 0, y: 8 }
+                            }
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.18 }}
+                            className={`flex gap-2.5 ${
+                              isUser ? 'justify-end' : 'justify-start'
+                            }`}
+                          >
+                            {!isUser && (
+                              <div className="mt-0.5">
+                                <RoboticAvatar size="sm" animated={false} />
+                              </div>
+                            )}
 
-      {/* Persistent Floating Webhouse AI Button (visible whenever welcome/chat is closed) */}
+                            <div
+                              className={`max-w-[85%] space-y-2 ${
+                                isUser ? 'items-end flex flex-col' : ''
+                              }`}
+                            >
+                              <div
+                                className={`rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-relaxed shadow-sm ${
+                                  isUser
+                                    ? 'bg-slate-900 text-white rounded-tr-sm border border-sky-400/20'
+                                    : msg.isError
+                                    ? 'bg-amber-50 border border-amber-200 text-amber-950 rounded-tl-sm'
+                                    : 'bg-white border border-slate-200/90 text-slate-800 rounded-tl-sm'
+                                }`}
+                              >
+                                {!isUser && !msg.content && isStreaming ? (
+                                  <div className="flex items-center gap-2 py-1">
+                                    <div className="flex items-center gap-1">
+                                      <span
+                                        className={`w-2 h-2 rounded-full bg-sky-500 ${
+                                          prefersReducedMotion ? '' : 'animate-bounce'
+                                        }`}
+                                      />
+                                      <span
+                                        className={`w-2 h-2 rounded-full bg-sky-500 ${
+                                          prefersReducedMotion ? '' : 'animate-bounce'
+                                        }`}
+                                        style={{ animationDelay: '150ms' }}
+                                      />
+                                      <span
+                                        className={`w-2 h-2 rounded-full bg-sky-500 ${
+                                          prefersReducedMotion ? '' : 'animate-bounce'
+                                        }`}
+                                        style={{ animationDelay: '300ms' }}
+                                      />
+                                    </div>
+                                    <span className="text-xs text-slate-400 font-medium">
+                                      Webhouse AI is thinking...
+                                    </span>
+                                  </div>
+                                ) : isUser ? (
+                                  <p className="whitespace-pre-wrap">{msg.content}</p>
+                                ) : (
+                                  <div className="prose prose-sm max-w-none prose-p:my-1.5 prose-ul:my-1.5 prose-li:my-0.5 prose-strong:text-slate-900 prose-a:text-sky-700">
+                                    <Markdown>{msg.content}</Markdown>
+                                  </div>
+                                )}
+
+                                {!isUser && msg.content && (
+                                  <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between gap-2 text-[11px] text-slate-400">
+                                    <span>{msg.timestamp}</span>
+                                    <button
+                                      type="button"
+                                      onClick={() => handleCopy(msg.id, msg.content)}
+                                      className="inline-flex items-center gap-1 text-slate-500 hover:text-sky-700 transition-colors"
+                                    >
+                                      {copiedId === msg.id ? (
+                                        <>
+                                          <Check className="w-3 h-3 text-emerald-600" />
+                                          <span className="text-emerald-600">Copied</span>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <Copy className="w-3 h-3" />
+                                          <span>Copy</span>
+                                        </>
+                                      )}
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* Verified Knowledge Sources */}
+                              {!isUser && msg.sources && msg.sources.length > 0 && (
+                                <div className="flex flex-wrap gap-1.5">
+                                  {msg.sources.map((src, idx) =>
+                                    src.url.startsWith('http') ? (
+                                      <a
+                                        key={`${msg.id}-src-${idx}`}
+                                        href={src.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md bg-white border border-slate-200 text-slate-600 hover:border-sky-500 hover:text-sky-700 transition-colors"
+                                      >
+                                        <span className="truncate max-w-[160px]">{src.title}</span>
+                                        <ExternalLink className="w-2.5 h-2.5 shrink-0" />
+                                      </a>
+                                    ) : (
+                                      <Link
+                                        key={`${msg.id}-src-${idx}`}
+                                        href={src.url}
+                                        className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md bg-white border border-slate-200 text-slate-600 hover:border-sky-500 hover:text-sky-700 transition-colors"
+                                      >
+                                        <span className="truncate max-w-[160px]">{src.title}</span>
+                                        <ExternalLink className="w-2.5 h-2.5 shrink-0" />
+                                      </Link>
+                                    )
+                                  )}
+                                </div>
+                              )}
+
+                              {/* WhatsApp Handoff Card */}
+                              {!isUser && msg.action === 'show_whatsapp_handoff' && (
+                                <div className="bg-sky-50 border border-sky-200 rounded-xl p-3 text-xs text-slate-700 space-y-2">
+                                  <p className="font-semibold text-slate-950">
+                                    Connect with the Webhouse Team
+                                  </p>
+                                  <p className="text-slate-600 leading-relaxed">
+                                    You can message us directly on WhatsApp or continue chatting with Webhouse AI here.
+                                  </p>
+                                  <div className="flex flex-wrap gap-2 pt-1">
+                                    <a
+                                      href={`https://wa.me/2348152469749?text=${encodeURIComponent(
+                                        'Hello Webhouse Media, I was chatting with Webhouse AI and would like to speak with your team.'
+                                      )}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#25D366] text-white font-semibold hover:brightness-95 transition"
+                                    >
+                                      <MessageSquare className="w-3.5 h-3.5" />
+                                      WhatsApp (+234 815 246 9749)
+                                    </a>
+                                    <button
+                                      type="button"
+                                      onClick={() => setShowEnquiryForm(true)}
+                                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white border border-sky-300 text-slate-900 font-semibold hover:bg-sky-100/60 transition"
+                                    >
+                                      <ClipboardList className="w-3.5 h-3.5" />
+                                      Leave Project Brief
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+
+                            {isUser && (
+                              <div className="w-8 h-8 rounded-xl bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 mt-0.5">
+                                <User className="w-4 h-4" />
+                              </div>
+                            )}
+                          </motion.div>
+                        );
+                      })}
+
+                      {/* Quick Suggestions when conversation is fresh in right-side chat */}
+                      {messages.length === 1 && !showEnquiryForm && (
+                        <div className="space-y-2 pt-1">
+                          <p className="text-[11px] font-semibold text-slate-500 px-1">
+                            Suggested Prompts
+                          </p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {QUICK_SUGGESTIONS.map((q) => (
+                              <button
+                                key={q}
+                                type="button"
+                                onClick={() => sendMessage(q)}
+                                className="text-left text-xs font-medium px-3 py-2 min-h-[40px] rounded-xl bg-white border border-slate-200 text-slate-700 hover:border-sky-500 hover:text-sky-700 hover:bg-sky-50/60 transition-colors"
+                              >
+                                {q}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Inline Consent-Gated Project Enquiry Form */}
+                      {showEnquiryForm && (
+                        <div className="bg-white border border-sky-200 rounded-2xl p-4 shadow-sm space-y-3">
+                          <div className="flex items-center justify-between">
+                            <h4 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                              <ClipboardList className="w-4 h-4 text-sky-600" />
+                              Project Enquiry Form
+                            </h4>
+                            <button
+                              type="button"
+                              onClick={() => setShowEnquiryForm(false)}
+                              className="text-slate-400 hover:text-slate-700 p-1"
+                              aria-label="Close Enquiry Form"
+                            >
+                              <X className="w-4 h-4" />
+                            </button>
+                          </div>
+
+                          {enquirySuccess ? (
+                            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 space-y-2 text-xs text-emerald-950">
+                              <div className="flex items-center gap-2 font-bold text-emerald-800">
+                                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                                Enquiry Recorded ({enquirySuccess.referenceCode})
+                              </div>
+                              <p>{enquirySuccess.message}</p>
+                              <a
+                                href={`https://wa.me/2348152469749?text=${encodeURIComponent(
+                                  `Hello Webhouse Media, I just submitted enquiry ${enquirySuccess.referenceCode}.`
+                                )}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#25D366] text-white font-semibold"
+                              >
+                                Follow up on WhatsApp
+                              </a>
+                            </div>
+                          ) : (
+                            <form onSubmit={handleEnquirySubmit} className="space-y-2.5 text-xs">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                <input
+                                  type="text"
+                                  required
+                                  placeholder="Full Name *"
+                                  value={fullName}
+                                  onChange={(e) => setFullName(e.target.value)}
+                                  className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:border-sky-500"
+                                />
+                                <input
+                                  type="text"
+                                  placeholder="Business Name"
+                                  value={businessName}
+                                  onChange={(e) => setBusinessName(e.target.value)}
+                                  className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:border-sky-500"
+                                />
+                              </div>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                <input
+                                  type="email"
+                                  required
+                                  placeholder="Email Address *"
+                                  value={email}
+                                  onChange={(e) => setEmail(e.target.value)}
+                                  className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:border-sky-500"
+                                />
+                                <input
+                                  type="tel"
+                                  required
+                                  placeholder="WhatsApp / Phone *"
+                                  value={phone}
+                                  onChange={(e) => setPhone(e.target.value)}
+                                  className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:border-sky-500"
+                                />
+                              </div>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                <select
+                                  value={serviceInterest}
+                                  onChange={(e) => setServiceInterest(e.target.value)}
+                                  className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-white focus:outline-none focus:border-sky-500"
+                                >
+                                  {SERVICE_OPTIONS.map((opt) => (
+                                    <option key={opt} value={opt}>
+                                      {opt}
+                                    </option>
+                                  ))}
+                                </select>
+                                <input
+                                  type="text"
+                                  placeholder="Estimated Budget (e.g. ₦250k)"
+                                  value={estimatedBudget}
+                                  onChange={(e) => setEstimatedBudget(e.target.value)}
+                                  className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:border-sky-500"
+                                />
+                              </div>
+                              <select
+                                value={preferredContact}
+                                onChange={(e) => setPreferredContact(e.target.value)}
+                                className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-white focus:outline-none focus:border-sky-500"
+                              >
+                                <option value="WhatsApp">Preferred Contact: WhatsApp</option>
+                                <option value="Email">Preferred Contact: Email</option>
+                                <option value="Phone Call">Preferred Contact: Phone Call</option>
+                              </select>
+                              <textarea
+                                required
+                                rows={2}
+                                placeholder="Briefly describe your project goals or questions *"
+                                value={projectDescription}
+                                onChange={(e) => setProjectDescription(e.target.value)}
+                                className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:border-sky-500"
+                              />
+                              <label className="flex items-start gap-2 text-[11px] text-slate-600 cursor-pointer">
+                                <input
+                                  type="checkbox"
+                                  checked={consentGiven}
+                                  onChange={(e) => setConsentGiven(e.target.checked)}
+                                  className="mt-0.5 rounded border-slate-300 text-sky-600 focus:ring-sky-500"
+                                />
+                                <span>
+                                  I consent to Webhouse Media storing my enquiry details and contacting me regarding this request.
+                                </span>
+                              </label>
+                              {enquiryError && (
+                                <p className="text-[11px] text-red-600 font-medium">
+                                  {enquiryError}
+                                </p>
+                              )}
+                              <button
+                                type="submit"
+                                disabled={enquirySubmitting}
+                                className="w-full py-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold transition-colors disabled:opacity-60"
+                              >
+                                {enquirySubmitting ? 'Submitting Enquiry...' : 'Submit Project Enquiry'}
+                              </button>
+                            </form>
+                          )}
+                        </div>
+                      )}
+
+                      <div ref={messagesEndRef} />
+                    </div>
+                  )}
+
+                  {/* Shared Persistent Input Bar (never destroyed across welcome -> right-side transformation) */}
+                  <motion.form
+                    key="webhouse-shared-input-form"
+                    layout={!prefersReducedMotion ? 'position' : false}
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      if (input.trim()) {
+                        sendMessage();
+                      } else if (isWelcomeMode) {
+                        transitionToRightChat(true);
+                      }
+                    }}
+                    className={`p-3.5 sm:p-4 shrink-0 pb-[max(0.85rem,env(safe-area-inset-bottom))] ${
+                      isWelcomeMode
+                        ? 'bg-slate-900/70 border-t border-white/10'
+                        : 'bg-white border-t border-slate-200'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <input
+                        ref={inputRef}
+                        type="text"
+                        value={input}
+                        onFocus={() => {
+                          if (isWelcomeMode) {
+                            transitionToRightChat(false);
+                          }
+                        }}
+                        onChange={(e) => {
+                          setInput(e.target.value);
+                          if (isWelcomeMode) {
+                            transitionToRightChat(false);
+                          }
+                        }}
+                        placeholder="Ask me anything about Webhouse..."
+                        disabled={isStreaming}
+                        maxLength={2000}
+                        aria-label="Ask me anything about Webhouse"
+                        className={`flex-1 min-h-[46px] px-4 py-2.5 text-sm rounded-2xl border focus:outline-none transition-all ${
+                          isWelcomeMode
+                            ? 'bg-white/10 border-sky-400/35 text-white placeholder:text-slate-300 focus:bg-white/15 focus:border-sky-400 focus:ring-2 focus:ring-sky-400/25'
+                            : 'bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-sky-500 focus:ring-2 focus:ring-sky-500/15'
+                        }`}
+                      />
+                      <button
+                        type="submit"
+                        disabled={isStreaming || !input.trim()}
+                        className="min-w-[46px] min-h-[46px] flex items-center justify-center rounded-2xl bg-sky-600 hover:bg-sky-500 text-white transition-all disabled:opacity-40 disabled:cursor-not-allowed shrink-0 shadow-[0_6px_18px_-4px_rgba(2,132,199,0.6)]"
+                        aria-label="Send message"
+                      >
+                        <Send className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </motion.form>
+                </>
+              )}
+            </motion.section>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Persistent Floating Bottom-Right Robotic AI Launcher */}
       <AnimatePresence>
         {!panelOpen && (
           <motion.button
-            key="webhouse-ai-launcher"
+            key="webhouse-ai-robot-launcher"
             type="button"
             initial={
               prefersReducedMotion
@@ -1197,28 +1344,32 @@ export function WebhouseAIChat() {
             whileTap={prefersReducedMotion ? undefined : { scale: 0.96 }}
             transition={{ duration: 0.2 }}
             onClick={handleOpenFromLauncher}
-            className="pointer-events-auto relative flex items-center gap-2.5 px-4 py-3 min-h-[48px] rounded-full bg-slate-900 hover:bg-slate-800 text-white shadow-[0_14px_34px_-8px_rgba(15,23,42,0.5)] border border-emerald-500/40 transition-colors group"
+            className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[110] flex items-center gap-2.5 pl-2 pr-4 py-2 min-h-[52px] rounded-full bg-slate-950 hover:bg-slate-900 text-white shadow-[0_14px_38px_-8px_rgba(2,132,199,0.5),0_10px_25px_-10px_rgba(15,23,42,0.7)] border border-sky-400/45 transition-colors group"
             aria-label="Open Webhouse AI Assistant"
           >
-            {/* Subtle, non-aggressive breathing halo */}
             {!prefersReducedMotion && (
               <motion.span
                 aria-hidden="true"
-                animate={{ scale: [1, 1.06, 1], opacity: [0.35, 0.1, 0.35] }}
-                transition={{ repeat: Infinity, duration: 3.4, ease: 'easeInOut' }}
-                className="absolute inset-0 rounded-full border border-emerald-400/50 pointer-events-none"
+                animate={{ scale: [1, 1.08, 1], opacity: [0.45, 0.12, 0.45] }}
+                transition={{ repeat: Infinity, duration: 3.2, ease: 'easeInOut' }}
+                className="absolute inset-0 rounded-full border border-sky-400/60 pointer-events-none"
               />
             )}
-            <div className="relative flex items-center justify-center w-7 h-7 rounded-full bg-emerald-600 shrink-0 shadow-inner">
-              <Smile className="w-4 h-4 text-white" />
-              <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-300 border-2 border-slate-900" />
+            <div className="relative">
+              <RoboticAvatar size="sm" animated={false} />
+              <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-sky-400 border-2 border-slate-950" />
             </div>
-            <span className="text-sm font-bold tracking-tight whitespace-nowrap">
-              Ask Webhouse AI
-            </span>
+            <div className="flex flex-col items-start text-left">
+              <span className="text-xs sm:text-sm font-bold tracking-tight whitespace-nowrap leading-none">
+                Webhouse AI
+              </span>
+              <span className="text-[10px] font-mono text-sky-300 leading-tight mt-0.5 hidden sm:block">
+                SYSTEM ONLINE
+              </span>
+            </div>
           </motion.button>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 }
